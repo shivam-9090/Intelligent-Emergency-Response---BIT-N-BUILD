@@ -63,6 +63,22 @@ services:
     volumes:
       - ../../backend:/app
 
+  frontend:
+    build:
+      context: ../../frontend
+      dockerfile: ../infra/docker/Dockerfile.frontend
+    container_name: emergency-frontend
+    restart: unless-stopped
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8001
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ../../frontend:/app
+      - /app/node_modules
+
 volumes:
   pgdata:
   redisdata:
