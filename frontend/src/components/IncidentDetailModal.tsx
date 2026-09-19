@@ -31,22 +31,22 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
   const [isLoadingHospitals, setIsLoadingHospitals] = useState(false);
   const [isLoadingCascade, setIsLoadingCascade] = useState(false);
   const [isLoadingEvacuation, setIsLoadingEvacuation] = useState(false);
-  const [isDispatched, setIsDispatched] = useState(false);
 
   // Vision Analysis State
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isAnalyzingImage, setIsAnalyzingImage] = useState(false);
   const [visualAudit, setVisualAudit] = useState<ImageAnalysisResponse | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const requestVersionRef = useRef(0);
 
   useEffect(() => {
+    const requestVersion = ++requestVersionRef.current;
     if (!incident) {
       setBundle(null);
       setSummary(null);
       setHospitals([]);
       setCascadeRisk(null);
       setEvacuationRoute(null);
-      setIsDispatched(false);
       setImagePreview(null);
       setVisualAudit(null);
       return;
@@ -54,35 +54,69 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
 
     setImagePreview(null);
     setVisualAudit(null);
+    setBundle(null);
+    setSummary(null);
+    setHospitals([]);
+    setCascadeRisk(null);
+    setEvacuationRoute(null);
 
     // Load bundle recommendations
     setIsLoadingBundle(true);
     fetchResourceBundle(incident.id)
-      .then(setBundle)
+      .then((result) => {
+        if (requestVersionRef.current === requestVersion) setBundle(result);
+      })
       .catch((err) => console.error("Bundle error:", err))
-      .finally(() => setIsLoadingBundle(false));
+      .finally(() => {
+        if (requestVersionRef.current === requestVersion) setIsLoadingBundle(false);
+      });
 
     // Load hospital recommendations
     setIsLoadingHospitals(true);
     fetchHospitalRecommendations(incident.id)
-      .then((res) => setHospitals(res.facilities))
+      .then((res) => {
+        if (requestVersionRef.current === requestVersion) setHospitals(res.facilities);
+      })
       .catch((err) => console.error("Hospitals error:", err))
-      .finally(() => setIsLoadingHospitals(false));
+      .finally(() => {
+        if (requestVersionRef.current === requestVersion) setIsLoadingHospitals(false);
+      });
 
     // Load predictive cascade risk
     setIsLoadingCascade(true);
     fetchCascadeRisk(incident.id)
-      .then((res) => setCascadeRisk(res))
+      .then((res) => {
+        if (requestVersionRef.current === requestVersion) setCascadeRisk(res);
+      })
       .catch((err) => console.error("Cascade risk error:", err))
-      .finally(() => setIsLoadingCascade(false));
+      .finally(() => {
+        if (requestVersionRef.current === requestVersion) setIsLoadingCascade(false);
+      });
 
     // Load hazard-aware evacuation route
     setIsLoadingEvacuation(true);
     fetchEvacuationRoute(incident.id)
-      .then((res) => setEvacuationRoute(res))
+      .then((res) => {
+        if (requestVersionRef.current === requestVersion) setEvacuationRoute(res);
+      })
       .catch((err) => console.error("Evacuation error:", err))
-      .finally(() => setIsLoadingEvacuation(false));
+      .finally(() => {
+        if (requestVersionRef.current === requestVersion) setIsLoadingEvacuation(false);
+      });
+
+    return () => {
+      if (requestVersionRef.current === requestVersion) requestVersionRef.current += 1;
+    };
   }, [incident]);
+
+  useEffect(() => {
+    if (!incident) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [incident, onClose]);
 
   if (!incident) return null;
 
@@ -132,13 +166,9 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
     }
   };
 
-  const handleDispatch = () => {
-    setIsDispatched(true);
-  };
-
   return (
-    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-      <div className="bg-white border border-[#DCE3E8] w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col text-[#263238] animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4" role="presentation">
+      <div role="dialog" aria-modal="true" aria-labelledby="incident-detail-title" className="bg-white border border-[#DCE3E8] w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col text-[#263238] animate-in fade-in zoom-in-95 duration-200">
         {/* Modal Header */}
         <div className="p-4 md:p-5 border-b border-[#DCE3E8] flex items-start justify-between bg-[#F8FAFC] shrink-0">
           <div>
@@ -151,7 +181,7 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                 Priority {incident.priority}
               </span>
             </div>
-            <h2 className="text-base font-bold text-[#0B1F33] mt-2 leading-snug">{incident.title}</h2>
+            <h2 id="incident-detail-title" className="text-base font-bold text-[#0B1F33] mt-2 leading-snug">{incident.title}</h2>
             <p className="text-xs text-[#607D8B] mt-1 flex items-center gap-1">
               <span>📍</span>
               <span>{incident.address || `${incident.latitude}, ${incident.longitude}`}</span>
@@ -159,6 +189,7 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
           </div>
           <button
             onClick={onClose}
+            autoFocus
             className="text-[#607D8B] hover:text-[#263238] p-1.5 rounded-lg hover:bg-[#EEF2F6] transition cursor-pointer"
             aria-label="Close modal"
           >
@@ -657,14 +688,7 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
         {/* Modal Footer */}
         <div className="p-4 border-t border-[#DCE3E8] bg-[#EEF2F6] flex items-center justify-between">
           <div className="text-xs text-[#607D8B]">
-            {isDispatched ? (
-              <span className="text-[#2E7D32] font-semibold flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-[#2E7D32]" />
-                Units Dispatched & In-Route
-              </span>
-            ) : (
-              <span>Review package before dispatching.</span>
-            )}
+            <span>Assignment confirmation requires the authenticated dispatch workflow.</span>
           </div>
           <div className="flex gap-2">
             <button
@@ -674,16 +698,13 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
               Close
             </button>
             <button
-              onClick={handleDispatch}
-              disabled={isDispatched}
-              className={`text-xs font-semibold px-4 py-2 rounded-lg transition flex items-center gap-1.5 cursor-pointer ${
-                isDispatched
-                  ? "bg-[#2E7D32] text-white cursor-default"
-                  : "bg-[#1565C0] hover:bg-[#0D47A1] text-white shadow-sm"
-              }`}
+              type="button"
+              disabled
+              title="Assignment persistence is not connected in this frontend yet."
+              className="text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 bg-[#90A4AE] text-white cursor-not-allowed"
             >
               <Navigation className="w-3.5 h-3.5" />
-              {isDispatched ? "Dispatched" : "Dispatch Response Package"}
+              Dispatch Integration Pending
             </button>
           </div>
         </div>

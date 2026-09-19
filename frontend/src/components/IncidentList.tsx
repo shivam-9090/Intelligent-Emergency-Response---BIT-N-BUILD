@@ -112,10 +112,12 @@ export const IncidentList: React.FC<IncidentListProps> = ({
             const isSelected = selectedIncident?.id === inc.id;
             const leftAccent = SEVERITY_LEFT_ACCENTS[inc.severity] || "border-l-[#90A4AE]";
             return (
-              <div
+              <button
+                type="button"
                 key={inc.id}
                 onClick={() => onSelectIncident(inc)}
-                className={`p-3 rounded-lg border border-l-4 transition cursor-pointer ${leftAccent} ${
+                aria-pressed={isSelected}
+                className={`w-full p-3 rounded-lg border border-l-4 text-left transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1565C0] ${leftAccent} ${
                   isSelected
                     ? "bg-[#EAF3FB] border-[#1565C0] ring-1 ring-[#1565C0] text-[#263238] shadow-md"
                     : "bg-white hover:bg-[#F8FAFC] border-[#DCE3E8] text-[#263238] shadow-xs"
@@ -159,7 +161,7 @@ export const IncidentList: React.FC<IncidentListProps> = ({
                     </span>
                   </div>
                 </div>
-              </div>
+              </button>
             );
           })
         )}
@@ -167,4 +169,3 @@ export const IncidentList: React.FC<IncidentListProps> = ({
     </aside>
   );
 };
-
