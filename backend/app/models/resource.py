@@ -1,5 +1,6 @@
 import uuid
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import DateTime, Enum, Float, String, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -7,6 +8,9 @@ from sqlalchemy.sql import func
 
 from app.db.base import Base
 from app.models.enums import ResourceStatus, ResourceType
+
+if TYPE_CHECKING:
+    from app.models.assignment import Assignment
 
 
 class ResourceUnit(Base):

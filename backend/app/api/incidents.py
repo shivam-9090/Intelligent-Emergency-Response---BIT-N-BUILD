@@ -18,9 +18,7 @@ def create_incident(payload: IncidentCreate, db: Session = Depends(get_db)) -> I
 
 
 @router.get("", response_model=list[IncidentRead])
-def list_incidents(
-    limit: int = 100, offset: int = 0, db: Session = Depends(get_db)
-) -> list[IncidentRead]:
+def list_incidents(limit: int = 100, offset: int = 0, db: Session = Depends(get_db)) -> list[IncidentRead]:
     incidents = incident_service.list_incidents(db, limit=limit, offset=offset)
     return [IncidentRead.model_validate(i) for i in incidents]
 

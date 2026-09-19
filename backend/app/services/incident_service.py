@@ -51,9 +51,7 @@ def create_incident(db: Session, payload: IncidentCreate) -> Incident:
 
 
 def list_incidents(db: Session, limit: int = 100, offset: int = 0) -> list[Incident]:
-    result = db.execute(
-        select(Incident).order_by(Incident.reported_at.desc()).offset(offset).limit(limit)
-    )
+    result = db.execute(select(Incident).order_by(Incident.reported_at.desc()).offset(offset).limit(limit))
     return list(result.scalars().all())
 
 

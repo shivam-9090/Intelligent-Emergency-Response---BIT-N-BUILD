@@ -34,17 +34,16 @@ def recommend_resources(
     relevant_types = _INCIDENT_TYPE_RESOURCES.get(incident.incident_type, tuple(ResourceType))
 
     candidates = [
-        r
-        for r in available
-        if r.status == ResourceStatus.AVAILABLE and r.resource_type in relevant_types
+        r for r in available if r.status == ResourceStatus.AVAILABLE and r.resource_type in relevant_types
     ]
 
     if incident.latitude is None or incident.longitude is None:
         return candidates[:limit]
+    incident_lat, incident_lon = incident.latitude, incident.longitude
 
     def distance(resource: ResourceUnit) -> float:
         if resource.latitude is None or resource.longitude is None:
             return float("inf")
-        return _haversine_km(incident.latitude, incident.longitude, resource.latitude, resource.longitude)
+        return _haversine_km(incident_lat, incident_lon, resource.latitude, resource.longitude)
 
     return sorted(candidates, key=distance)[:limit]

@@ -1,5 +1,6 @@
 import uuid
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, Text, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -7,6 +8,9 @@ from sqlalchemy.sql import func
 
 from app.db.base import Base
 from app.models.enums import AlertType
+
+if TYPE_CHECKING:
+    from app.models.incident import Incident
 
 
 class Alert(Base):
