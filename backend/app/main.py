@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import incidents, realtime, resources
+from app.api import alerts, assignments, incidents, realtime, resources
 from app.core.config import get_settings
 
 settings = get_settings()
@@ -18,6 +18,8 @@ app.add_middleware(
 
 app.include_router(incidents.router)
 app.include_router(resources.router)
+app.include_router(assignments.router)
+app.include_router(alerts.router)
 app.include_router(realtime.router)
 
 
