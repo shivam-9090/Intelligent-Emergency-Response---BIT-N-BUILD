@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import type { Incident } from "../types";
-import { Search, Flame, Droplets, AlertOctagon, Car, HeartPulse, HelpCircle, Layers, ShieldCheck } from "lucide-react";
+import { Search, ChevronDown, Flame, Droplets, AlertOctagon, Car, HeartPulse, HelpCircle, Layers, ShieldCheck } from "lucide-react";
 import { SeverityBadge } from "./SeverityBadge";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
 
 interface IncidentListProps {
   incidents: Incident[];
@@ -60,31 +65,39 @@ export const IncidentList: React.FC<IncidentListProps> = ({
           <span className="text-[10px] text-[#90A4AE] font-mono">LIVE FEED</span>
         </div>
 
-        <div className="relative">
-          <Search className="w-3.5 h-3.5 text-[#90A4AE] absolute left-3 top-2.5" />
-          <input
-            type="text"
-            placeholder="Search incidents, address, keywords..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-[#102A43] border border-[#163A59] rounded-lg pl-9 pr-3 py-1.5 text-xs text-white placeholder-[#90A4AE] focus:outline-none focus:border-[#1565C0] focus:ring-1 focus:ring-[#1565C0] transition"
-          />
-        </div>
+        <div className="flex items-center gap-2">
+          <InputGroup className="flex-1">
+            <InputGroupAddon>
+              <Search className="w-3.5 h-3.5" />
+            </InputGroupAddon>
+            <InputGroupInput
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {filtered.length > 0 && (
+              <InputGroupAddon align="inline-end">
+                {filtered.length} {filtered.length === 1 ? "result" : "results"}
+              </InputGroupAddon>
+            )}
+          </InputGroup>
 
-        <div className="flex gap-1 overflow-x-auto pb-0.5 text-[11px]">
-          {["all", "critical", "high", "medium", "low"].map((sev) => (
-            <button
-              key={sev}
-              onClick={() => setSeverityFilter(sev)}
-              className={`px-2.5 py-1 rounded-md capitalize font-medium transition whitespace-nowrap cursor-pointer text-xs ${
-                severityFilter === sev
-                  ? "bg-[#1565C0] text-white shadow-sm font-semibold"
-                  : "bg-[#102A43] text-[#B0BEC5] hover:text-white hover:bg-[#163A59]"
-              }`}
+          {/* Severity Dropdown next to Search */}
+          <div className="relative shrink-0">
+            <select
+              value={severityFilter}
+              onChange={(e) => setSeverityFilter(e.target.value)}
+              className="bg-[#102A43] border border-[#163A59] text-white text-xs rounded-lg pl-2.5 pr-7 py-1.5 focus:outline-none focus:border-[#1565C0] cursor-pointer capitalize appearance-none font-medium h-9"
+              aria-label="Filter severity"
             >
-              {sev}
-            </button>
-          ))}
+              <option value="all">All</option>
+              <option value="critical">Critical</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+            <ChevronDown className="w-3 h-3 text-[#90A4AE] absolute right-2 top-3 pointer-events-none" />
+          </div>
         </div>
       </div>
 
