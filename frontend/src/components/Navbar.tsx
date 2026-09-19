@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Activity, AlertTriangleIcon, Plus, BarChart3, Radio, Zap, X, Bell, PanelLeft } from "lucide-react";
 import {
   Alert,
@@ -15,6 +15,7 @@ interface NavbarProps {
   incidentCount?: number;
   isSidebarOpen?: boolean;
   onToggleSidebar?: () => void;
+  dataStatus: "loading" | "live" | "degraded";
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -25,8 +26,18 @@ export const Navbar: React.FC<NavbarProps> = ({
   alertCount,
   isSidebarOpen = true,
   onToggleSidebar,
+  dataStatus,
 }) => {
   const [showAlertModal, setShowAlertModal] = useState(false);
+
+  useEffect(() => {
+    if (!showAlertModal) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setShowAlertModal(false);
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [showAlertModal]);
 
   return (
     <header className="bg-white border-b border-[#DCE3E8] flex items-center justify-between text-[#263238] select-none shadow-xs relative z-30 h-13">
@@ -55,6 +66,10 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       <div className="flex items-center space-x-2 md:space-x-3 px-4 md:px-6">
+        <span className={`hidden lg:inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase ${dataStatus === "live" ? "text-[#2E7D32]" : dataStatus === "degraded" ? "text-[#B71C1C]" : "text-[#607D8B]"}`} aria-live="polite">
+          <span className={`h-1.5 w-1.5 rounded-full ${dataStatus === "live" ? "bg-[#2E7D32]" : dataStatus === "degraded" ? "bg-[#D32F2F]" : "bg-[#90A4AE]"}`} />
+          {dataStatus === "live" ? "Live sync" : dataStatus === "degraded" ? "Data degraded" : "Connecting"}
+        </span>
         {/* Navigation Tabs */}
         <div className="flex bg-[#EEF2F6] p-1 rounded-lg border border-[#DCE3E8] text-xs font-semibold">
           <button
@@ -115,20 +130,21 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Middle Notification Modal Dialog */}
       {showAlertModal && (
-        <div className="fixed inset-0 z-[2500] flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-in fade-in duration-150">
-          <div className="bg-white rounded-2xl border border-[#DCE3E8] p-5 max-w-lg w-full shadow-2xl space-y-4 animate-in zoom-in-95 duration-150 text-[#263238]">
+        <div className="fixed inset-0 z-[2500] flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-in fade-in duration-150" role="presentation">
+          <div role="dialog" aria-modal="true" aria-labelledby="notifications-title" className="bg-white rounded-2xl border border-[#DCE3E8] p-5 max-w-lg w-full shadow-2xl space-y-4 animate-in zoom-in-95 duration-150 text-[#263238]">
             <div className="flex items-center justify-between pb-3 border-b border-[#DCE3E8]">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-[#FFF3E0] border border-[#FFE0B2] flex items-center justify-center text-[#E65100]">
                   <Bell className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-[#0B1F33]">Emergency Notifications</h3>
+                  <h3 id="notifications-title" className="text-sm font-bold text-[#0B1F33]">Emergency Notifications</h3>
                   <p className="text-xs text-[#607D8B]">{alertCount} active priority advisories</p>
                 </div>
               </div>
               <button
                 onClick={() => setShowAlertModal(false)}
+                autoFocus
                 className="text-[#90A4AE] hover:text-[#263238] p-1.5 rounded-lg hover:bg-[#EEF2F6] transition cursor-pointer"
                 aria-label="Close notification"
               >

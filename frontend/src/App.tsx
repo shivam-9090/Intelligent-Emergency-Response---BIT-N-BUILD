@@ -18,25 +18,23 @@ function App() {
   const [activeEvacuationRoute, setActiveEvacuationRoute] = useState<EvacuationRouteResponse | null>(null);
   const [predictiveDemand, setPredictiveDemand] = useState<PredictiveDemandResponse | null>(null);
   const [showDemandHeatmap, setShowDemandHeatmap] = useState(false);
+  const [dataStatus, setDataStatus] = useState<"loading" | "live" | "degraded">("loading");
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
   const [isOptimizerOpen, setIsOptimizerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"map" | "analytics">("map");
 
   const loadData = useCallback(async () => {
-    try {
-      const [incData, resData, alertData, demandData] = await Promise.all([
-        fetchIncidents(),
-        fetchResources(),
-        fetchAlerts(),
-        fetchPredictiveDemandForecast(2).catch(() => null),
-      ]);
-      setIncidents(incData);
-      setResources(resData);
-      setAlerts(alertData);
-      if (demandData) setPredictiveDemand(demandData);
-    } catch (err) {
-      console.error("Failed to load initial data:", err);
-    }
+    const [incidentsResult, resourcesResult, alertsResult, demandResult] = await Promise.allSettled([
+      fetchIncidents(),
+      fetchResources(),
+      fetchAlerts(),
+      fetchPredictiveDemandForecast(2),
+    ]);
+    if (incidentsResult.status === "fulfilled") setIncidents(incidentsResult.value);
+    if (resourcesResult.status === "fulfilled") setResources(resourcesResult.value);
+    if (alertsResult.status === "fulfilled") setAlerts(alertsResult.value);
+    if (demandResult.status === "fulfilled") setPredictiveDemand(demandResult.value);
+    setDataStatus([incidentsResult, resourcesResult, alertsResult].some((result) => result.status === "rejected") ? "degraded" : "live");
   }, []);
 
   useEffect(() => {
@@ -65,6 +63,7 @@ function App() {
         incidentCount={incidents.length}
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
+        dataStatus={dataStatus}
       />
 
       <main className="flex-1 relative flex overflow-hidden">

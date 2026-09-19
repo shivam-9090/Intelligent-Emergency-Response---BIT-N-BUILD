@@ -26,11 +26,9 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
 }) => {
   const [plan, setPlan] = useState<FleetOptimizationResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isCommitted, setIsCommitted] = useState(false);
 
   const runOptimization = async () => {
     setIsLoading(true);
-    setIsCommitted(false);
     try {
       const res = await optimizeFleet();
       setPlan(res);
@@ -47,11 +45,20 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-      <div className="bg-white border border-[#DCE3E8] w-full max-w-3xl rounded-xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col text-[#263238] animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4" role="presentation">
+      <div role="dialog" aria-modal="true" aria-labelledby="fleet-optimizer-title" className="bg-white border border-[#DCE3E8] w-full max-w-3xl rounded-xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col text-[#263238] animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="p-4 md:p-5 border-b border-[#DCE3E8] flex items-start justify-between bg-[#F8FAFC] shrink-0">
           <div>
@@ -59,7 +66,7 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
               <span className="p-1 rounded-md bg-[#E3F2FD] text-[#1565C0] border border-[#90CAF9]">
                 <Zap className="w-4 h-4" />
               </span>
-              <h2 className="text-base font-bold text-[#0B1F33]">
+              <h2 id="fleet-optimizer-title" className="text-base font-bold text-[#0B1F33]">
                 Global Fleet Optimization Engine
               </h2>
               <span className="text-[10px] font-mono bg-[#E8F1FA] text-[#1565C0] border border-[#90CAF9] px-2 py-0.5 rounded font-bold">
@@ -72,6 +79,7 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
           </div>
           <button
             onClick={onClose}
+            autoFocus
             className="text-[#607D8B] hover:text-[#263238] p-1.5 rounded-lg hover:bg-[#EEF2F6] transition cursor-pointer"
             aria-label="Close dialog"
           >
@@ -255,16 +263,13 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
               Close
             </button>
             <button
-              onClick={() => setIsCommitted(true)}
-              disabled={isCommitted || !plan || plan.assignments.length === 0}
-              className={`text-xs font-semibold px-4 py-2 rounded-lg transition flex items-center gap-1.5 cursor-pointer ${
-                isCommitted
-                  ? "bg-[#2E7D32] text-white cursor-default"
-                  : "bg-[#1565C0] hover:bg-[#0D47A1] text-white shadow-sm"
-              }`}
+              type="button"
+              disabled
+              title="This screen calculates a plan; it does not persist assignments."
+              className="text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 bg-[#90A4AE] text-white cursor-not-allowed"
             >
               <Zap className="w-3.5 h-3.5" />
-              {isCommitted ? "Fleet Dispatched" : "Commit Optimal Dispatch"}
+              Plan Only — Dispatch Pending
             </button>
           </div>
         </div>
