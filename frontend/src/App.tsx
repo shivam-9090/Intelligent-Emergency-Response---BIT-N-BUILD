@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { fetchIncidents, fetchResources, fetchAlerts } from "./api";
-import type { Incident, ResourceUnit, Alert } from "./types";
+import type { Incident, ResourceUnit, Alert, EvacuationRouteResponse } from "./types";
 import { Navbar } from "./components/Navbar";
 import { EmergencyMap } from "./components/EmergencyMap";
 import { IncidentList } from "./components/IncidentList";
@@ -15,6 +15,7 @@ function App() {
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
   const [activePlumePolygon, setActivePlumePolygon] = useState<[number, number][] | null>(null);
+  const [activeEvacuationRoute, setActiveEvacuationRoute] = useState<EvacuationRouteResponse | null>(null);
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
   const [isOptimizerOpen, setIsOptimizerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"map" | "analytics">("map");
@@ -64,15 +65,22 @@ function App() {
             <IncidentList
               incidents={incidents}
               selectedIncident={selectedIncident}
-              onSelectIncident={(inc) => setSelectedIncident(inc)}
+              onSelectIncident={(inc) => {
+                setSelectedIncident(inc);
+                setActiveEvacuationRoute(null);
+              }}
             />
             <div className="flex-1 h-full relative">
               <EmergencyMap
                 incidents={incidents}
                 resources={resources}
                 selectedIncident={selectedIncident}
-                onSelectIncident={(inc) => setSelectedIncident(inc)}
+                onSelectIncident={(inc) => {
+                  setSelectedIncident(inc);
+                  setActiveEvacuationRoute(null);
+                }}
                 activePlumePolygon={activePlumePolygon}
+                evacuationRoute={activeEvacuationRoute}
               />
             </div>
           </>
@@ -100,9 +108,12 @@ function App() {
         onClose={() => {
           setSelectedIncident(null);
           setActivePlumePolygon(null);
+          setActiveEvacuationRoute(null);
         }}
         onTogglePlume={setActivePlumePolygon}
         isPlumeActive={activePlumePolygon !== null}
+        onToggleEvacuationRoute={setActiveEvacuationRoute}
+        isEvacuationActive={activeEvacuationRoute !== null}
       />
     </div>
   );
