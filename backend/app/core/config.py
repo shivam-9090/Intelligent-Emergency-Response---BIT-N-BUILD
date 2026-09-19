@@ -14,6 +14,10 @@ class Settings(BaseSettings):
     redis_url: str = "redis://localhost:6380/0"
 
     llm_api_key: str = ""
+    llm_base_url: str = "https://integrate.api.nvidia.com/v1"
+    llm_model: str = "meta/llama-3.2-11b-vision-instruct"
+    llm_max_tokens: int = 250
+    llm_timeout_seconds: int = 20
 
     cors_origins: list[str] = ["http://localhost:5173"]
 
