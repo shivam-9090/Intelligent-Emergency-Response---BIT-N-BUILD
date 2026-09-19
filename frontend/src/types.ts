@@ -185,4 +185,27 @@ export interface FleetOptimizationResponse {
   bottlenecks: SectorBottleneck[];
 }
 
+export interface VisualHazardItem {
+  hazard_type: string;
+  confidence: number;
+  description: string;
+}
+
+export interface ImageAnalysisResponse {
+  analysis_id: string;
+  timestamp: string;
+  damage_severity: Severity;
+  damage_score: number;
+  authenticity_status: "verified_authentic" | "possible_misinformation" | "false_alarm" | "inconclusive";
+  authenticity_confidence: number;
+  authenticity_reasoning: string;
+  detected_hazards: VisualHazardItem[];
+  trapped_victims_likely: boolean;
+  estimated_casualty_count: number | null;
+  accessibility_status: "accessible" | "partially_blocked" | "completely_blocked";
+  recommended_tactical_gear: string[];
+  tactical_assessment: string;
+  analysis_provider: string;
+}
+
 

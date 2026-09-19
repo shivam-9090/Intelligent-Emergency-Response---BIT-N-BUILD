@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import type { Incident, ResourceBundleResponse, IncidentSummary, HospitalFacility, CascadeRiskResponse } from "../types";
-import { fetchResourceBundle, fetchSummary, fetchHospitalRecommendations, fetchCascadeRisk } from "../api";
-import { X, Sparkles, Clock, ShieldAlert, CheckCircle2, Navigation, Hospital, Bed, TrendingUp, Wind, AlertTriangle, Eye } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import type { Incident, ResourceBundleResponse, IncidentSummary, HospitalFacility, CascadeRiskResponse, ImageAnalysisResponse } from "../types";
+import { fetchResourceBundle, fetchSummary, fetchHospitalRecommendations, fetchCascadeRisk, analyzeIncidentImage } from "../api";
+import { X, Sparkles, Clock, ShieldAlert, CheckCircle2, Navigation, Hospital, Bed, TrendingUp, Wind, AlertTriangle, Eye, Camera, Trash2, Zap } from "lucide-react";
 
 interface IncidentDetailModalProps {
   incident: Incident | null;
@@ -26,6 +26,12 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
   const [isLoadingCascade, setIsLoadingCascade] = useState(false);
   const [isDispatched, setIsDispatched] = useState(false);
 
+  // Vision Analysis State
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isAnalyzingImage, setIsAnalyzingImage] = useState(false);
+  const [visualAudit, setVisualAudit] = useState<ImageAnalysisResponse | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     if (!incident) {
       setBundle(null);
@@ -33,8 +39,13 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
       setHospitals([]);
       setCascadeRisk(null);
       setIsDispatched(false);
+      setImagePreview(null);
+      setVisualAudit(null);
       return;
     }
+
+    setImagePreview(null);
+    setVisualAudit(null);
 
     // Load bundle recommendations
     setIsLoadingBundle(true);
@@ -59,6 +70,39 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
   }, [incident]);
 
   if (!incident) return null;
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !incident) return;
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const dataUrl = reader.result as string;
+      setImagePreview(dataUrl);
+      setIsAnalyzingImage(true);
+      try {
+        const audit = await analyzeIncidentImage(
+          dataUrl,
+          incident.incident_type,
+          incident.description || undefined
+        );
+        setVisualAudit(audit);
+      } catch (err) {
+        console.error("Image analysis error:", err);
+      } finally {
+        setIsAnalyzingImage(false);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+    setVisualAudit(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   const handleGenerateSummary = async () => {
     setIsLoadingSummary(true);
@@ -275,6 +319,98 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
             ) : (
               <div className="text-xs text-slate-500 text-center py-2">
                 Atmospheric telemetry offline.
+              </div>
+            )}
+          </div>
+
+          {/* Visual Evidence & Multimodal AI Audit */}
+          <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Camera className="w-4 h-4 text-rose-400" />
+                <h4 className="text-xs font-semibold text-slate-200 uppercase tracking-wider">
+                  Scene Photo & Multi-Modal Damage Audit
+                </h4>
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={handleImageChange}
+                className="hidden"
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-rose-300 bg-rose-950/80 border border-rose-800 hover:bg-rose-900 px-2.5 py-1 rounded-md transition cursor-pointer"
+              >
+                <Camera className="w-3 h-3 text-rose-400" />
+                <span>{imagePreview ? "Replace Photo" : "Upload Scene Photo"}</span>
+              </button>
+            </div>
+
+            {isAnalyzingImage ? (
+              <div className="py-4 text-center text-xs text-amber-400 flex items-center justify-center gap-2 animate-pulse">
+                <Zap className="w-4 h-4 animate-bounce" />
+                <span>Running Llama-3.2 Vision Multi-Modal Damage Assessment...</span>
+              </div>
+            ) : visualAudit ? (
+              <div className="space-y-3">
+                <div className="flex items-start gap-3 bg-slate-950/60 p-3 rounded-xl border border-slate-800">
+                  {imagePreview && (
+                    <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-slate-700 shrink-0 bg-slate-900">
+                      <img src={imagePreview} alt="Scene Evidence" className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={handleRemoveImage}
+                        className="absolute top-0.5 right-0.5 bg-black/70 hover:bg-rose-900 text-slate-300 hover:text-white p-0.5 rounded"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0 space-y-1.5">
+                    <div className="flex flex-wrap items-center justify-between gap-1.5">
+                      <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded ${
+                        visualAudit.damage_severity === "critical"
+                          ? "bg-rose-900/80 text-rose-200 border border-rose-700"
+                          : "bg-amber-900/80 text-amber-200 border border-amber-700"
+                      }`}>
+                        {visualAudit.damage_severity.toUpperCase()} DAMAGE ({visualAudit.damage_score}%)
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-700 text-emerald-300">
+                        <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                        {visualAudit.authenticity_status.replace("_", " ").toUpperCase()} ({(visualAudit.authenticity_confidence * 100).toFixed(0)}%)
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-300 leading-snug">
+                      {visualAudit.tactical_assessment}
+                    </p>
+                    <div className="text-[10px] text-slate-500 font-mono">
+                      Engine: {visualAudit.analysis_provider}
+                    </div>
+                  </div>
+                </div>
+
+                {visualAudit.detected_hazards.length > 0 && (
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                      Observed Visual Hazards:
+                    </span>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
+                      {visualAudit.detected_hazards.map((haz, idx) => (
+                        <div key={idx} className="bg-slate-800/80 border border-slate-700/70 px-2 py-1 rounded text-xs">
+                          <span className="text-amber-300 font-semibold">⚠️ {haz.hazard_type.replace(/_/g, " ")}: </span>
+                          <span className="text-slate-300 text-[11px]">{haz.description}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-xs text-slate-500 text-center py-2 bg-slate-950/40 rounded-lg border border-dashed border-slate-800">
+                No visual evidence attached yet. Upload a scene photo to trigger automated damage assessment.
               </div>
             )}
           </div>
