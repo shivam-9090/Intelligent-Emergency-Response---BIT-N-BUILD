@@ -88,3 +88,16 @@ def test_hotspots(client):
     assert body[0]["count"] == 2
     assert body[0]["latitude"] == 12.97
     assert body[0]["longitude"] == 77.59
+
+
+def test_model_evaluation(client):
+    res = client.get("/analytics/model-evaluation")
+    assert res.status_code == 200
+    data = res.json()
+    assert "model_version" in data
+    assert "incident_type_accuracy" in data
+    assert "severity_accuracy" in data
+    assert data["incident_type_accuracy"] >= 0.90
+    assert data["severity_accuracy"] >= 0.90
+    assert "calibration_status" in data
+    assert len(data["incident_type_classes"]) > 0

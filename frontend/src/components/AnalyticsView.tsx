@@ -1,7 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { fetchAnalyticsBreakdown, fetchAnalyticsDelays, fetchAnalyticsShortages, fetchPredictiveDemandForecast } from "../api";
-import type { Incident, IncidentBreakdownResponse, PredictiveDemandResponse, ResourceShortage, ResponseDelayStats } from "../types";
-import { ShieldCheck, AlertTriangle, Clock, Flame, Users, Radio, Activity } from "lucide-react";
+import {
+  fetchAnalyticsBreakdown,
+  fetchAnalyticsDelays,
+  fetchAnalyticsShortages,
+  fetchModelEvaluation,
+  fetchPredictiveDemandForecast,
+} from "../api";
+import type {
+  Incident,
+  IncidentBreakdownResponse,
+  ModelEvaluationSummary,
+  PredictiveDemandResponse,
+  ResourceShortage,
+  ResponseDelayStats,
+} from "../types";
+import { ShieldCheck, AlertTriangle, Clock, Flame, Users, Radio, Activity, CheckCircle2, Cpu } from "lucide-react";
 
 interface AnalyticsViewProps {
   incidents: Incident[];
@@ -13,25 +26,32 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
   const [shortages, setShortages] = useState<ResourceShortage[] | null>(null);
   const [analyticsError, setAnalyticsError] = useState(false);
   const [predictiveDemand, setPredictiveDemand] = useState<PredictiveDemandResponse | null>(null);
+  const [modelEval, setModelEval] = useState<ModelEvaluationSummary | null>(null);
 
   useEffect(() => {
     let isCurrent = true;
     const loadAnalytics = async () => {
-      const [breakdownResult, delaysResult, shortagesResult, demandResult] = await Promise.allSettled([
+      const [breakdownResult, delaysResult, shortagesResult, demandResult, evalResult] = await Promise.allSettled([
         fetchAnalyticsBreakdown(),
         fetchAnalyticsDelays(),
         fetchAnalyticsShortages(),
         fetchPredictiveDemandForecast(2),
+        fetchModelEvaluation(),
       ]);
       if (!isCurrent) return;
       if (breakdownResult.status === "fulfilled") setBreakdown(breakdownResult.value);
       if (delaysResult.status === "fulfilled") setDelays(delaysResult.value);
       if (shortagesResult.status === "fulfilled") setShortages(shortagesResult.value);
       if (demandResult.status === "fulfilled") setPredictiveDemand(demandResult.value);
-      setAnalyticsError([breakdownResult, delaysResult, shortagesResult, demandResult].some((result) => result.status === "rejected"));
+      if (evalResult.status === "fulfilled") setModelEval(evalResult.value);
+      setAnalyticsError(
+        [breakdownResult, delaysResult, shortagesResult, demandResult].some((result) => result.status === "rejected")
+      );
     };
     void loadAnalytics();
-    return () => { isCurrent = false; };
+    return () => {
+      isCurrent = false;
+    };
   }, []);
 
   const totalIncidents = incidents.length;
@@ -206,6 +226,103 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
           )}
         </section>
       </div>
+
+      {/* ML Classifier Evaluation & Calibration Card */}
+      {modelEval && (
+        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-4">
+          <div className="flex flex-col justify-between gap-2 border-b border-slate-100 pb-3 sm:flex-row sm:items-center">
+            <div className="flex items-center gap-2">
+              <Cpu className="size-5 text-indigo-600" />
+              <div>
+                <h3 className="text-sm font-semibold text-slate-900">
+                  ML Classifier Evaluation & Calibration Diagnostics
+                </h3>
+                <p className="text-[11px] text-slate-500">
+                  Holdout validation metrics: precision, recall, and calibration status by class and severity.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="rounded-full bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 text-[10px] font-mono font-medium text-indigo-700">
+                v{modelEval.model_version}
+              </span>
+              <span className="flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[10px] font-medium text-emerald-700">
+                <CheckCircle2 className="size-3 text-emerald-600" />
+                {modelEval.calibration_status}
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
+              <div className="text-[10px] uppercase font-semibold text-slate-500">Incident Type Acc</div>
+              <div className="mt-1 font-mono text-xl font-bold text-slate-900">
+                {(modelEval.incident_type_accuracy * 100).toFixed(1)}%
+              </div>
+              <div className="mt-0.5 text-[10px] text-slate-400">Macro F1: {(modelEval.incident_type_macro_f1 * 100).toFixed(1)}%</div>
+            </div>
+            <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
+              <div className="text-[10px] uppercase font-semibold text-slate-500">Severity Acc</div>
+              <div className="mt-1 font-mono text-xl font-bold text-slate-900">
+                {(modelEval.severity_accuracy * 100).toFixed(1)}%
+              </div>
+              <div className="mt-0.5 text-[10px] text-slate-400">Macro F1: {(modelEval.severity_macro_f1 * 100).toFixed(1)}%</div>
+            </div>
+            <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
+              <div className="text-[10px] uppercase font-semibold text-slate-500">Split Protocol</div>
+              <div className="mt-1 text-xs font-medium text-slate-800 line-clamp-1" title={modelEval.split_strategy}>
+                {modelEval.split_strategy}
+              </div>
+              <div className="mt-0.5 text-[10px] text-slate-400">Holdout validation</div>
+            </div>
+            <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
+              <div className="text-[10px] uppercase font-semibold text-slate-500">Dataset Hash</div>
+              <div className="mt-1 font-mono text-xs text-slate-700 truncate" title={modelEval.dataset_sha256 || "N/A"}>
+                {modelEval.dataset_sha256 ? `${modelEval.dataset_sha256.slice(0, 10)}...` : "synthetic-v1"}
+              </div>
+              <div className="mt-0.5 text-[10px] text-slate-400">Reproducibility key</div>
+            </div>
+          </div>
+
+          {/* Breakdown by Incident Type */}
+          {Object.keys(modelEval.incident_type_classes).length > 0 && (
+            <div>
+              <div className="text-xs font-semibold text-slate-800 mb-2">Class Precision & Recall (Incident Type)</div>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+                {Object.entries(modelEval.incident_type_classes).map(([cName, metric]) => (
+                  <div key={cName} className="rounded-lg border border-slate-100 bg-slate-50 p-2.5 text-[11px]">
+                    <div className="font-semibold capitalize text-slate-800 truncate">{cName.replace(/_/g, " ")}</div>
+                    <div className="mt-1 flex items-center justify-between font-mono text-[10px] text-slate-600">
+                      <span>P: {(metric.precision * 100).toFixed(0)}%</span>
+                      <span>R: {(metric.recall * 100).toFixed(0)}%</span>
+                      <span>F1: {(metric.f1_score * 100).toFixed(0)}%</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Breakdown by Severity */}
+          {Object.keys(modelEval.severity_classes).length > 0 && (
+            <div>
+              <div className="text-xs font-semibold text-slate-800 mb-2">Class Precision & Recall (Severity)</div>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {Object.entries(modelEval.severity_classes).map(([sName, metric]) => (
+                  <div key={sName} className="rounded-lg border border-slate-100 bg-slate-50 p-2.5 text-[11px]">
+                    <div className="font-semibold capitalize text-slate-800">{sName}</div>
+                    <div className="mt-1 flex items-center justify-between font-mono text-[10px] text-slate-600">
+                      <span>Precision: {(metric.precision * 100).toFixed(0)}%</span>
+                      <span>Recall: {(metric.recall * 100).toFixed(0)}%</span>
+                      <span>F1: {(metric.f1_score * 100).toFixed(0)}%</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from app.models.enums import IncidentType, ResourceType, Severity
 
@@ -44,3 +44,26 @@ class Hotspot(BaseModel):
     latitude: float
     longitude: float
     count: int
+
+
+class ClassMetric(BaseModel):
+    precision: float
+    recall: float
+    f1_score: float
+    support: int
+
+
+class ModelEvaluationSummary(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
+    model_version: str
+    trained_at: str | None
+    dataset_sha256: str | None
+    split_strategy: str
+    incident_type_accuracy: float
+    incident_type_macro_f1: float
+    incident_type_classes: dict[str, ClassMetric]
+    severity_accuracy: float
+    severity_macro_f1: float
+    severity_classes: dict[str, ClassMetric]
+    calibration_status: str

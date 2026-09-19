@@ -119,7 +119,11 @@ def check_escalations(db: Session, threshold_minutes: int = ESCALATION_MINUTES) 
 
 def list_alerts(db: Session, resolved: bool | None = None, limit: int = 100, offset: int = 0) -> list[Alert]:
     # Suppress legacy alerts attached to duplicate reports. The canonical incident owns the queue.
-    query = select(Alert).join(Incident, Alert.incident_id == Incident.id).where(Incident.duplicate_of_id.is_(None))
+    query = (
+        select(Alert)
+        .join(Incident, Alert.incident_id == Incident.id)
+        .where(Incident.duplicate_of_id.is_(None))
+    )
     if resolved is not None:
         query = query.where(Alert.resolved.is_(resolved))
     query = query.order_by(Alert.created_at.desc()).offset(offset).limit(limit)

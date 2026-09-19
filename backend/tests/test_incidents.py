@@ -49,7 +49,9 @@ def test_duplicate_detection(client):
 
 
 def test_nearby_distinct_reports_are_not_auto_merged(client):
-    client.post("/incidents", json=_incident_payload(description="Kitchen fire contained inside apartment 12"))
+    client.post(
+        "/incidents", json=_incident_payload(description="Kitchen fire contained inside apartment 12")
+    )
     second = client.post(
         "/incidents",
         json=_incident_payload(

@@ -301,3 +301,25 @@ export interface ResourceShortage {
   unavailable: number;
   shortage: boolean;
 }
+
+export interface ClassMetric {
+  precision: number;
+  recall: number;
+  f1_score: number;
+  support: number;
+}
+
+export interface ModelEvaluationSummary {
+  model_version: string;
+  trained_at: string | null;
+  dataset_sha256: string | null;
+  split_strategy: string;
+  incident_type_accuracy: number;
+  incident_type_macro_f1: number;
+  incident_type_classes: Record<string, ClassMetric>;
+  severity_accuracy: number;
+  severity_macro_f1: number;
+  severity_classes: Record<string, ClassMetric>;
+  calibration_status: string;
+}
+

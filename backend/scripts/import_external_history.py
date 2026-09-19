@@ -7,11 +7,12 @@ under data/external/ for review before any model training.
 
 import argparse
 import json
+import os
 from datetime import UTC, datetime
 from pathlib import Path
 from urllib.request import urlopen
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(os.environ.get("PROJECT_ROOT", Path(__file__).resolve().parents[2]))
 OUTPUT = ROOT / "data" / "external"
 SOURCES = {
     "india-flood": "https://zenodo.org/api/records/11275211",
@@ -40,12 +41,17 @@ def main() -> None:
         return
 
     target = OUTPUT / "fdny_fire_dispatch_snapshot.json"
-    target.write_text(json.dumps({
-        "source": SOURCES[args.source],
-        "retrieved_at": datetime.now(UTC).isoformat(),
-        "geography": "New York City; external dispatch benchmark only",
-        "records": payload,
-    }), encoding="utf-8")
+    target.write_text(
+        json.dumps(
+            {
+                "source": SOURCES[args.source],
+                "retrieved_at": datetime.now(UTC).isoformat(),
+                "geography": "New York City; external dispatch benchmark only",
+                "records": payload,
+            }
+        ),
+        encoding="utf-8",
+    )
     print(f"Wrote {target}")
 
 
