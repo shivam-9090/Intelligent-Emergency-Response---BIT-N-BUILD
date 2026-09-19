@@ -7,6 +7,7 @@ import { IncidentList } from "./components/IncidentList";
 import { QuickIntakeModal } from "./components/QuickIntakeModal";
 import { IncidentDetailModal } from "./components/IncidentDetailModal";
 import { AnalyticsView } from "./components/AnalyticsView";
+import { FleetOptimizerModal } from "./components/FleetOptimizerModal";
 
 function App() {
   const [incidents, setIncidents] = useState<Incident[]>([]);
@@ -15,6 +16,7 @@ function App() {
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
   const [activePlumePolygon, setActivePlumePolygon] = useState<[number, number][] | null>(null);
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
+  const [isOptimizerOpen, setIsOptimizerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"map" | "analytics">("map");
 
   const loadData = useCallback(async () => {
@@ -51,6 +53,7 @@ function App() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         onOpenNewIncident={() => setIsNewModalOpen(true)}
+        onOpenOptimizer={() => setIsOptimizerOpen(true)}
         alertCount={alerts.filter((a) => !a.is_resolved).length}
         incidentCount={incidents.length}
       />
@@ -82,6 +85,14 @@ function App() {
         isOpen={isNewModalOpen}
         onClose={() => setIsNewModalOpen(false)}
         onIncidentCreated={handleIncidentCreated}
+      />
+
+      <FleetOptimizerModal
+        isOpen={isOptimizerOpen}
+        onClose={() => {
+          setIsOptimizerOpen(false);
+          loadData();
+        }}
       />
 
       <IncidentDetailModal
