@@ -11,6 +11,7 @@ import {
   TrendingDown,
   RotateCcw,
   Shield,
+  Workflow,
 } from "lucide-react";
 
 import { SeverityBadge } from "./SeverityBadge";
@@ -58,24 +59,22 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4" role="presentation">
-      <div role="dialog" aria-modal="true" aria-labelledby="fleet-optimizer-title" className="bg-white border border-[#DCE3E8] w-full max-w-3xl rounded-xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col text-[#263238] animate-in fade-in zoom-in-95 duration-200">
+      <div role="dialog" aria-modal="true" aria-labelledby="fleet-optimizer-title" className="flex max-h-[min(86vh,820px)] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white text-slate-900 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="p-4 md:p-5 border-b border-[#DCE3E8] flex items-start justify-between bg-[#F8FAFC] shrink-0">
-          <div>
+        <div className="flex shrink-0 items-start justify-between border-b border-slate-200 bg-slate-50 px-5 py-4 md:px-6">
+          <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <span className="p-1 rounded-md bg-[#E3F2FD] text-[#1565C0] border border-[#90CAF9]">
-                <Zap className="w-4 h-4" />
+              <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-slate-950 text-cyan-300 shadow-sm">
+                <Workflow className="size-4" />
               </span>
-              <h2 id="fleet-optimizer-title" className="text-base font-bold text-[#0B1F33]">
-                Global Fleet Optimization Engine
-              </h2>
-              <span className="text-[10px] font-mono bg-[#E8F1FA] text-[#1565C0] border border-[#90CAF9] px-2 py-0.5 rounded font-bold">
-                Hungarian Algorithm
-              </span>
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <h2 id="fleet-optimizer-title" className="font-heading text-lg font-semibold tracking-tight text-slate-950">Fleet allocation plan</h2>
+                  <span className="rounded-md border border-sky-200 bg-sky-50 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-sky-700">{plan?.algorithm || "Matching engine"}</span>
+                </div>
+                <p className="mt-1 text-xs text-slate-500">A recommended allocation only. Assignment requires the authenticated dispatch workflow.</p>
+              </div>
             </div>
-            <p className="text-xs text-[#607D8B] mt-1">
-              Solves the Mass-Casualty Resource Scarcity Dilemma via Scipy bipartite minimum-cost matching.
-            </p>
           </div>
           <button
             onClick={onClose}
@@ -88,7 +87,7 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 overflow-y-auto space-y-5">
+        <div className="space-y-5 overflow-y-auto bg-white p-5 md:p-6">
           {isLoading ? (
             <div className="py-16 text-center space-y-3">
               <Zap className="w-8 h-8 text-[#1565C0] animate-bounce mx-auto" />
@@ -101,71 +100,56 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
             </div>
           ) : plan ? (
             <>
-              {/* Metrics Highlights Banner */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <div className="bg-[#EEF2F6] border border-[#DCE3E8] p-3 rounded-xl flex flex-col">
-                  <span className="text-[10px] font-bold text-[#607D8B] uppercase tracking-wider">
-                    Efficiency Gain
-                  </span>
-                  <div className="text-xl font-extrabold text-[#2E7D32] mt-1 flex items-center gap-1">
-                    <TrendingDown className="w-4 h-4 text-[#2E7D32]" />
-                    +{plan.metrics.efficiency_gain_pct}%
+              <section className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+                <div className="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3">
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-300">Proposed allocation</p>
+                    <p className="mt-0.5 text-xs text-slate-300">Calculated for the current incident and unit snapshot</p>
                   </div>
-                  <span className="text-[10px] text-[#90A4AE] mt-0.5">vs. Naive Greedy</span>
+                  <span className="rounded-full border border-white/15 bg-white/10 px-2 py-1 font-mono text-[9px] text-slate-300">Plan {plan.plan_id.slice(0, 8)}</span>
                 </div>
-
-                <div className="bg-[#EEF2F6] border border-[#DCE3E8] p-3 rounded-xl flex flex-col">
-                  <span className="text-[10px] font-bold text-[#607D8B] uppercase tracking-wider">
-                    Total Time Saved
-                  </span>
-                  <div className="text-xl font-extrabold text-[#1565C0] mt-1 flex items-center gap-1">
-                    <Clock className="w-4 h-4 text-[#1565C0]" />
-                    {plan.metrics.time_saved_minutes}m
+                <div className="grid grid-cols-2 divide-x divide-y divide-white/10 md:grid-cols-4 md:divide-y-0">
+                  <div className="p-3.5">
+                    <span className="text-[10px] font-medium uppercase tracking-[.12em] text-slate-400">Efficiency</span>
+                    <div className="mt-1 flex items-center gap-1 text-xl font-semibold text-emerald-300"><TrendingDown className="size-4" />+{plan.metrics.efficiency_gain_pct}%</div>
+                    <span className="mt-0.5 block text-[10px] text-slate-400">vs. greedy allocation</span>
                   </div>
-                  <span className="text-[10px] text-[#90A4AE] mt-0.5">Across All Sectors</span>
-                </div>
-
-                <div className="bg-[#EEF2F6] border border-[#DCE3E8] p-3 rounded-xl flex flex-col">
-                  <span className="text-[10px] font-bold text-[#607D8B] uppercase tracking-wider">
-                    Units Assigned
-                  </span>
-                  <div className="text-xl font-extrabold text-[#1565C0] mt-1 flex items-center gap-1">
-                    <Shield className="w-4 h-4 text-[#1565C0]" />
-                    {plan.metrics.incidents_assigned}
+                  <div className="p-3.5">
+                    <span className="text-[10px] font-medium uppercase tracking-[.12em] text-slate-400">Time reclaimed</span>
+                    <div className="mt-1 flex items-center gap-1 text-xl font-semibold text-cyan-200"><Clock className="size-4" />{plan.metrics.time_saved_minutes}m</div>
+                    <span className="mt-0.5 block text-[10px] text-slate-400">across assigned sectors</span>
                   </div>
-                  <span className="text-[10px] text-[#90A4AE] mt-0.5">Optimal Pairs</span>
-                </div>
-
-                <div className="bg-[#EEF2F6] border border-[#DCE3E8] p-3 rounded-xl flex flex-col">
-                  <span className="text-[10px] font-bold text-[#607D8B] uppercase tracking-wider">
-                    Bottlenecks
-                  </span>
-                  <div className="text-xl font-extrabold text-[#F57C00] mt-1 flex items-center gap-1">
-                    <AlertTriangle className="w-4 h-4 text-[#F57C00]" />
-                    {plan.metrics.unassigned_bottlenecks}
+                  <div className="p-3.5">
+                    <span className="text-[10px] font-medium uppercase tracking-[.12em] text-slate-400">Matched</span>
+                    <div className="mt-1 flex items-center gap-1 text-xl font-semibold text-white"><Shield className="size-4 text-cyan-200" />{plan.metrics.incidents_assigned}</div>
+                    <span className="mt-0.5 block text-[10px] text-slate-400">incident-unit pairs</span>
                   </div>
-                  <span className="text-[10px] text-[#90A4AE] mt-0.5">Demand Exceeds Fleet</span>
+                  <div className="p-3.5">
+                    <span className="text-[10px] font-medium uppercase tracking-[.12em] text-slate-400">Exceptions</span>
+                    <div className="mt-1 flex items-center gap-1 text-xl font-semibold text-amber-300"><AlertTriangle className="size-4" />{plan.metrics.unassigned_bottlenecks}</div>
+                    <span className="mt-0.5 block text-[10px] text-slate-400">need mutual-aid review</span>
+                  </div>
                 </div>
-              </div>
+              </section>
 
               {/* Optimal Assignment List */}
-              <div className="space-y-3">
+              <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-[#263238] uppercase tracking-wider flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#2E7D32]" />
-                    Globally Optimal Dispatch Matches ({plan.assignments.length})
+                  <h4 className="flex items-center gap-2 px-4 py-3.5 text-sm font-semibold text-slate-900">
+                    <CheckCircle2 className="size-4 text-emerald-600" />
+                    Recommended matches <span className="rounded-full bg-slate-100 px-1.5 py-0.5 font-mono text-[9px] text-slate-500">{plan.assignments.length}</span>
                   </h4>
-                  <span className="text-[10px] text-[#607D8B] font-mono">
-                    Session: {plan.plan_id}
+                  <span className="mr-4 text-[10px] text-slate-500">
+                    Lowest combined ETA
                   </span>
                 </div>
 
                 {plan.assignments.length > 0 ? (
-                  <div className="space-y-2">
+                  <div className="divide-y divide-slate-100 border-t border-slate-100">
                     {plan.assignments.map((item, idx) => (
                       <div
                         key={idx}
-                        className="bg-white border border-[#DCE3E8] p-3 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs hover:bg-[#F8FAFC] transition shadow-xs"
+                        className="flex flex-col justify-between gap-3 px-4 py-3.5 text-xs transition-colors hover:bg-slate-50 md:flex-row md:items-center"
                       >
                         {/* Incident Info */}
                         <div className="min-w-0 flex-1">
@@ -175,27 +159,27 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
                               {item.incident_title}
                             </span>
                           </div>
-                          <div className="text-[11px] text-[#607D8B] mt-0.5">
-                            Sector Type: <span className="capitalize text-[#263238] font-medium">{item.incident_type.replace(/_/g, " ")}</span> | Priority {item.priority}
+                          <div className="mt-1 text-[10px] text-slate-500">
+                            <span className="capitalize">{item.incident_type.replace(/_/g, " ")}</span><span className="mx-1.5 text-slate-300">•</span>Priority {item.priority}
                           </div>
                         </div>
 
                         {/* Arrow */}
-                        <div className="hidden md:flex text-[#90A4AE] shrink-0">
+                        <div className="hidden shrink-0 text-slate-300 md:flex">
                           <ArrowRight className="w-4 h-4" />
                         </div>
 
                         {/* Matched Unit */}
-                        <div className="flex items-center justify-between md:justify-end gap-3 min-w-[200px]">
+                        <div className="flex min-w-[200px] items-center justify-between gap-3 md:justify-end">
                           <div>
-                            <div className="font-semibold text-[#263238]">{item.unit_name}</div>
-                            <div className="text-[10px] text-[#607D8B] capitalize">
+                            <div className="font-semibold text-slate-800">{item.unit_name}</div>
+                            <div className="mt-0.5 text-[10px] capitalize text-slate-500">
                               {item.resource_type} {item.capability ? `(${item.capability})` : ""}
                             </div>
                           </div>
 
-                          <div className="flex items-center gap-1 bg-[#EEF2F6] border border-[#DCE3E8] px-2 py-1 rounded text-xs font-mono text-[#1565C0] font-bold">
-                            <Clock className="w-3 h-3 text-[#1565C0]" />
+                          <div className="flex items-center gap-1 rounded-lg border border-sky-100 bg-sky-50 px-2 py-1 font-mono text-[10px] font-semibold text-sky-700">
+                            <Clock className="size-3" />
                             <span>{item.eta_minutes}m</span>
                           </div>
                         </div>
@@ -203,38 +187,36 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
                     ))}
                   </div>
                 ) : (
-                  <div className="text-xs text-[#90A4AE] text-center py-6 bg-[#EEF2F6] rounded-xl border border-[#DCE3E8]">
+                  <div className="border-t border-slate-100 py-6 text-center text-xs text-slate-500">
                     No active emergency incidents currently pending assignment.
                   </div>
                 )}
-              </div>
+              </section>
 
               {/* Sector Bottlenecks */}
               {plan.bottlenecks.length > 0 && (
-                <div className="space-y-2 pt-1">
-                  <h4 className="text-xs font-bold text-[#E65100] uppercase tracking-wider flex items-center gap-1.5">
-                    <AlertTriangle className="w-4 h-4 text-[#F57C00]" />
-                    Resource Deficit & Sector Bottlenecks ({plan.bottlenecks.length})
-                  </h4>
-                  <div className="space-y-2">
+                <section className="overflow-hidden rounded-2xl border border-amber-200 bg-amber-50/40">
+                  <div className="flex items-center justify-between border-b border-amber-200 bg-amber-50 px-4 py-3">
+                    <h4 className="flex items-center gap-2 text-sm font-semibold text-amber-950">
+                      <AlertTriangle className="size-4 text-amber-600" /> Exceptions requiring review
+                    </h4>
+                    <span className="rounded-full border border-amber-200 bg-white px-1.5 py-0.5 font-mono text-[9px] font-semibold text-amber-700">{plan.bottlenecks.length}</span>
+                  </div>
+                  <div className="divide-y divide-amber-200/70">
                     {plan.bottlenecks.map((bot, idx) => (
                       <div
                         key={idx}
-                        className="bg-[#FFF3E0] border border-[#FFCC80] p-3 rounded-xl text-xs space-y-1"
+                        className="grid gap-2 px-4 py-3 text-xs md:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] md:gap-5"
                       >
-                        <div className="font-semibold text-[#E65100]">
-                          ⚠️ {bot.incident_title} ({bot.severity.toUpperCase()} {bot.incident_type.toUpperCase()})
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2"><SeverityBadge severity={bot.severity} size="sm" /><span className="truncate font-semibold text-slate-800">{bot.incident_title}</span></div>
+                          <p className="mt-1 text-[10px] text-amber-800">Missing: <span className="font-medium">{bot.missing_capability}</span></p>
                         </div>
-                        <div className="text-[11px] text-[#263238]">
-                          {bot.missing_capability}
-                        </div>
-                        <div className="text-[10px] text-[#E65100] font-mono">
-                          Recommendation: {bot.recommendation}
-                        </div>
+                        <p className="text-[11px] leading-5 text-slate-600"><span className="font-semibold text-amber-800">Recommended next step: </span>{bot.recommendation}</p>
                       </div>
                     ))}
                   </div>
-                </div>
+                </section>
               )}
             </>
           ) : (
@@ -245,7 +227,7 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-[#DCE3E8] bg-[#EEF2F6] flex items-center justify-between">
+        <div className="flex items-center justify-between border-t border-slate-200 bg-slate-50 px-5 py-3">
           <button
             onClick={runOptimization}
             disabled={isLoading}

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Activity, AlertTriangleIcon, Plus, BarChart3, Radio, Zap, X, Bell, PanelLeft } from "lucide-react";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "./ui/alert";
+import { Activity, AlertTriangle, BarChart3, Bell, Map, Menu, Plus, X, Zap } from "lucide-react";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
 
 interface NavbarProps {
   activeTab: "map" | "analytics";
@@ -18,163 +16,23 @@ interface NavbarProps {
   dataStatus: "loading" | "live" | "degraded";
 }
 
-export const Navbar: React.FC<NavbarProps> = ({
-  activeTab,
-  setActiveTab,
-  onOpenNewIncident,
-  onOpenOptimizer,
-  alertCount,
-  isSidebarOpen = true,
-  onToggleSidebar,
-  dataStatus,
-}) => {
-  const [showAlertModal, setShowAlertModal] = useState(false);
-
+export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenNewIncident, onOpenOptimizer, alertCount, incidentCount = 0, isSidebarOpen = true, onToggleSidebar, dataStatus }) => {
+  const [showAlerts, setShowAlerts] = useState(false);
   useEffect(() => {
-    if (!showAlertModal) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setShowAlertModal(false);
-    };
-    document.addEventListener("keydown", closeOnEscape);
-    return () => document.removeEventListener("keydown", closeOnEscape);
-  }, [showAlertModal]);
+    if (!showAlerts) return;
+    const close = (event: KeyboardEvent) => event.key === "Escape" && setShowAlerts(false);
+    document.addEventListener("keydown", close);
+    return () => document.removeEventListener("keydown", close);
+  }, [showAlerts]);
+  const statusTone = dataStatus === "live" ? "bg-emerald-400" : dataStatus === "degraded" ? "bg-rose-400" : "bg-amber-300";
 
-  return (
-    <header className="bg-white border-b border-[#DCE3E8] flex items-center justify-between text-[#263238] select-none shadow-xs relative z-30 h-13">
-      {/* Left Column: Aligned with the sidebar below */}
-      <div
-        className={`flex items-center justify-between px-3.5 h-full border-r border-[#DCE3E8] transition-all duration-200 ${
-          isSidebarOpen ? "w-88 lg:w-96 shrink-0" : "w-auto shrink-0 gap-3"
-        }`}
-      >
-        <div className="flex items-center space-x-2 text-[#0B1F33] font-black text-xl tracking-tight">
-          <Activity className="w-5.5 h-5.5 text-[#1565C0]" />
-          <span>RESPONDR<span className="text-[#1565C0] font-semibold text-xs ml-1.5 px-2 py-0.5 bg-[#E3F2FD] border border-[#90CAF9] rounded">AI</span></span>
-        </div>
-
-        {/* Sidebar Open/Close Toggle Button (Icon-only, no text written) */}
-        {onToggleSidebar && (
-          <button
-            onClick={onToggleSidebar}
-            className="p-1.5 rounded-lg border border-[#DCE3E8] bg-[#F8FAFC] hover:bg-[#EEF2F6] text-[#1565C0] hover:text-[#0D47A1] transition cursor-pointer shadow-xs flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#1565C0]/20"
-            title={isSidebarOpen ? "Close panel" : "Open panel"}
-            aria-label="Toggle Sidebar"
-          >
-            <PanelLeft className="w-4 h-4" />
-          </button>
-        )}
-      </div>
-
-      <div className="flex items-center space-x-2 md:space-x-3 px-4 md:px-6">
-        <span className={`hidden lg:inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase ${dataStatus === "live" ? "text-[#2E7D32]" : dataStatus === "degraded" ? "text-[#B71C1C]" : "text-[#607D8B]"}`} aria-live="polite">
-          <span className={`h-1.5 w-1.5 rounded-full ${dataStatus === "live" ? "bg-[#2E7D32]" : dataStatus === "degraded" ? "bg-[#D32F2F]" : "bg-[#90A4AE]"}`} />
-          {dataStatus === "live" ? "Live sync" : dataStatus === "degraded" ? "Data degraded" : "Connecting"}
-        </span>
-        {/* Navigation Tabs */}
-        <div className="flex bg-[#EEF2F6] p-1 rounded-lg border border-[#DCE3E8] text-xs font-semibold">
-          <button
-            onClick={() => setActiveTab("map")}
-            className={`px-3 py-1.5 rounded-md transition flex items-center gap-1.5 cursor-pointer ${
-              activeTab === "map"
-                ? "bg-[#1565C0] text-white shadow-xs"
-                : "text-[#607D8B] hover:text-[#263238] hover:bg-[#E8F1FA]"
-            }`}
-          >
-            <Radio className="w-3.5 h-3.5" /> Live Map
-          </button>
-          <button
-            onClick={() => setActiveTab("analytics")}
-            className={`px-3 py-1.5 rounded-md transition flex items-center gap-1.5 cursor-pointer ${
-              activeTab === "analytics"
-                ? "bg-[#1565C0] text-white shadow-xs"
-                : "text-[#607D8B] hover:text-[#263238] hover:bg-[#E8F1FA]"
-            }`}
-          >
-            <BarChart3 className="w-3.5 h-3.5" /> Analytics
-          </button>
-        </div>
-
-        {/* Notification Bell Icon with Badge on Top Right */}
-        <button
-          onClick={() => setShowAlertModal(true)}
-          className="relative p-2 rounded-lg border border-[#DCE3E8] bg-white hover:bg-[#F8FAFC] text-[#263238] transition cursor-pointer shadow-xs focus:outline-none focus:ring-2 focus:ring-[#1565C0]/20"
-          title={`Alerts & Notifications (${alertCount})`}
-          aria-label="Alerts"
-        >
-          <Bell className="w-4 h-4 text-[#455A64]" />
-          {alertCount > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 bg-[#D32F2F] text-white text-[10px] font-bold rounded-full h-4.5 min-w-[18px] px-1 flex items-center justify-center border-2 border-white shadow-xs font-mono">
-              {alertCount}
-            </span>
-          )}
-        </button>
-
-        {/* Action Buttons */}
-        <button
-          onClick={onOpenOptimizer}
-          className="bg-[#1565C0] hover:bg-[#0D47A1] text-white text-xs font-semibold px-3 py-2 rounded-lg flex items-center gap-1.5 shadow-xs transition active:scale-95 cursor-pointer"
-          title="Global Fleet Optimizer - Hungarian Algorithm Dispatch"
-        >
-          <Zap className="w-3.5 h-3.5 text-[#FFF8E1]" />
-          <span className="hidden sm:inline">Optimize Fleet</span>
-        </button>
-
-        <button
-          onClick={onOpenNewIncident}
-          className="bg-[#D32F2F] hover:bg-[#B71C1C] text-white text-xs font-semibold px-3.5 py-2 rounded-lg flex items-center gap-1.5 shadow-xs transition active:scale-95 cursor-pointer"
-        >
-          <Plus className="w-3.5 h-3.5" />
-          <span>Report Emergency</span>
-        </button>
-      </div>
-
-      {/* Middle Notification Modal Dialog */}
-      {showAlertModal && (
-        <div className="fixed inset-0 z-[2500] flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-in fade-in duration-150" role="presentation">
-          <div role="dialog" aria-modal="true" aria-labelledby="notifications-title" className="bg-white rounded-2xl border border-[#DCE3E8] p-5 max-w-lg w-full shadow-2xl space-y-4 animate-in zoom-in-95 duration-150 text-[#263238]">
-            <div className="flex items-center justify-between pb-3 border-b border-[#DCE3E8]">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-[#FFF3E0] border border-[#FFE0B2] flex items-center justify-center text-[#E65100]">
-                  <Bell className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 id="notifications-title" className="text-sm font-bold text-[#0B1F33]">Emergency Notifications</h3>
-                  <p className="text-xs text-[#607D8B]">{alertCount} active priority advisories</p>
-                </div>
-              </div>
-              <button
-                onClick={() => setShowAlertModal(false)}
-                autoFocus
-                className="text-[#90A4AE] hover:text-[#263238] p-1.5 rounded-lg hover:bg-[#EEF2F6] transition cursor-pointer"
-                aria-label="Close notification"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Amber Alert Card as requested */}
-            <Alert className="border-amber-200 bg-amber-50 text-amber-900 shadow-xs">
-              <AlertTriangleIcon className="w-5 h-5 text-amber-700" />
-              <AlertTitle className="font-bold">Resource & Priority Queue Alert</AlertTitle>
-              <AlertDescription className="text-xs mt-1 text-amber-800 leading-relaxed">
-                {alertCount > 0
-                  ? `${alertCount} critical emergency dispatches require immediate field review. High hazard risk detected in active sector.`
-                  : "All monitored sectors report normal status. No pending critical escalation alerts."}
-              </AlertDescription>
-            </Alert>
-
-            <div className="flex justify-end gap-2 pt-1">
-              <button
-                type="button"
-                onClick={() => setShowAlertModal(false)}
-                className="px-4 py-2 bg-[#1565C0] hover:bg-[#0D47A1] text-white text-xs font-semibold rounded-lg shadow-xs transition cursor-pointer"
-              >
-                Acknowledge & Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </header>
-  );
+  return <header className="relative z-30 border-b border-white/10 bg-[#0b1020] text-white shadow-[0_12px_32px_rgba(2,6,23,.16)]">
+    <div className="flex h-16 items-center gap-3 px-3 sm:px-5">
+      <div className="flex min-w-0 items-center gap-3"><div className="grid size-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-cyan-300 to-blue-500 shadow-lg shadow-blue-500/20"><Activity className="size-5 text-slate-950" strokeWidth={2.6} /></div><div className="hidden min-[420px]:block"><div className="font-heading text-sm font-semibold tracking-tight">RESPONDR <span className="text-cyan-300">/ COMMAND</span></div><p className="text-[10px] font-medium uppercase tracking-[.16em] text-slate-500">Emergency operations network</p></div>{onToggleSidebar && <Button variant="ghost" size="icon" onClick={onToggleSidebar} aria-label={isSidebarOpen ? "Hide incident queue" : "Show incident queue"} className="size-8 text-slate-300 hover:bg-white/10 hover:text-white"><Menu className="size-4" /></Button>}</div>
+      <Separator orientation="vertical" className="hidden h-6 bg-white/10 sm:block" />
+      <nav aria-label="Workspace views" className="flex items-center rounded-lg bg-white/5 p-1"><button onClick={() => setActiveTab("map")} className={`inline-flex h-7 items-center gap-1.5 rounded-md px-2.5 text-xs font-medium transition ${activeTab === "map" ? "bg-white text-slate-950 shadow-sm" : "text-slate-400 hover:text-white"}`}><Map className="size-3.5" /><span className="hidden sm:inline">Live map</span></button><button onClick={() => setActiveTab("analytics")} className={`inline-flex h-7 items-center gap-1.5 rounded-md px-2.5 text-xs font-medium transition ${activeTab === "analytics" ? "bg-white text-slate-950 shadow-sm" : "text-slate-400 hover:text-white"}`}><BarChart3 className="size-3.5" /><span className="hidden sm:inline">Intelligence</span></button></nav>
+      <div className="ml-auto flex items-center gap-2"><div className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 sm:flex" aria-live="polite"><span className={`size-1.5 rounded-full ${statusTone}`} /><span className="text-[10px] font-medium text-slate-300">{dataStatus === "live" ? "LIVE" : dataStatus === "degraded" ? "DEGRADED" : "SYNCING"}</span></div><Badge variant="outline" className="hidden border-white/10 bg-white/5 text-[10px] text-slate-300 md:inline-flex">{incidentCount} active</Badge><Button variant="ghost" size="icon" onClick={() => setShowAlerts(true)} className="relative size-8 text-slate-300 hover:bg-white/10 hover:text-white" aria-label={`Alerts, ${alertCount} active`}><Bell className="size-4" />{alertCount > 0 && <span className="absolute right-0.5 top-0.5 grid size-3.5 place-items-center rounded-full bg-rose-500 text-[8px] font-bold text-white">{alertCount}</span>}</Button><Button variant="outline" size="sm" onClick={onOpenOptimizer} className="hidden border-white/15 bg-white/5 text-slate-100 hover:bg-white/10 hover:text-white sm:inline-flex"><Zap className="size-3.5 text-amber-300" /> Optimize</Button><Button size="sm" onClick={onOpenNewIncident} className="bg-rose-500 text-white hover:bg-rose-400"><Plus className="size-3.5" /><span className="hidden sm:inline">New incident</span></Button></div>
+    </div>
+    {showAlerts && <div className="fixed inset-0 z-[2500] grid place-items-center bg-slate-950/70 p-4 backdrop-blur-sm" role="presentation"><section role="dialog" aria-modal="true" aria-labelledby="alert-title" className="w-full max-w-md rounded-2xl border border-slate-700 bg-[#111827] p-5 text-slate-100 shadow-2xl"><div className="mb-4 flex items-start justify-between"><div><p className="text-[10px] font-semibold uppercase tracking-[.18em] text-cyan-300">Operations alerting</p><h2 id="alert-title" className="mt-1 font-heading text-lg font-semibold">Priority queue</h2></div><Button autoFocus variant="ghost" size="icon" onClick={() => setShowAlerts(false)} className="text-slate-400 hover:bg-white/10 hover:text-white"><X className="size-4" /></Button></div><div className="rounded-xl border border-amber-400/20 bg-amber-300/10 p-4"><AlertTriangle className="mb-2 size-4 text-amber-300" /><p className="text-sm font-medium">{alertCount ? `${alertCount} item${alertCount === 1 ? "" : "s"} require operator review.` : "No active priority advisories."}</p><p className="mt-1 text-xs leading-relaxed text-slate-400">Verify the incident queue and dispatch workflow before taking action.</p></div><Button className="mt-4 w-full" onClick={() => setShowAlerts(false)}>Acknowledge</Button></section></div>}
+  </header>;
 };
