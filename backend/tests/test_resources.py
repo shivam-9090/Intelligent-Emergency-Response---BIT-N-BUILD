@@ -1,4 +1,4 @@
-def test_create_and_list_resources(client):
+def test_create_and_list_resources(client, dispatcher_headers):
     payload = {
         "name": "Fire Engine 12",
         "resource_type": "vehicle",
@@ -6,7 +6,7 @@ def test_create_and_list_resources(client):
         "latitude": 12.9716,
         "longitude": 77.5946,
     }
-    create_response = client.post("/resources", json=payload)
+    create_response = client.post("/resources", json=payload, headers=dispatcher_headers)
     assert create_response.status_code == 201
     assert create_response.json()["status"] == "available"
 
@@ -15,7 +15,7 @@ def test_create_and_list_resources(client):
     assert len(list_response.json()) == 1
 
 
-def test_recommended_resources_for_incident(client):
+def test_recommended_resources_for_incident(client, dispatcher_headers):
     client.post(
         "/resources",
         json={
@@ -24,6 +24,7 @@ def test_recommended_resources_for_incident(client):
             "latitude": 12.9716,
             "longitude": 77.5946,
         },
+        headers=dispatcher_headers,
     )
 
     incident_response = client.post(

@@ -8,6 +8,7 @@ class Settings(BaseSettings):
 
     environment: str = "development"
     secret_key: str = "change-me"
+    access_token_expire_minutes: int = 480
 
     database_url: str = "postgresql+psycopg://emergency:emergency@localhost:5433/emergency_db"
     redis_url: str = "redis://localhost:6380/0"
