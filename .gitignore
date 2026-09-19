@@ -67,3 +67,4 @@ data/raw/
 data/*.csv
 !data/synthetic/.gitkeep
 !data/sensors/.gitkeep
+STATEMENT.MD
