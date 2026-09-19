@@ -14,12 +14,11 @@ interface EmergencyMapProps {
   onToggleDemandHeatmap?: () => void;
 }
 
-const SEVERITY_COLORS: Record<string, string> = {
-  critical: "#D32F2F",
-  high: "#F57C00",
-  medium: "#F9A825",
-  low: "#1565C0",
-  resolved: "#2E7D32",
+const SEVERITY_COLORS = {
+  critical: "#ef4444",
+  high: "#f97316",
+  medium: "#eab308",
+  low: "#3b82f6",
 };
 
 export const EmergencyMap: React.FC<EmergencyMapProps> = ({
@@ -48,40 +47,18 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
       zoomControl: true,
     });
 
-    // High-performance, unrestricted Esri ArcGIS Dark Gray Base
-    L.tileLayer(
-      "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
-      {
-        attribution: "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
-        maxZoom: 16,
-      }
-    ).addTo(map);
-
-    // Esri ArcGIS Dark Gray City Labels & Road Reference
-    L.tileLayer(
-      "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
-      {
-        attribution: "",
-        maxZoom: 16,
-      }
-    ).addTo(map);
+    // Dark-themed OpenStreetMap tiles (CartoDB Dark Matter)
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: "abcd",
+      maxZoom: 19,
+    }).addTo(map);
 
     layerGroupRef.current = L.layerGroup().addTo(map);
     mapInstanceRef.current = map;
 
-    // Ensure Leaflet recalculates viewport container dimensions
-    const timer = setTimeout(() => {
-      map.invalidateSize();
-    }, 250);
-
-    const handleResize = () => {
-      map.invalidateSize();
-    };
-    window.addEventListener("resize", handleResize);
-
     return () => {
-      clearTimeout(timer);
-      window.removeEventListener("resize", handleResize);
       map.remove();
       mapInstanceRef.current = null;
     };
@@ -99,7 +76,7 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
     incidents.forEach((inc) => {
       if (inc.latitude === null || inc.longitude === null) return;
 
-      const color = SEVERITY_COLORS[inc.severity] || "#90A4AE";
+      const color = SEVERITY_COLORS[inc.severity] || "#94a3b8";
       const isSelected = selectedIncident?.id === inc.id;
 
       const icon = L.divIcon({
@@ -136,12 +113,12 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
       marker.on("click", () => onSelectIncident(inc));
 
       const popupContent = `
-        <div style="color: #263238; font-family: sans-serif; min-width: 180px;">
-          <div style="font-weight: 700; font-size: 14px; color: #263238;">${inc.title}</div>
-          <div style="font-size: 12px; color: #607D8B; margin-top: 4px;">Type: <b>${inc.incident_type.toUpperCase()}</b></div>
-          <div style="font-size: 12px; color: ${color}; font-weight: 700;">Severity: ${inc.severity.toUpperCase()}</div>
-          <div style="font-size: 11px; color: #607D8B; margin-top: 4px;">Status: ${inc.status}</div>
-          ${inc.duplicate_of_id ? `<div style="font-size: 10px; background: #FFF8E1; border: 1px solid #FFE082; color: #F57F17; padding: 2px 4px; border-radius: 4px; margin-top: 4px;">⚠️ Duplicate Report</div>` : ""}
+        <div style="color: #0f172a; font-family: sans-serif; min-width: 180px;">
+          <div style="font-weight: 700; font-size: 14px;">${inc.title}</div>
+          <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Type: <b>${inc.incident_type.toUpperCase()}</b></div>
+          <div style="font-size: 12px; color: ${color}; font-weight: 600;">Severity: ${inc.severity.toUpperCase()}</div>
+          <div style="font-size: 11px; color: #475569; margin-top: 4px;">Status: ${inc.status}</div>
+          ${inc.duplicate_of_id ? `<div style="font-size: 10px; background: #fef08a; color: #854d0e; padding: 2px 4px; border-radius: 4px; margin-top: 4px;">⚠️ Duplicate Report</div>` : ""}
         </div>
       `;
       marker.bindPopup(popupContent);
@@ -159,10 +136,10 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
           <div style="
             width: 14px;
             height: 14px;
-            background-color: ${isAvail ? "#2E7D32" : "#90A4AE"};
-            border: 2px solid #FFFFFF;
+            background-color: ${isAvail ? "#10b981" : "#64748b"};
+            border: 2px solid #0f172a;
             border-radius: 3px;
-            box-shadow: 0 0 6px ${isAvail ? "#2E7D32" : "#90A4AE"};
+            box-shadow: 0 0 6px ${isAvail ? "#10b981" : "#475569"};
           "></div>
         `,
         iconSize: [14, 14],
@@ -171,10 +148,10 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
 
       const marker = L.marker([res.latitude, res.longitude], { icon });
       marker.bindPopup(`
-        <div style="color: #263238; font-family: sans-serif;">
-          <div style="font-weight: 600; color: #263238;">${res.name}</div>
-          <div style="font-size: 11px; color: #607D8B;">Type: ${res.resource_type}</div>
-          <div style="font-size: 11px; color: ${isAvail ? "#2E7D32" : "#90A4AE"}; font-weight: 600;">Status: ${res.status}</div>
+        <div style="color: #0f172a; font-family: sans-serif;">
+          <div style="font-weight: 600;">${res.name}</div>
+          <div style="font-size: 11px; color: #64748b;">Type: ${res.resource_type}</div>
+          <div style="font-size: 11px; color: ${isAvail ? "#16a34a" : "#64748b"}; font-weight: 600;">Status: ${res.status}</div>
         </div>
       `);
       layerGroup.addLayer(marker);
@@ -183,16 +160,16 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
     // 3. Render Atmospheric Hazard Plume Polygon
     if (activePlumePolygon && activePlumePolygon.length > 0) {
       const polygon = L.polygon(activePlumePolygon, {
-        color: "#F57C00",
+        color: "#f97316",
         weight: 2,
         dashArray: "4, 6",
-        fillColor: "#F57C00",
-        fillOpacity: 0.25,
+        fillColor: "#ea580c",
+        fillOpacity: 0.28,
       });
       polygon.bindPopup(`
-        <div style="color: #263238; font-family: sans-serif; min-width: 170px;">
-          <div style="font-weight: 700; color: #E65100; font-size: 13px;">⚠️ Atmospheric Hazard Plume</div>
-          <div style="font-size: 11px; color: #607D8B; margin-top: 3px;">
+        <div style="color: #0f172a; font-family: sans-serif; min-width: 170px;">
+          <div style="font-weight: 700; color: #ea580c; font-size: 13px;">⚠️ Atmospheric Hazard Plume</div>
+          <div style="font-size: 11px; color: #475569; margin-top: 3px;">
             Predicted downwind dispersion corridor based on meteorological wind vectors.
           </div>
         </div>
@@ -208,21 +185,21 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
       );
       if (naiveWaypoints.length > 1) {
         const naiveLine = L.polyline(naiveWaypoints, {
-          color: "#D32F2F",
+          color: "#f43f5e",
           weight: 3,
           dashArray: "6, 8",
-          opacity: 0.9,
+          opacity: 0.85,
         });
         naiveLine.bindPopup(`
-          <div style="color: #263238; font-family: sans-serif; min-width: 200px;">
-            <div style="font-weight: 700; color: #D32F2F; font-size: 13px;">⚠️ Naive Direct Path (Hazard Penetration)</div>
-            <div style="font-size: 11px; color: #607D8B; margin-top: 3px;">
+          <div style="color: #0f172a; font-family: sans-serif; min-width: 200px;">
+            <div style="font-weight: 700; color: #e11d48; font-size: 13px;">⚠️ Naive Direct Path (Hazard Penetration)</div>
+            <div style="font-size: 11px; color: #475569; margin-top: 3px;">
               Direct trajectory penetrates the active toxic plume corridor.
             </div>
-            <div style="margin-top: 5px; font-size: 12px; font-weight: 700; color: #B71C1C;">
+            <div style="margin-top: 5px; font-size: 12px; font-weight: 700; color: #be123c;">
               Toxic Exposure: ${Math.round(evacuationRoute.naive_direct_route.hazard_exposure_meters)}m
             </div>
-            <div style="font-size: 11px; color: #607D8B; margin-top: 2px;">
+            <div style="font-size: 11px; color: #64748b; margin-top: 2px;">
               Distance: ${evacuationRoute.naive_direct_route.total_distance_km.toFixed(1)} km | Transit: ${Math.round(evacuationRoute.naive_direct_route.eta_minutes)} min
             </div>
           </div>
@@ -230,29 +207,29 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
         layerGroup.addLayer(naiveLine);
       }
 
-      // 4b. Safe Evacuation Corridor (Safe Green Line - Zero Plume Exposure)
+      // 4b. Safe Evacuation Corridor (Glowing Emerald Line - Zero Plume Exposure)
       const safeWaypoints = evacuationRoute.safe_evacuation_corridor.waypoints.map(
         (w) => [w.latitude, w.longitude] as [number, number]
       );
       if (safeWaypoints.length > 1) {
         const safeLine = L.polyline(safeWaypoints, {
-          color: "#2E7D32",
+          color: "#10b981",
           weight: 4.5,
           opacity: 0.95,
         });
         safeLine.bindPopup(`
-          <div style="color: #263238; font-family: sans-serif; min-width: 220px;">
-            <div style="font-weight: 700; color: #2E7D32; font-size: 13px;">🛡️ Safe Evacuation Corridor (Zero Exposure)</div>
-            <div style="font-size: 11px; color: #2E7D32; font-weight: 700; margin-top: 2px;">
+          <div style="color: #0f172a; font-family: sans-serif; min-width: 220px;">
+            <div style="font-weight: 700; color: #059669; font-size: 13px;">🛡️ Safe Evacuation Corridor (Zero Exposure)</div>
+            <div style="font-size: 11px; color: #047857; font-weight: 700; margin-top: 2px;">
               ✅ 0.0m Plume Penetration Guaranteed
             </div>
-            <div style="font-size: 11px; color: #607D8B; margin-top: 4px; line-height: 1.3;">
+            <div style="font-size: 11px; color: #475569; margin-top: 4px; line-height: 1.3;">
               ${evacuationRoute.tactical_advice}
             </div>
-            <div style="margin-top: 6px; font-size: 11px; color: #263238; border-top: 1px solid #DCE3E8; padding-top: 4px;">
+            <div style="margin-top: 6px; font-size: 11px; color: #334155; border-top: 1px solid #e2e8f0; padding-top: 4px;">
               Distance: <b>${evacuationRoute.safe_evacuation_corridor.total_distance_km.toFixed(1)} km</b> | 
               ETA: <b>${Math.round(evacuationRoute.safe_evacuation_corridor.eta_minutes)} min</b> | 
-              Exposure Avoided: <b style="color: #2E7D32;">${Math.round(evacuationRoute.safety_delta_meters_avoided)}m</b>
+              Exposure Avoided: <b style="color: #059669;">${Math.round(evacuationRoute.safety_delta_meters_avoided)}m</b>
             </div>
           </div>
         `);
@@ -266,10 +243,10 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
               <div style="
                 width: 10px;
                 height: 10px;
-                background-color: #2E7D32;
+                background-color: #10b981;
                 border: 2px solid white;
                 border-radius: 50%;
-                box-shadow: 0 0 6px #2E7D32;
+                box-shadow: 0 0 6px #10b981;
               "></div>
             `,
             iconSize: [10, 10],
@@ -277,8 +254,8 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
           });
           const wpMarker = L.marker([wp.latitude, wp.longitude], { icon: wpIcon });
           wpMarker.bindPopup(`
-            <div style="color: #263238; font-family: sans-serif; font-size: 11px;">
-              <span style="font-weight: 700; color: #2E7D32;">Waypoint #${wp.step_index}:</span> ${wp.description}
+            <div style="color: #0f172a; font-family: sans-serif; font-size: 11px;">
+              <span style="font-weight: 700; color: #059669;">Waypoint #${wp.step_index}:</span> ${wp.description}
             </div>
           `);
           layerGroup.addLayer(wpMarker);
@@ -290,14 +267,14 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
           className: "custom-dest-icon",
           html: `
             <div style="
-              background-color: #2E7D32;
-              color: #FFFFFF;
+              background-color: #065f46;
+              color: #ecfdf5;
               padding: 3px 7px;
               border-radius: 4px;
-              border: 1.5px solid #A5D6A7;
+              border: 1.5px solid #34d399;
               font-size: 10px;
               font-weight: 700;
-              box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+              box-shadow: 0 4px 10px rgba(0,0,0,0.5);
               white-space: nowrap;
             ">
               🏥 ${evacuationRoute.target_destination_name}
@@ -308,10 +285,10 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
         });
         const destMarker = L.marker(destCoords, { icon: destIcon });
         destMarker.bindPopup(`
-          <div style="color: #263238; font-family: sans-serif;">
-            <div style="font-weight: 700; font-size: 13px; color: #263238;">${evacuationRoute.target_destination_name}</div>
-            <div style="font-size: 11px; color: #2E7D32; font-weight: 600;">Destination ${evacuationRoute.target_destination_category}</div>
-            <div style="font-size: 11px; color: #607D8B; margin-top: 2px;">Safe Evacuation Terminal Facility</div>
+          <div style="color: #0f172a; font-family: sans-serif;">
+            <div style="font-weight: 700; font-size: 13px;">${evacuationRoute.target_destination_name}</div>
+            <div style="font-size: 11px; color: #059669; font-weight: 600;">Destination ${evacuationRoute.target_destination_category}</div>
+            <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Safe Evacuation Terminal Facility</div>
           </div>
         `);
         layerGroup.addLayer(destMarker);
@@ -325,12 +302,12 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
         if (pt.intensity < 0.12) return;
         const color =
           pt.intensity >= 0.75
-            ? "#D32F2F"
+            ? "#f43f5e"
             : pt.intensity >= 0.5
-            ? "#F57C00"
+            ? "#f97316"
             : pt.intensity >= 0.25
-            ? "#F9A825"
-            : "#1565C0";
+            ? "#eab308"
+            : "#06b6d4";
 
         const circle = L.circle([pt.latitude, pt.longitude], {
           radius: 800 + pt.intensity * 900,
@@ -342,17 +319,17 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
         });
 
         circle.bindPopup(`
-          <div style="color: #263238; font-family: sans-serif; min-width: 190px;">
+          <div style="color: #0f172a; font-family: sans-serif; min-width: 190px;">
             <div style="font-weight: 700; color: ${color}; font-size: 13px;">
               🔮 Predicted Surge: ${pt.risk_level.toUpperCase()}
             </div>
-            <div style="font-size: 11px; color: #607D8B; margin-top: 3px;">
+            <div style="font-size: 11px; color: #475569; margin-top: 3px;">
               Demand Surge Index: <b>${Math.round(pt.intensity * 100)}%</b>
             </div>
-            <div style="font-size: 11px; color: #263238; margin-top: 2px;">
+            <div style="font-size: 11px; color: #334155; margin-top: 2px;">
               Dominant Hazard: <b>${pt.predicted_incident_type.replace(/_/g, " ").toUpperCase()}</b>
             </div>
-            <div style="font-size: 10px; color: #90A4AE; margin-top: 3px;">
+            <div style="font-size: 10px; color: #64748b; margin-top: 3px;">
               Historical Influence: ${pt.historical_event_count} incidents
             </div>
           </div>
@@ -367,14 +344,14 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
           html: `
             <div style="position: relative; display: flex; align-items: center; justify-content: center;">
               <div style="
-                background-color: #1565C0;
-                color: #FFFFFF;
+                background-color: #0369a1;
+                color: #f0f9ff;
                 padding: 3px 8px;
                 border-radius: 6px;
-                border: 2px solid #90CAF9;
+                border: 2px solid #38bdf8;
                 font-size: 10px;
                 font-weight: 800;
-                box-shadow: 0 0 14px rgba(21, 101, 192, 0.6);
+                box-shadow: 0 0 14px rgba(56, 189, 248, 0.8);
                 white-space: nowrap;
               ">
                 🚨 STAGING: ${st.recommended_unit_type.replace(/_/g, " ").toUpperCase()}
@@ -387,20 +364,20 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
 
         const beaconMarker = L.marker([st.latitude, st.longitude], { icon: beaconIcon });
         beaconMarker.bindPopup(`
-          <div style="color: #263238; font-family: sans-serif; min-width: 220px;">
-            <div style="font-weight: 700; color: #1565C0; font-size: 13px;">
+          <div style="color: #0f172a; font-family: sans-serif; min-width: 220px;">
+            <div style="font-weight: 700; color: #0284c7; font-size: 13px;">
               🛡️ Tactical Standby Pre-Positioning
             </div>
-            <div style="font-size: 12px; font-weight: 600; color: #263238; margin-top: 2px;">
+            <div style="font-size: 12px; font-weight: 600; color: #0f172a; margin-top: 2px;">
               ${st.zone_name}
             </div>
-            <div style="font-size: 11px; color: #1565C0; font-weight: 600; margin-top: 3px;">
+            <div style="font-size: 11px; color: #0369a1; font-weight: 600; margin-top: 3px;">
               Unit: <b>${st.recommended_unit_type.replace(/_/g, " ").toUpperCase()}</b> ➔ ${st.target_incident_type}
             </div>
-            <div style="font-size: 11px; color: #2E7D32; font-weight: 700; margin-top: 3px;">
+            <div style="font-size: 11px; color: #16a34a; font-weight: 700; margin-top: 3px;">
               ⏱️ Projected Response Savings: ~${st.projected_eta_savings_minutes} mins faster
             </div>
-            <div style="font-size: 11px; color: #607D8B; margin-top: 4px; line-height: 1.3;">
+            <div style="font-size: 11px; color: #475569; margin-top: 4px; line-height: 1.3;">
               ${st.tactical_rationale}
             </div>
           </div>
@@ -451,16 +428,16 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
           <button
             type="button"
             onClick={onToggleDemandHeatmap}
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold border transition shadow-lg cursor-pointer backdrop-blur ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold border transition shadow-xl cursor-pointer backdrop-blur ${
               showDemandHeatmap
-                ? "bg-[#1565C0] hover:bg-[#0D47A1] text-white border-[#1565C0] shadow-md"
-                : "bg-white/95 hover:bg-[#E8F1FA] text-[#263238] border-[#DCE3E8]"
+                ? "bg-sky-600/90 hover:bg-sky-500 text-white border-sky-400 shadow-sky-500/25"
+                : "bg-slate-900/85 hover:bg-slate-800 text-slate-300 border-slate-700"
             }`}
           >
             <span>🔮</span>
             <span>{showDemandHeatmap ? "Hide Demand Heatmap" : "Predictive Demand (KDE)"}</span>
             {predictiveDemand && showDemandHeatmap && (
-              <span className="text-[10px] bg-[#E3F2FD] text-[#1565C0] px-1.5 py-0.5 rounded font-mono border border-[#90CAF9]">
+              <span className="text-[10px] bg-sky-950 px-1.5 py-0.5 rounded font-mono border border-sky-700">
                 {predictiveDemand.staging_recommendations.length} Staged
               </span>
             )}
@@ -469,55 +446,56 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
       )}
 
       {/* Map Legend Overlay */}
-      <div className="absolute bottom-6 left-6 z-[1000] bg-white/95 backdrop-blur border border-[#DCE3E8] px-3.5 py-2.5 rounded-lg shadow-xl text-xs space-y-1.5 pointer-events-auto text-[#263238]">
-        <div className="text-[#607D8B] font-semibold mb-1 text-[11px] uppercase tracking-wider">
+      <div className="absolute bottom-6 left-6 z-[1000] bg-slate-900/90 backdrop-blur border border-slate-700/80 px-3.5 py-2.5 rounded-lg shadow-xl text-xs space-y-1.5 pointer-events-auto">
+        <div className="text-slate-400 font-semibold mb-1 text-[11px] uppercase tracking-wider">
           Incident Severity
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-xs bg-[#D32F2F] inline-block" />
-          <span className="text-[#263238] font-medium">Critical (Immediate)</span>
+          <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping inline-block" />
+          <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block -ml-4.5" />
+          <span className="text-slate-200">Critical (Immediate)</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-xs bg-[#F57C00] inline-block" />
-          <span className="text-[#263238]">High Severity</span>
+          <span className="w-2.5 h-2.5 rounded-full bg-orange-500 inline-block" />
+          <span className="text-slate-200">High Severity</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-xs bg-[#F9A825] inline-block" />
-          <span className="text-[#263238]">Medium Severity</span>
+          <span className="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block" />
+          <span className="text-slate-200">Medium Severity</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-xs bg-[#1565C0] inline-block" />
-          <span className="text-[#263238]">Low Severity</span>
+          <span className="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block" />
+          <span className="text-slate-200">Low Severity</span>
         </div>
-        <div className="border-t border-[#DCE3E8] pt-1.5 mt-1 flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-sm bg-[#2E7D32] inline-block" />
-          <span className="text-[#607D8B]">Available Resource</span>
+        <div className="border-t border-slate-700 pt-1.5 mt-1 flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500 inline-block" />
+          <span className="text-slate-300">Available Resource</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-sm bg-[#FFF3E0] border border-[#FFCC80] inline-block" />
-          <span className="text-[#607D8B]">Downwind Hazard Plume</span>
+          <span className="w-2.5 h-2.5 rounded-sm bg-orange-500/70 border border-orange-400 inline-block" />
+          <span className="text-slate-300">Downwind Hazard Plume</span>
         </div>
         {evacuationRoute && (
           <>
-            <div className="border-t border-[#DCE3E8] pt-1.5 mt-1 flex items-center gap-2">
-              <span className="w-3.5 h-0.5 border-t-2 border-dashed border-[#D32F2F] inline-block" />
-              <span className="text-[#B71C1C] font-medium">Naive Path ({Math.round(evacuationRoute.naive_direct_route.hazard_exposure_meters)}m Exposure)</span>
+            <div className="border-t border-slate-700 pt-1.5 mt-1 flex items-center gap-2">
+              <span className="w-3.5 h-0.5 border-t-2 border-dashed border-rose-500 inline-block" />
+              <span className="text-rose-400 font-medium">Naive Path ({Math.round(evacuationRoute.naive_direct_route.hazard_exposure_meters)}m Exposure)</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-3.5 h-1 bg-[#2E7D32] rounded-full inline-block" />
-              <span className="text-[#2E7D32] font-medium">Safe Corridor (0m Exposure)</span>
+              <span className="w-3.5 h-1 bg-emerald-500 rounded-full inline-block" />
+              <span className="text-emerald-400 font-medium">Safe Corridor (0m Exposure)</span>
             </div>
           </>
         )}
         {showDemandHeatmap && (
           <>
-            <div className="border-t border-[#DCE3E8] pt-1.5 mt-1 flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-xs bg-[#1565C0] inline-block" />
-              <span className="text-[#1565C0] font-medium">KDE Demand Surge Zone</span>
+            <div className="border-t border-slate-700 pt-1.5 mt-1 flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400/80 inline-block" />
+              <span className="text-cyan-300 font-medium">KDE Demand Surge Zone</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-sm bg-[#1565C0] border border-[#90CAF9] inline-block" />
-              <span className="text-[#1565C0] font-medium">Tactical Pre-Deploy Beacon</span>
+              <span className="w-2.5 h-2.5 rounded-sm bg-sky-600 border border-sky-300 inline-block" />
+              <span className="text-sky-300 font-medium">Tactical Pre-Deploy Beacon</span>
             </div>
           </>
         )}
