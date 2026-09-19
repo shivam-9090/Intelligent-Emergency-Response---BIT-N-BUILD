@@ -1,4 +1,10 @@
 from app.schemas.alert import AlertRead
+from app.schemas.analytics import (
+    Hotspot,
+    IncidentBreakdown,
+    ResourceShortage,
+    ResponseDelayStats,
+)
 from app.schemas.assignment import AssignmentCreate, AssignmentRead, AssignmentStatusUpdate
 from app.schemas.incident import IncidentCreate, IncidentRead
 from app.schemas.resource import ResourceUnitCreate, ResourceUnitRead
@@ -9,10 +15,14 @@ __all__ = [
     "AssignmentCreate",
     "AssignmentRead",
     "AssignmentStatusUpdate",
+    "Hotspot",
+    "IncidentBreakdown",
     "IncidentCreate",
     "IncidentRead",
+    "ResourceShortage",
     "ResourceUnitCreate",
     "ResourceUnitRead",
+    "ResponseDelayStats",
     "Token",
     "UserCreate",
     "UserRead",
