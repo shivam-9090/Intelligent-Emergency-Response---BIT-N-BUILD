@@ -1,0 +1,63 @@
+[
+  {
+    "id": "HOSP-01",
+    "name": "Victoria Hospital & Emergency Burn Center",
+    "address": "Fort Road, KR Market, Bangalore",
+    "latitude": 12.9634,
+    "longitude": 77.5755,
+    "capabilities": ["burn_icu", "trauma_level_1", "general_icu", "blood_bank"],
+    "total_icu_beds": 45,
+    "available_icu_beds": 12,
+    "burn_unit_available": true,
+    "heliport": false
+  },
+  {
+    "id": "HOSP-02",
+    "name": "NIMHANS Neuro-Trauma Center",
+    "address": "Hosur Road, Lakkasandra, Bangalore",
+    "latitude": 12.9372,
+    "longitude": 77.5906,
+    "capabilities": ["neuro_trauma", "trauma_level_1", "general_icu"],
+    "total_icu_beds": 60,
+    "available_icu_beds": 8,
+    "burn_unit_available": false,
+    "heliport": true
+  },
+  {
+    "id": "HOSP-03",
+    "name": "Manipal Hospital Old Airport Road",
+    "address": "98 HAL Airport Rd, Kodihalli, Bangalore",
+    "latitude": 12.9587,
+    "longitude": 77.6485,
+    "capabilities": ["cardiac_cath_lab", "trauma_level_1", "pediatric_icu", "general_icu"],
+    "total_icu_beds": 75,
+    "available_icu_beds": 18,
+    "burn_unit_available": false,
+    "heliport": true
+  },
+  {
+    "id": "HOSP-04",
+    "name": "Narayana Institute of Cardiac Sciences",
+    "address": "258/A Bommasandra Industrial Area, Bangalore",
+    "latitude": 12.8138,
+    "longitude": 77.6917,
+    "capabilities": ["cardiac_cath_lab", "general_icu", "extracorporeal_life_support"],
+    "total_icu_beds": 110,
+    "available_icu_beds": 24,
+    "burn_unit_available": false,
+    "heliport": false
+  },
+  {
+    "id": "HOSP-05",
+    "name": "Bowring & Lady Curzon Civil Hospital",
+    "address": "Shivajinagar, Tasker Town, Bangalore",
+    "latitude": 12.9836,
+    "longitude": 77.6044,
+    "capabilities": ["general_icu", "mass_casualty_decontamination", "trauma_level_2"],
+    "total_icu_beds": 50,
+    "available_icu_beds": 15,
+    "burn_unit_available": false,
+    "heliport": false
+  }
+]
+

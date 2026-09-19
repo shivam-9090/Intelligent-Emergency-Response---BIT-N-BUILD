@@ -1,6 +1,6 @@
 import logging
 
-from openai import APIError, OpenAI
+from openai import OpenAI
 
 from app.core.config import get_settings
 
@@ -9,9 +9,11 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 _SYSTEM_PROMPT = (
-    "You are an assistant for emergency dispatchers. Given structured incident data, "
-    "write a concise 2-3 sentence situational summary and one practical recommendation "
-    "for the response team. Be factual, do not invent details not present in the input."
+    "You are an expert AI operational assistant for emergency dispatchers and field commanders. "
+    "Given structured incident data, provide: "
+    "1) A concise 2-sentence Situational Summary. "
+    "2) A Tactical Action Recommendation (suggested cordon perimeter in meters, required PPE/equipment, "
+    "and immediate safety hazard protocols). Be direct, factual, and actionable."
 )
 
 
@@ -48,7 +50,7 @@ def generate_incident_summary(prompt: str) -> str | None:
             max_tokens=settings.llm_max_tokens,
             temperature=0.3,
         )
-    except (APIError, TimeoutError, ConnectionError):
+    except Exception:
         logger.exception("LLM summary generation failed")
         return None
 
