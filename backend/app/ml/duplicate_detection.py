@@ -1,6 +1,7 @@
 import logging
 import math
 import re
+from dataclasses import dataclass
 
 from app.models.incident import Incident
 
@@ -11,6 +12,14 @@ _CLOSE_DISTANCE_THRESHOLD_KM = 0.5
 _EXTENDED_DISTANCE_THRESHOLD_KM = 1.5
 _TIME_WINDOW_SECONDS = 3600
 _SEMANTIC_SIMILARITY_THRESHOLD = 0.20
+_AUTO_MERGE_SIMILARITY_THRESHOLD = 0.35
+
+
+@dataclass(frozen=True)
+class DuplicateMatch:
+    incident: Incident
+    score: float
+    reason: str
 
 
 def _haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -62,11 +71,11 @@ def compute_text_similarity(text1: str | None, text2: str | None) -> float:
     return round(intersection / union, 3) if union > 0 else 0.0
 
 
-def find_duplicate(new_incident: Incident, candidates: list[Incident]) -> Incident | None:
+def find_duplicate_match(new_incident: Incident, candidates: list[Incident]) -> DuplicateMatch | None:
     """Identify duplicate or related reports using spatio-temporal and semantic text matching.
 
-    - Matches if within 0.5km and 1 hour window of the same incident type.
-    - Extended match: if within 1.5km and 1 hour with high text similarity (>= 0.20).
+    Auto-merges only when both location/time and language support the match.
+    This intentionally avoids treating two nearby same-type emergencies as one event.
     """
     if new_incident.latitude is None or new_incident.longitude is None:
         return None
@@ -85,19 +94,21 @@ def find_duplicate(new_incident: Incident, candidates: list[Incident]) -> Incide
             new_incident.latitude, new_incident.longitude, candidate.latitude, candidate.longitude
         )
 
-        # 1. Direct proximity duplicate (< 0.5km)
-        if distance <= _CLOSE_DISTANCE_THRESHOLD_KM:
-            return candidate
+        if distance > _EXTENDED_DISTANCE_THRESHOLD_KM:
+            continue
 
-        # 2. Extended radius with semantic text confirmation (0.5km - 1.5km)
-        if distance <= _EXTENDED_DISTANCE_THRESHOLD_KM:
-            similarity = compute_text_similarity(new_incident.description, candidate.description)
-            if similarity >= _SEMANTIC_SIMILARITY_THRESHOLD:
-                logger.info(
-                    "Identified duplicate incident across %0.2f km with text similarity %0.2f",
-                    distance,
-                    similarity,
-                )
-                return candidate
+        similarity = compute_text_similarity(new_incident.description, candidate.description)
+        proximity_score = max(0.0, 1 - (distance / _EXTENDED_DISTANCE_THRESHOLD_KM))
+        score = round((similarity * 0.75) + (proximity_score * 0.25), 3)
+        if similarity >= _AUTO_MERGE_SIMILARITY_THRESHOLD:
+            reason = f"same type within {distance:.2f} km; semantic similarity {similarity:.2f}"
+            logger.info("Identified duplicate incident: %s", reason)
+            return DuplicateMatch(candidate, score, reason)
 
     return None
+
+
+def find_duplicate(new_incident: Incident, candidates: list[Incident]) -> Incident | None:
+    """Backward-compatible duplicate lookup for existing callers."""
+    match = find_duplicate_match(new_incident, candidates)
+    return match.incident if match else None
