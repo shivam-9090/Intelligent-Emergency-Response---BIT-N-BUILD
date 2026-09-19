@@ -3,11 +3,15 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
+from app.api.deps import require_roles
 from app.db.session import get_db
+from app.models.enums import UserRole
 from app.schemas.alert import AlertRead
 from app.services import alert_service
 
 router = APIRouter(prefix="/alerts", tags=["alerts"])
+
+_dispatch_roles = Depends(require_roles(UserRole.ADMIN, UserRole.DISPATCHER))
 
 
 @router.get("", response_model=list[AlertRead])
@@ -18,7 +22,7 @@ def list_alerts(
     return [AlertRead.model_validate(a) for a in alerts]
 
 
-@router.post("/{alert_id}/resolve", response_model=AlertRead)
+@router.post("/{alert_id}/resolve", response_model=AlertRead, dependencies=[_dispatch_roles])
 def resolve_alert(alert_id: uuid.UUID, db: Session = Depends(get_db)) -> AlertRead:
     alert = alert_service.resolve_alert(db, alert_id)
     if alert is None:
@@ -26,7 +30,7 @@ def resolve_alert(alert_id: uuid.UUID, db: Session = Depends(get_db)) -> AlertRe
     return AlertRead.model_validate(alert)
 
 
-@router.post("/check-delayed", response_model=list[AlertRead])
+@router.post("/check-delayed", response_model=list[AlertRead], dependencies=[_dispatch_roles])
 def check_delayed_responses(db: Session = Depends(get_db)) -> list[AlertRead]:
     """Manually trigger the delayed-response check.
 
@@ -37,7 +41,7 @@ def check_delayed_responses(db: Session = Depends(get_db)) -> list[AlertRead]:
     return [AlertRead.model_validate(a) for a in alerts]
 
 
-@router.post("/check-escalations", response_model=list[AlertRead])
+@router.post("/check-escalations", response_model=list[AlertRead], dependencies=[_dispatch_roles])
 def check_escalations(db: Session = Depends(get_db)) -> list[AlertRead]:
     """Manually trigger the escalation check. Same scheduling caveat as above."""
     alerts = alert_service.check_escalations(db)

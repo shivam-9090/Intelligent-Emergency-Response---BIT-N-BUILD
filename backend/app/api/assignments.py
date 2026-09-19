@@ -3,7 +3,9 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
+from app.api.deps import require_roles
 from app.db.session import get_db
+from app.models.enums import UserRole
 from app.schemas.assignment import AssignmentCreate, AssignmentRead, AssignmentStatusUpdate
 from app.services import assignment_service
 from app.services.assignment_service import NotFoundError, ResourceUnavailableError
@@ -11,7 +13,12 @@ from app.services.assignment_service import NotFoundError, ResourceUnavailableEr
 router = APIRouter(prefix="/assignments", tags=["assignments"])
 
 
-@router.post("", response_model=AssignmentRead, status_code=201)
+@router.post(
+    "",
+    response_model=AssignmentRead,
+    status_code=201,
+    dependencies=[Depends(require_roles(UserRole.ADMIN, UserRole.DISPATCHER))],
+)
 def create_assignment(payload: AssignmentCreate, db: Session = Depends(get_db)) -> AssignmentRead:
     try:
         assignment = assignment_service.create_assignment(db, payload)
@@ -33,7 +40,11 @@ def list_assignments(
     return [AssignmentRead.model_validate(a) for a in assignments]
 
 
-@router.patch("/{assignment_id}/status", response_model=AssignmentRead)
+@router.patch(
+    "/{assignment_id}/status",
+    response_model=AssignmentRead,
+    dependencies=[Depends(require_roles(UserRole.ADMIN, UserRole.DISPATCHER, UserRole.FIELD_TEAM))],
+)
 def update_assignment_status(
     assignment_id: uuid.UUID, payload: AssignmentStatusUpdate, db: Session = Depends(get_db)
 ) -> AssignmentRead:

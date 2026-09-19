@@ -11,3 +11,6 @@ pandas==2.2.3
 numpy==2.1.1
 websockets==13.1
 python-multipart==0.0.9
+bcrypt==4.2.0
+pyjwt==2.9.0
+email-validator==2.2.0

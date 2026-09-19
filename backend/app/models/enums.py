@@ -60,3 +60,9 @@ class AlertType(str, enum.Enum):
     CRITICAL_INCIDENT = "critical_incident"
     DELAYED_RESPONSE = "delayed_response"
     ESCALATION = "escalation"
+
+
+class UserRole(str, enum.Enum):
+    ADMIN = "admin"
+    DISPATCHER = "dispatcher"
+    FIELD_TEAM = "field_team"

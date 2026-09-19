@@ -30,7 +30,7 @@ def test_non_critical_incident_does_not_generate_alert(client):
     assert client.get("/alerts").json() == []
 
 
-def test_resolve_alert(client):
+def test_resolve_alert(client, dispatcher_headers):
     client.post(
         "/incidents",
         json={
@@ -42,9 +42,24 @@ def test_resolve_alert(client):
     )
 
     alert = client.get("/alerts").json()[0]
-    response = client.post(f"/alerts/{alert['id']}/resolve")
+    response = client.post(f"/alerts/{alert['id']}/resolve", headers=dispatcher_headers)
     assert response.status_code == 200
     assert response.json()["resolved"] is True
 
     unresolved = client.get("/alerts", params={"resolved": False}).json()
     assert unresolved == []
+
+
+def test_resolve_alert_requires_auth(client):
+    client.post(
+        "/incidents",
+        json={
+            "title": "Building collapse",
+            "description": "Structure collapse, people trapped",
+            "source": "field_team",
+            "incident_type": "industrial_accident",
+        },
+    )
+    alert = client.get("/alerts").json()[0]
+    response = client.post(f"/alerts/{alert['id']}/resolve")
+    assert response.status_code == 401
