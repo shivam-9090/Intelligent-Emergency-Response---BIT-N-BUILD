@@ -1,7 +1,10 @@
+import uuid
+
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.security import hash_password, verify_password
+from app.models.enums import UserRole
 from app.models.user import User
 from app.schemas.user import UserCreate
 
@@ -10,7 +13,13 @@ class EmailAlreadyRegisteredError(Exception):
     pass
 
 
+class UserNotFoundError(Exception):
+    pass
+
+
 def register_user(db: Session, payload: UserCreate) -> User:
+    """Self-registration always creates a FIELD_TEAM account. Role is never
+    taken from client input here — see update_user_role() for elevation."""
     existing = db.execute(select(User).where(User.email == payload.email)).scalar_one_or_none()
     if existing is not None:
         raise EmailAlreadyRegisteredError("Email already registered")
@@ -18,10 +27,20 @@ def register_user(db: Session, payload: UserCreate) -> User:
     user = User(
         email=payload.email,
         full_name=payload.full_name,
-        role=payload.role,
+        role=UserRole.FIELD_TEAM,
         hashed_password=hash_password(payload.password),
     )
     db.add(user)
+    db.commit()
+    db.refresh(user)
+    return user
+
+
+def update_user_role(db: Session, user_id: uuid.UUID, role: UserRole) -> User:
+    user = db.get(User, user_id)
+    if user is None:
+        raise UserNotFoundError("User not found")
+    user.role = role
     db.commit()
     db.refresh(user)
     return user

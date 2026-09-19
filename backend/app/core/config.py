@@ -1,13 +1,16 @@
 from functools import lru_cache
 
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+_INSECURE_DEFAULT_SECRET = "change-me"
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     environment: str = "development"
-    secret_key: str = "change-me"
+    secret_key: str = _INSECURE_DEFAULT_SECRET
     access_token_expire_minutes: int = 480
 
     database_url: str = "postgresql+psycopg://emergency:emergency@localhost:5433/emergency_db"
@@ -31,6 +34,20 @@ class Settings(BaseSettings):
     smtp_password: str = ""
     smtp_from_email: str = "alerts@emergency-response.local"
     smtp_use_tls: bool = True
+
+    initial_admin_email: str = ""
+    initial_admin_password: str = ""
+
+    @model_validator(mode="after")
+    def _reject_insecure_secret_outside_dev(self) -> "Settings":
+        if self.environment not in ("development", "test") and (
+            not self.secret_key or self.secret_key == _INSECURE_DEFAULT_SECRET
+        ):
+            raise ValueError(
+                "SECRET_KEY must be set to a real secret when ENVIRONMENT is not "
+                "'development' or 'test' — refusing to start with the insecure default."
+            )
+        return self
 
 
 @lru_cache

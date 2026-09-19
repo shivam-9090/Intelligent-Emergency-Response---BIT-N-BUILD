@@ -17,6 +17,7 @@ def create_resource(db: Session, payload: ResourceUnitCreate) -> ResourceUnit:
         capability=payload.capability,
         latitude=payload.latitude,
         longitude=payload.longitude,
+        assigned_user_id=payload.assigned_user_id,
     )
     db.add(resource)
     db.commit()
