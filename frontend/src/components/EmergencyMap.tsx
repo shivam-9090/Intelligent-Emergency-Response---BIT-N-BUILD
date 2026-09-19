@@ -12,6 +12,7 @@ interface EmergencyMapProps {
   predictiveDemand?: PredictiveDemandResponse | null;
   showDemandHeatmap?: boolean;
   onToggleDemandHeatmap?: () => void;
+  isSidebarOpen?: boolean;
 }
 
 const SEVERITY_COLORS = {
@@ -31,6 +32,7 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
   predictiveDemand,
   showDemandHeatmap = false,
   onToggleDemandHeatmap,
+  isSidebarOpen = true,
 }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -47,22 +49,98 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
       zoomControl: true,
     });
 
-    // Dark-themed OpenStreetMap tiles (CartoDB Dark Matter)
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: "abcd",
-      maxZoom: 19,
-    }).addTo(map);
+    // 1. Detailed Global Street Map with 100% English Labels (All country and city names strictly in English)
+    const englishStreetMap = L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+      {
+        attribution:
+          "Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, METI, TomTom",
+        maxNativeZoom: 18,
+        maxZoom: 19,
+      }
+    );
+
+    // 2. Real Satellite Imagery (Esri World Imagery + Labels - zero watermarks)
+    const satelliteLayer = L.layerGroup([
+      L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        {
+          attribution:
+            "Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics",
+          maxZoom: 19,
+        }
+      ),
+      L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+        {
+          attribution: "",
+          maxZoom: 19,
+        }
+      ),
+    ]);
+
+    // 3. Command Center Tactical Dark (Esri World Dark Gray - zero watermarks)
+    const darkMapLayer = L.layerGroup([
+      L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+        {
+          attribution: "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
+          maxNativeZoom: 16,
+          maxZoom: 19,
+        }
+      ),
+      L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+        {
+          attribution: "",
+          maxNativeZoom: 16,
+          maxZoom: 19,
+        }
+      ),
+    ]);
+
+    // Add English Street Map by default for a vibrant, detailed real-world map with all names in English
+    englishStreetMap.addTo(map);
+
+    // Map layer switcher
+    const baseMaps = {
+      "🗺️ Real Street Map (English)": englishStreetMap,
+      "🛰️ Satellite Map": satelliteLayer,
+      "🌙 Tactical Dark": darkMapLayer,
+    };
+    L.control.layers(baseMaps, undefined, { position: "topright" }).addTo(map);
 
     layerGroupRef.current = L.layerGroup().addTo(map);
     mapInstanceRef.current = map;
 
+    // Observe container resizing so Leaflet automatically adapts without blank spaces
+    const resizeObserver = new ResizeObserver(() => {
+      map.invalidateSize();
+    });
+    if (mapContainerRef.current) {
+      resizeObserver.observe(mapContainerRef.current);
+    }
+
     return () => {
+      resizeObserver.disconnect();
       map.remove();
       mapInstanceRef.current = null;
     };
   }, []);
+
+  // Invalidate map size on sidebar hide/show transitions
+  useEffect(() => {
+    if (!mapInstanceRef.current) return;
+    mapInstanceRef.current.invalidateSize();
+    const t1 = setTimeout(() => mapInstanceRef.current?.invalidateSize(), 100);
+    const t2 = setTimeout(() => mapInstanceRef.current?.invalidateSize(), 250);
+    const t3 = setTimeout(() => mapInstanceRef.current?.invalidateSize(), 400);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  }, [isSidebarOpen]);
 
   // Update Markers
   useEffect(() => {
