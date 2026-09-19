@@ -53,6 +53,7 @@ services:
     environment:
       DATABASE_URL: postgresql+psycopg://emergency:emergency@db:5432/emergency_db
       REDIS_URL: redis://redis:6379/0
+      LLM_API_KEY: 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
     ports:
       - "8001:8000"
     depends_on:
