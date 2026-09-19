@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import L from "leaflet";
+import { Activity, ChevronDown, Layers3, MapPinned, Radio, Sparkles } from "lucide-react";
 import type { EvacuationRouteResponse, Incident, PredictiveDemandResponse, ResourceUnit } from "../types";
 
 interface EmergencyMapProps {
@@ -45,6 +46,8 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const layerGroupRef = useRef<L.LayerGroup | null>(null);
+  const activeIncidentCount = incidents.filter((incident) => incident.status !== "resolved").length;
+  const availableResourceCount = resources.filter((resource) => resource.status === "available").length;
 
   // Initialize Map
   useEffect(() => {
@@ -508,84 +511,84 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
     <div className="relative w-full h-full">
       <div ref={mapContainerRef} className="w-full h-full z-0" />
 
-      {/* Floating Toggle: Spatio-Temporal Demand Forecast Layer */}
+      <div className="pointer-events-none absolute left-4 top-16 z-[1000] hidden sm:block">
+        <div className="flex items-center gap-3 rounded-xl border border-white/75 bg-white/90 px-3 py-2 shadow-[0_10px_30px_rgba(15,23,42,0.12)] backdrop-blur-md">
+          <span className="grid size-7 place-items-center rounded-lg bg-slate-950 text-cyan-300">
+            <MapPinned className="size-3.5" aria-hidden="true" />
+          </span>
+          <div className="leading-tight">
+            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+              <Radio className="size-3 text-emerald-500" aria-hidden="true" /> Field picture
+            </div>
+            <p className="mt-0.5 text-xs font-semibold text-slate-800">{activeIncidentCount} active · {availableResourceCount} ready</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Forecast is an opt-in map layer, not a competing primary action. */}
       {onToggleDemandHeatmap && (
-        <div className="absolute top-4 right-4 z-[1000] pointer-events-auto">
+        <div className="absolute right-16 top-4 z-[1000] pointer-events-auto sm:right-16">
           <button
             type="button"
             onClick={onToggleDemandHeatmap}
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold border transition shadow-xl cursor-pointer backdrop-blur ${
+            aria-pressed={showDemandHeatmap}
+            className={`flex h-9 items-center gap-2 rounded-xl border px-3 text-xs font-semibold shadow-[0_10px_25px_rgba(15,23,42,0.16)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 backdrop-blur-md ${
               showDemandHeatmap
-                ? "bg-sky-600/90 hover:bg-sky-500 text-white border-sky-400 shadow-sky-500/25"
-                : "bg-slate-900/85 hover:bg-slate-800 text-slate-300 border-slate-700"
+                ? "border-sky-400 bg-sky-600 text-white hover:bg-sky-500"
+                : "border-slate-700/70 bg-slate-950/90 text-slate-100 hover:bg-slate-800"
             }`}
           >
-            <span>🔮</span>
-            <span>{showDemandHeatmap ? "Hide Demand Heatmap" : "Predictive Demand (KDE)"}</span>
+            <Sparkles className="size-3.5 text-cyan-200" aria-hidden="true" />
+            <span className="hidden sm:inline">{showDemandHeatmap ? "Demand layer on" : "Demand forecast"}</span>
+            <span className="sm:hidden">Forecast</span>
             {predictiveDemand && showDemandHeatmap && (
-              <span className="text-[10px] bg-sky-950 px-1.5 py-0.5 rounded font-mono border border-sky-700">
-                {predictiveDemand.staging_recommendations.length} Staged
+              <span className="rounded-md border border-sky-400/50 bg-sky-950/35 px-1.5 py-0.5 font-mono text-[10px]">
+                {predictiveDemand.staging_recommendations.length}
               </span>
             )}
           </button>
         </div>
       )}
 
-      {/* Map Legend Overlay */}
-      <div className="absolute bottom-6 left-6 z-[1000] bg-slate-900/90 backdrop-blur border border-slate-700/80 px-3.5 py-2.5 rounded-lg shadow-xl text-xs space-y-1.5 pointer-events-auto">
-        <div className="text-slate-400 font-semibold mb-1 text-[11px] uppercase tracking-wider">
-          Incident Severity
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping inline-block" />
-          <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block -ml-4.5" />
-          <span className="text-slate-200">Critical (Immediate)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-orange-500 inline-block" />
-          <span className="text-slate-200">High Severity</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block" />
-          <span className="text-slate-200">Medium Severity</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block" />
-          <span className="text-slate-200">Low Severity</span>
-        </div>
-        <div className="border-t border-slate-700 pt-1.5 mt-1 flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500 inline-block" />
-          <span className="text-slate-300">Available Resource</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-sm bg-orange-500/70 border border-orange-400 inline-block" />
-          <span className="text-slate-300">Downwind Hazard Plume</span>
-        </div>
+      {/* The legend starts compact so it supports the map instead of obscuring it. */}
+      <details className="group absolute bottom-7 left-4 z-[1000] w-52 rounded-xl border border-slate-700/80 bg-slate-950/92 text-xs shadow-[0_12px_32px_rgba(15,23,42,0.28)] backdrop-blur-md pointer-events-auto" open>
+        <summary className="flex h-10 cursor-pointer list-none items-center justify-between px-3 text-xs font-semibold text-slate-100 marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cyan-300">
+          <span className="flex items-center gap-2"><Layers3 className="size-3.5 text-cyan-300" aria-hidden="true" /> Map key</span>
+          <ChevronDown className="size-3.5 text-slate-400 transition-transform group-open:rotate-180" aria-hidden="true" />
+        </summary>
+        <div className="space-y-2 border-t border-slate-700/80 px-3 pb-3 pt-2.5">
+          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-slate-500">Incident priority</p>
+          <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-[11px] text-slate-200">
+            <span className="flex items-center gap-1.5"><i className="size-2 rounded-full bg-rose-500 shadow-[0_0_0_3px_rgba(244,63,94,0.18)]" />Critical</span>
+            <span className="flex items-center gap-1.5"><i className="size-2 rounded-full bg-orange-500" />High</span>
+            <span className="flex items-center gap-1.5"><i className="size-2 rounded-full bg-amber-400" />Medium</span>
+            <span className="flex items-center gap-1.5"><i className="size-2 rounded-full bg-blue-500" />Low</span>
+          </div>
+          <div className="flex items-center justify-between border-t border-slate-700/80 pt-2 text-[11px] text-slate-300">
+            <span className="flex items-center gap-1.5"><i className="size-2 rounded-sm bg-emerald-500" />Ready resource</span>
+            <Activity className="size-3 text-emerald-400" aria-hidden="true" />
+          </div>
+          <div className="flex items-center gap-1.5 text-[11px] text-slate-300">
+            <i className="size-2 rounded-sm border border-orange-300 bg-orange-500/70" />Downwind plume
+          </div>
         {evacuationRoute && (
-          <>
-            <div className="border-t border-slate-700 pt-1.5 mt-1 flex items-center gap-2">
-              <span className="w-3.5 h-0.5 border-t-2 border-dashed border-rose-500 inline-block" />
-              <span className="text-rose-400 font-medium">Naive Path ({Math.round(evacuationRoute.naive_direct_route.hazard_exposure_meters)}m Exposure)</span>
+          <div className="space-y-1.5 border-t border-slate-700/80 pt-2 text-[11px]">
+            <div className="flex items-center gap-1.5 text-rose-300">
+              <i className="w-4 border-t-2 border-dashed border-rose-400" />Direct: {Math.round(evacuationRoute.naive_direct_route.hazard_exposure_meters)}m exposure
             </div>
-            <div className="flex items-center gap-2">
-              <span className="w-3.5 h-1 bg-emerald-500 rounded-full inline-block" />
-              <span className="text-emerald-400 font-medium">Safe Corridor (0m Exposure)</span>
+            <div className="flex items-center gap-1.5 text-emerald-300">
+              <i className="h-1 w-4 rounded-full bg-emerald-400" />Safe corridor
             </div>
-          </>
+          </div>
         )}
         {showDemandHeatmap && (
-          <>
-            <div className="border-t border-slate-700 pt-1.5 mt-1 flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400/80 inline-block" />
-              <span className="text-cyan-300 font-medium">KDE Demand Surge Zone</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-sm bg-sky-600 border border-sky-300 inline-block" />
-              <span className="text-sky-300 font-medium">Tactical Pre-Deploy Beacon</span>
-            </div>
-          </>
+          <div className="space-y-1.5 border-t border-slate-700/80 pt-2 text-[11px] text-cyan-200">
+            <div className="flex items-center gap-1.5"><i className="size-2 rounded-full bg-cyan-300" />Demand surge zone</div>
+            <div className="flex items-center gap-1.5"><i className="size-2 rounded-sm border border-sky-300 bg-sky-600" />Pre-deploy beacon</div>
+          </div>
         )}
-      </div>
+        </div>
+      </details>
     </div>
   );
 };
