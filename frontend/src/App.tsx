@@ -47,12 +47,11 @@ function App() {
     return () => clearInterval(interval);
   }, [loadData]);
 
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const handleIncidentCreated = (newInc: Incident) => {
     setIncidents((prev) => [newInc, ...prev]);
     setSelectedIncident(newInc);
-    setIsMobileSidebarOpen(false);
   };
 
   return (
@@ -64,39 +63,42 @@ function App() {
         onOpenOptimizer={() => setIsOptimizerOpen(true)}
         alertCount={alerts.filter((a) => !a.is_resolved).length}
         incidentCount={incidents.length}
-        onToggleSidebar={() => setIsMobileSidebarOpen((prev) => !prev)}
+        isSidebarOpen={isSidebarOpen}
+        onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
       />
 
       <main className="flex-1 relative flex overflow-hidden">
         {activeTab === "map" ? (
           <>
             {/* Desktop Incident Sidebar */}
-            <div className="hidden md:block h-full">
-              <IncidentList
-                incidents={incidents}
-                selectedIncident={selectedIncident}
-                onSelectIncident={(inc) => {
-                  setSelectedIncident(inc);
-                  setActiveEvacuationRoute(null);
-                }}
-              />
-            </div>
+            {isSidebarOpen && (
+              <div className="hidden md:block h-full animate-in slide-in-from-left duration-200">
+                <IncidentList
+                  incidents={incidents}
+                  selectedIncident={selectedIncident}
+                  onSelectIncident={(inc) => {
+                    setSelectedIncident(inc);
+                    setActiveEvacuationRoute(null);
+                  }}
+                />
+              </div>
+            )}
 
             {/* Mobile Drawer Overlay */}
-            {isMobileSidebarOpen && (
+            {isSidebarOpen && (
               <div className="md:hidden fixed inset-0 z-[1500] flex">
                 <div
                   className="fixed inset-0 bg-black/50 backdrop-blur-xs"
-                  onClick={() => setIsMobileSidebarOpen(false)}
+                  onClick={() => setIsSidebarOpen(false)}
                 />
-                <div className="relative z-10 w-80 max-w-[85vw] h-full shadow-2xl">
+                <div className="relative z-10 w-80 max-w-[85vw] h-full shadow-2xl animate-in slide-in-from-left duration-200">
                   <IncidentList
                     incidents={incidents}
                     selectedIncident={selectedIncident}
                     onSelectIncident={(inc) => {
                       setSelectedIncident(inc);
                       setActiveEvacuationRoute(null);
-                      setIsMobileSidebarOpen(false);
+                      setIsSidebarOpen(false);
                     }}
                   />
                 </div>

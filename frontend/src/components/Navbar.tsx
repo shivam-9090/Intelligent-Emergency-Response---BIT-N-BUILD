@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Activity, AlertTriangleIcon, Plus, BarChart3, Radio, Zap, Menu, X, Bell } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Activity, AlertTriangleIcon, Plus, BarChart3, Radio, Zap, X, Bell, PanelLeft } from "lucide-react";
 import {
   Alert,
   AlertDescription,
@@ -14,6 +13,7 @@ interface NavbarProps {
   onOpenOptimizer: () => void;
   alertCount: number;
   incidentCount: number;
+  isSidebarOpen?: boolean;
   onToggleSidebar?: () => void;
 }
 
@@ -24,6 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenOptimizer,
   alertCount,
   incidentCount,
+  isSidebarOpen = true,
   onToggleSidebar,
 }) => {
   const [showAlertModal, setShowAlertModal] = useState(false);
@@ -31,24 +32,27 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <header className="bg-white border-b border-[#DCE3E8] px-4 md:px-6 py-2.5 flex items-center justify-between text-[#263238] select-none shadow-xs relative z-30">
       <div className="flex items-center space-x-3 md:space-x-4">
-        {onToggleSidebar && (
-          <button
-            onClick={onToggleSidebar}
-            className="md:hidden p-1.5 rounded-lg border border-[#DCE3E8] hover:bg-[#EEF2F6] text-[#607D8B] cursor-pointer"
-            aria-label="Toggle incident list"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-        )}
         <div className="flex items-center space-x-2 text-[#0B1F33] font-black text-xl tracking-tight">
           <Activity className="w-6 h-6 text-[#1565C0]" />
           <span>RESPONDR<span className="text-[#1565C0] font-semibold text-xs ml-1.5 px-2 py-0.5 bg-[#E3F2FD] border border-[#90CAF9] rounded">AI</span></span>
         </div>
-        <div className="hidden md:flex items-center text-xs text-[#607D8B] border-l border-[#DCE3E8] pl-4 space-x-2">
-          <Badge variant="outline" className="border-[#A5D6A7] bg-[#E8F5E9] text-[#2E7D32] font-medium py-1">
-            Live Dispatch Connected
-          </Badge>
-          <span className="text-[#90A4AE]">|</span>
+
+        {/* Sidebar Open/Close Toggle Button right beside RESPONDR logo */}
+        {onToggleSidebar && (
+          <button
+            onClick={onToggleSidebar}
+            className="p-1.5 px-2.5 rounded-lg border border-[#DCE3E8] bg-[#F8FAFC] hover:bg-[#EEF2F6] text-[#455A64] hover:text-[#0B1F33] transition cursor-pointer shadow-xs flex items-center gap-1.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#1565C0]/20"
+            title={isSidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
+            aria-label="Toggle Sidebar"
+          >
+            <PanelLeft className="w-4 h-4 text-[#1565C0]" />
+            <span className="hidden sm:inline text-[11px] text-[#607D8B]">
+              {isSidebarOpen ? "Hide Panel" : "Show Panel"}
+            </span>
+          </button>
+        )}
+
+        <div className="hidden md:flex items-center text-xs text-[#607D8B] border-l border-[#DCE3E8] pl-3">
           <span className="font-medium text-[#607D8B]">{incidentCount} active incidents</span>
         </div>
       </div>
