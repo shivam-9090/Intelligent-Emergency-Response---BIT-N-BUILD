@@ -50,36 +50,32 @@ export const IncidentList: React.FC<IncidentListProps> = ({
   });
 
   return (
-    <aside className="w-88 lg:w-96 h-full bg-[#0B1F33] border-r border-[#102A43] flex flex-col z-10 select-none shrink-0">
+    <aside className="w-88 lg:w-96 h-full bg-white border-r border-[#DCE3E8] flex flex-col z-10 select-none shrink-0 shadow-xs">
       {/* Search and Filters Header */}
-      <div className="p-3.5 border-b border-[#102A43] space-y-2.5 bg-[#0B1F33]">
+      <div className="p-3.5 border-b border-[#DCE3E8] space-y-2.5 bg-[#F8FAFC]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h2 className="text-xs font-bold text-white uppercase tracking-wider">
+            <h2 className="text-xs font-bold text-[#0B1F33] uppercase tracking-wider">
               Active Incidents
             </h2>
-            <span className="text-[10px] font-mono font-bold bg-[#102A43] border border-[#163A59] text-[#90CAF9] px-2 py-0.5 rounded">
+            <span className="text-[10px] font-mono font-bold bg-[#EEF2F6] border border-[#DCE3E8] text-[#1565C0] px-2 py-0.5 rounded">
               {filtered.length}
             </span>
           </div>
-          <span className="text-[10px] text-[#90A4AE] font-mono">LIVE FEED</span>
+          <span className="text-[10px] text-[#607D8B] font-mono font-semibold">LIVE FEED</span>
         </div>
 
         <div className="flex items-center gap-2">
-          <InputGroup className="flex-1">
+          <InputGroup className="flex-1 bg-white border-[#DCE3E8] focus-within:border-[#1565C0]">
             <InputGroupAddon>
-              <Search className="w-3.5 h-3.5" />
+              <Search className="w-3.5 h-3.5 text-[#607D8B]" />
             </InputGroupAddon>
             <InputGroupInput
               placeholder="Search..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              className="text-[#263238] placeholder:text-[#90A4AE]"
             />
-            {filtered.length > 0 && (
-              <InputGroupAddon align="inline-end">
-                {filtered.length} {filtered.length === 1 ? "result" : "results"}
-              </InputGroupAddon>
-            )}
           </InputGroup>
 
           {/* Severity Dropdown next to Search */}
@@ -87,7 +83,7 @@ export const IncidentList: React.FC<IncidentListProps> = ({
             <select
               value={severityFilter}
               onChange={(e) => setSeverityFilter(e.target.value)}
-              className="bg-[#102A43] border border-[#163A59] text-white text-xs rounded-lg pl-2.5 pr-7 py-1.5 focus:outline-none focus:border-[#1565C0] cursor-pointer capitalize appearance-none font-medium h-9"
+              className="bg-white border border-[#DCE3E8] text-[#263238] hover:border-[#B0BEC5] focus:border-[#1565C0] text-xs rounded-lg pl-2.5 pr-7 py-1.5 focus:outline-none cursor-pointer capitalize appearance-none font-medium h-9 shadow-xs transition"
               aria-label="Filter severity"
             >
               <option value="all">All</option>
@@ -96,20 +92,20 @@ export const IncidentList: React.FC<IncidentListProps> = ({
               <option value="medium">Medium</option>
               <option value="low">Low</option>
             </select>
-            <ChevronDown className="w-3 h-3 text-[#90A4AE] absolute right-2 top-3 pointer-events-none" />
+            <ChevronDown className="w-3 h-3 text-[#607D8B] absolute right-2 top-3 pointer-events-none" />
           </div>
         </div>
       </div>
 
       {/* Incidents Scrollable Feed */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-[#071522]">
+      <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-[#F1F5F9]">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-            <div className="w-10 h-10 rounded-full bg-[#102A43] border border-[#163A59] flex items-center justify-center text-[#2E7D32] mb-3">
+            <div className="w-10 h-10 rounded-full bg-[#E8F1FA] border border-[#DCE3E8] flex items-center justify-center text-[#2E7D32] mb-3">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <p className="text-sm font-semibold text-white">All monitored sectors are currently clear.</p>
-            <p className="text-xs text-[#90A4AE] mt-1">No emergency incidents match current filter.</p>
+            <p className="text-sm font-semibold text-[#0B1F33]">All monitored sectors are currently clear.</p>
+            <p className="text-xs text-[#607D8B] mt-1">No emergency incidents match current filter.</p>
           </div>
         ) : (
           filtered.map((inc) => {

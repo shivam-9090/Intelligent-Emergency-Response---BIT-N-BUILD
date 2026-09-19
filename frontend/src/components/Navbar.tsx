@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Activity, AlertTriangle, AlertTriangleIcon, Plus, BarChart3, Radio, Zap, Menu, X } from "lucide-react";
+import { Activity, AlertTriangleIcon, Plus, BarChart3, Radio, Zap, Menu, X, Bell } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Alert,
@@ -26,7 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   incidentCount,
   onToggleSidebar,
 }) => {
-  const [showAlertPopover, setShowAlertPopover] = useState(false);
+  const [showAlertModal, setShowAlertModal] = useState(false);
 
   return (
     <header className="bg-white border-b border-[#DCE3E8] px-4 md:px-6 py-2.5 flex items-center justify-between text-[#263238] select-none shadow-xs relative z-30">
@@ -78,45 +78,20 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </div>
 
-        {/* Alerts Trigger with Badge */}
-        {alertCount > 0 && (
-          <div className="relative">
-            <button
-              onClick={() => setShowAlertPopover((prev) => !prev)}
-              className="flex items-center gap-1.5 bg-[#FFF3E0] hover:bg-[#FFE0B2] border border-[#FFCC80] text-[#E65100] text-xs px-3 py-1.5 rounded-lg font-medium cursor-pointer transition"
-            >
-              <AlertTriangle className="w-3.5 h-3.5 text-[#F57C00]" />
-              <span className="hidden sm:inline">Alerts</span>
-              <Badge variant="destructive" className="px-1.5 py-0 text-[10px] ml-0.5">
-                {alertCount}
-              </Badge>
-            </button>
-
-            {/* Alert Popover */}
-            {showAlertPopover && (
-              <div className="absolute right-0 mt-2 w-80 sm:w-96 p-3 bg-white border border-[#DCE3E8] rounded-xl shadow-2xl z-50 animate-in fade-in-90 duration-150">
-                <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#DCE3E8]">
-                  <span className="text-xs font-bold text-[#0B1F33] uppercase tracking-wider">
-                    Emergency Dispatch Alerts ({alertCount})
-                  </span>
-                  <button
-                    onClick={() => setShowAlertPopover(false)}
-                    className="text-[#90A4AE] hover:text-[#263238] p-1 rounded"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-                <Alert className="border-amber-200 bg-amber-50 text-amber-900">
-                  <AlertTriangleIcon className="w-4 h-4 text-amber-700" />
-                  <AlertTitle>Resource & Priority Queue Alert</AlertTitle>
-                  <AlertDescription>
-                    {alertCount} critical emergency dispatches require immediate field review. High hazard risk detected in active sector.
-                  </AlertDescription>
-                </Alert>
-              </div>
-            )}
-          </div>
-        )}
+        {/* Notification Bell Icon with Badge on Top Right */}
+        <button
+          onClick={() => setShowAlertModal(true)}
+          className="relative p-2 rounded-lg border border-[#DCE3E8] bg-white hover:bg-[#F8FAFC] text-[#263238] transition cursor-pointer shadow-xs focus:outline-none focus:ring-2 focus:ring-[#1565C0]/20"
+          title={`Alerts & Notifications (${alertCount})`}
+          aria-label="Alerts"
+        >
+          <Bell className="w-4 h-4 text-[#455A64]" />
+          {alertCount > 0 && (
+            <span className="absolute -top-1.5 -right-1.5 bg-[#D32F2F] text-white text-[10px] font-bold rounded-full h-4.5 min-w-[18px] px-1 flex items-center justify-center border-2 border-white shadow-xs font-mono">
+              {alertCount}
+            </span>
+          )}
+        </button>
 
         {/* Action Buttons */}
         <button
@@ -136,6 +111,53 @@ export const Navbar: React.FC<NavbarProps> = ({
           <span>Report Emergency</span>
         </button>
       </div>
+
+      {/* Middle Notification Modal Dialog */}
+      {showAlertModal && (
+        <div className="fixed inset-0 z-[2500] flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-in fade-in duration-150">
+          <div className="bg-white rounded-2xl border border-[#DCE3E8] p-5 max-w-lg w-full shadow-2xl space-y-4 animate-in zoom-in-95 duration-150 text-[#263238]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#DCE3E8]">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-[#FFF3E0] border border-[#FFE0B2] flex items-center justify-center text-[#E65100]">
+                  <Bell className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-[#0B1F33]">Emergency Notifications</h3>
+                  <p className="text-xs text-[#607D8B]">{alertCount} active priority advisories</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowAlertModal(false)}
+                className="text-[#90A4AE] hover:text-[#263238] p-1.5 rounded-lg hover:bg-[#EEF2F6] transition cursor-pointer"
+                aria-label="Close notification"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Amber Alert Card as requested */}
+            <Alert className="border-amber-200 bg-amber-50 text-amber-900 shadow-xs">
+              <AlertTriangleIcon className="w-5 h-5 text-amber-700" />
+              <AlertTitle className="font-bold">Resource & Priority Queue Alert</AlertTitle>
+              <AlertDescription className="text-xs mt-1 text-amber-800 leading-relaxed">
+                {alertCount > 0
+                  ? `${alertCount} critical emergency dispatches require immediate field review. High hazard risk detected in active sector.`
+                  : "All monitored sectors report normal status. No pending critical escalation alerts."}
+              </AlertDescription>
+            </Alert>
+
+            <div className="flex justify-end gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => setShowAlertModal(false)}
+                className="px-4 py-2 bg-[#1565C0] hover:bg-[#0D47A1] text-white text-xs font-semibold rounded-lg shadow-xs transition cursor-pointer"
+              >
+                Acknowledge & Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
