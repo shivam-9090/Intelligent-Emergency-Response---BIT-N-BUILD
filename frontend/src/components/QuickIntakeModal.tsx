@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { classifyText, createIncident, analyzeIncidentImage } from "../api";
 import { Sparkles, X, AlertCircle, Camera, CheckCircle2, Trash2, Zap } from "lucide-react";
 import type { Incident, ImageAnalysisResponse } from "../types";
@@ -51,6 +51,15 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
   const [isAnalyzingImage, setIsAnalyzingImage] = useState(false);
   const [visualAudit, setVisualAudit] = useState<ImageAnalysisResponse | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -121,6 +130,13 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
       return;
     }
 
+    const parsedLatitude = Number(latitude);
+    const parsedLongitude = Number(longitude);
+    if (!Number.isFinite(parsedLatitude) || !Number.isFinite(parsedLongitude) || parsedLatitude < -90 || parsedLatitude > 90 || parsedLongitude < -180 || parsedLongitude > 180) {
+      setError("Enter a valid latitude (-90 to 90) and longitude (-180 to 180).");
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
 
@@ -130,8 +146,8 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
         description,
         source: "citizen_report",
         incident_type: incidentType,
-        latitude: parseFloat(latitude),
-        longitude: parseFloat(longitude),
+        latitude: parsedLatitude,
+        longitude: parsedLongitude,
         address,
       });
 
@@ -145,12 +161,12 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-      <div className="bg-white border border-[#DCE3E8] w-full max-w-xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] text-[#263238] animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4" role="presentation">
+      <div role="dialog" aria-modal="true" aria-labelledby="new-incident-title" className="bg-white border border-[#DCE3E8] w-full max-w-xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] text-[#263238] animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="p-4 md:p-5 border-b border-[#DCE3E8] flex items-center justify-between bg-[#F8FAFC] shrink-0">
           <div>
-            <h2 className="text-sm font-bold text-[#0B1F33]">
+            <h2 id="new-incident-title" className="text-sm font-bold text-[#0B1F33]">
               Report New Incident
             </h2>
             <p className="text-[11px] text-[#607D8B] mt-0.5">
@@ -159,6 +175,7 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
           </div>
           <button
             onClick={onClose}
+            autoFocus
             className="text-[#607D8B] hover:text-[#263238] p-1.5 rounded-lg hover:bg-[#EEF2F6] transition cursor-pointer"
             aria-label="Close dialog"
           >
@@ -390,6 +407,10 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
                   <FieldLabel htmlFor="incident-latitude">Latitude</FieldLabel>
                   <Input
                     id="incident-latitude"
+                    type="number"
+                    min="-90"
+                    max="90"
+                    step="any"
                     value={latitude}
                     onChange={(e) => setLatitude(e.target.value)}
                     className="font-mono"
@@ -401,6 +422,10 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
                   <FieldLabel htmlFor="incident-longitude">Longitude</FieldLabel>
                   <Input
                     id="incident-longitude"
+                    type="number"
+                    min="-180"
+                    max="180"
+                    step="any"
                     value={longitude}
                     onChange={(e) => setLongitude(e.target.value)}
                     className="font-mono"

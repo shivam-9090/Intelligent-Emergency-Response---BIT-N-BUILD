@@ -269,4 +269,33 @@ export interface PredictiveDemandResponse {
   algorithm: string;
 }
 
+export interface IncidentTypeCount {
+  incident_type: IncidentType;
+  count: number;
+}
+
+export interface IncidentBreakdownResponse {
+  total: number;
+  by_type: IncidentTypeCount[];
+  by_severity: Array<{ severity: Severity; count: number }>;
+}
+
+export interface ResponseDelayStats {
+  overall_average_minutes: number | null;
+  overall_sample_size: number;
+  by_type: Array<{
+    incident_type: IncidentType;
+    average_minutes: number;
+    sample_size: number;
+  }>;
+}
+
+export interface ResourceShortage {
+  resource_type: ResourceType;
+  total: number;
+  available: number;
+  assigned: number;
+  unavailable: number;
+  shortage: boolean;
+}
 
