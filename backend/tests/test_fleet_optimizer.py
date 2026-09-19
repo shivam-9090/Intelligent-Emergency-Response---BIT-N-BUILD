@@ -171,4 +171,3 @@ def test_optimize_fleet_api_endpoint(client: TestClient):
     assert "plan_id" in data
     assert "metrics" in data
     assert "Hungarian" in data["algorithm"]
-
