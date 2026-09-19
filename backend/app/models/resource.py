@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import DateTime, Enum, Float, String, Uuid
+from sqlalchemy import DateTime, Enum, Float, ForeignKey, String, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
@@ -11,6 +11,7 @@ from app.models.enums import ResourceStatus, ResourceType
 
 if TYPE_CHECKING:
     from app.models.assignment import Assignment
+    from app.models.user import User
 
 
 class ResourceUnit(Base):
@@ -29,9 +30,15 @@ class ResourceUnit(Base):
     latitude: Mapped[float | None] = mapped_column(Float, nullable=True)
     longitude: Mapped[float | None] = mapped_column(Float, nullable=True)
 
+    assigned_user_id: Mapped[uuid.UUID | None] = mapped_column(Uuid, ForeignKey("users.id"), nullable=True)
+    """The field-team user operating this resource, if any. Used to scope
+    which assignments a FIELD_TEAM caller is allowed to update the status
+    of — see assignment_service.update_assignment_status."""
+
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
 
+    assigned_user: Mapped["User | None"] = relationship()
     assignments: Mapped[list["Assignment"]] = relationship(back_populates="resource")

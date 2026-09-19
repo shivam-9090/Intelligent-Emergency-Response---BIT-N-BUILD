@@ -5,9 +5,10 @@ from sqlalchemy.orm import Session
 
 from app.core.realtime import manager
 from app.models.assignment import Assignment
-from app.models.enums import AssignmentStatus, IncidentStatus, ResourceStatus
+from app.models.enums import AssignmentStatus, IncidentStatus, ResourceStatus, UserRole
 from app.models.incident import Incident
 from app.models.resource import ResourceUnit
+from app.models.user import User
 from app.schemas.assignment import AssignmentCreate, AssignmentRead
 from app.schemas.incident import IncidentRead
 
@@ -17,6 +18,10 @@ class ResourceUnavailableError(Exception):
 
 
 class NotFoundError(Exception):
+    pass
+
+
+class ForbiddenError(Exception):
     pass
 
 
@@ -49,13 +54,21 @@ def create_assignment(db: Session, payload: AssignmentCreate) -> Assignment:
     return assignment
 
 
-def update_assignment_status(db: Session, assignment_id: uuid.UUID, status: AssignmentStatus) -> Assignment:
+def update_assignment_status(
+    db: Session, assignment_id: uuid.UUID, status: AssignmentStatus, current_user: User
+) -> Assignment:
     assignment = db.get(Assignment, assignment_id)
     if assignment is None:
         raise NotFoundError("Assignment not found")
 
-    assignment.status = status
     resource = db.get(ResourceUnit, assignment.resource_id)
+
+    if current_user.role == UserRole.FIELD_TEAM and (
+        resource is None or resource.assigned_user_id != current_user.id
+    ):
+        raise ForbiddenError("You can only update assignments for resources assigned to you")
+
+    assignment.status = status
     incident = db.get(Incident, assignment.incident_id)
     incident_status_before = incident.status if incident is not None else None
 

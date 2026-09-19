@@ -12,6 +12,7 @@ class ResourceUnitCreate(BaseModel):
     capability: str | None = None
     latitude: float | None = None
     longitude: float | None = None
+    assigned_user_id: uuid.UUID | None = None
 
 
 class ResourceUnitRead(BaseModel):
@@ -24,5 +25,6 @@ class ResourceUnitRead(BaseModel):
     capability: str | None
     latitude: float | None
     longitude: float | None
+    assigned_user_id: uuid.UUID | None
     created_at: datetime
     updated_at: datetime

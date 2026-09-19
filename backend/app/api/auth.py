@@ -1,14 +1,17 @@
+import uuid
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
-from app.api.deps import get_current_user
+from app.api.deps import get_current_user, require_roles
 from app.core.security import create_access_token
 from app.db.session import get_db
+from app.models.enums import UserRole
 from app.models.user import User
-from app.schemas.user import Token, UserCreate, UserRead
+from app.schemas.user import Token, UserCreate, UserRead, UserRoleUpdate
 from app.services import auth_service
-from app.services.auth_service import EmailAlreadyRegisteredError
+from app.services.auth_service import EmailAlreadyRegisteredError, UserNotFoundError
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -38,3 +41,16 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 @router.get("/me", response_model=UserRead)
 def read_current_user(current_user: User = Depends(get_current_user)) -> UserRead:
     return UserRead.model_validate(current_user)
+
+
+@router.patch(
+    "/users/{user_id}/role",
+    response_model=UserRead,
+    dependencies=[Depends(require_roles(UserRole.ADMIN))],
+)
+def update_user_role(user_id: uuid.UUID, payload: UserRoleUpdate, db: Session = Depends(get_db)) -> UserRead:
+    try:
+        user = auth_service.update_user_role(db, user_id, payload.role)
+    except UserNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    return UserRead.model_validate(user)

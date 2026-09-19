@@ -1,5 +1,27 @@
-def test_incident_creation_broadcasts_over_websocket(client):
-    with client.websocket_connect("/ws/dashboard") as websocket:
+import pytest
+from starlette.websockets import WebSocketDisconnect
+
+
+def _token(headers: dict) -> str:
+    return headers["Authorization"].removeprefix("Bearer ")
+
+
+def test_websocket_requires_token(client):
+    with pytest.raises(WebSocketDisconnect), client.websocket_connect("/ws/dashboard"):
+        pass
+
+
+def test_websocket_rejects_invalid_token(client):
+    with (
+        pytest.raises(WebSocketDisconnect),
+        client.websocket_connect("/ws/dashboard?token=not-a-real-token"),
+    ):
+        pass
+
+
+def test_incident_creation_broadcasts_over_websocket(client, dispatcher_headers):
+    token = _token(dispatcher_headers)
+    with client.websocket_connect(f"/ws/dashboard?token={token}") as websocket:
         client.post(
             "/incidents",
             json={
@@ -15,6 +37,7 @@ def test_incident_creation_broadcasts_over_websocket(client):
 
 
 def test_assignment_lifecycle_broadcasts_over_websocket(client, dispatcher_headers):
+    token = _token(dispatcher_headers)
     incident = client.post(
         "/incidents",
         json={"title": "Road accident", "source": "citizen_report", "incident_type": "road_accident"},
@@ -23,7 +46,7 @@ def test_assignment_lifecycle_broadcasts_over_websocket(client, dispatcher_heade
         "/resources", json={"name": "Ambulance 1", "resource_type": "vehicle"}, headers=dispatcher_headers
     ).json()
 
-    with client.websocket_connect("/ws/dashboard") as websocket:
+    with client.websocket_connect(f"/ws/dashboard?token={token}") as websocket:
         client.post(
             "/assignments",
             json={"incident_id": incident["id"], "resource_id": resource["id"]},
