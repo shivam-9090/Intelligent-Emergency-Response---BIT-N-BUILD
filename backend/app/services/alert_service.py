@@ -4,9 +4,11 @@ from datetime import UTC, datetime, timedelta
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.core.realtime import manager
 from app.models.alert import Alert
 from app.models.enums import AlertType, IncidentStatus, Severity
 from app.models.incident import Incident
+from app.schemas.alert import AlertRead
 
 DELAYED_RESPONSE_MINUTES = 30
 ESCALATION_MINUTES = 60
@@ -17,6 +19,9 @@ def create_alert(db: Session, incident_id: uuid.UUID, alert_type: AlertType, mes
     db.add(alert)
     db.commit()
     db.refresh(alert)
+
+    manager.broadcast_event("alert_created", AlertRead.model_validate(alert).model_dump(mode="json"))
+
     return alert
 
 
@@ -112,4 +117,7 @@ def resolve_alert(db: Session, alert_id: uuid.UUID) -> Alert | None:
     alert.resolved = True
     db.commit()
     db.refresh(alert)
+
+    manager.broadcast_event("alert_resolved", AlertRead.model_validate(alert).model_dump(mode="json"))
+
     return alert
