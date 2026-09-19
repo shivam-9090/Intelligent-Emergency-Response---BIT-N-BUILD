@@ -1,7 +1,3 @@
-import React, { useState } from "react";
-import { classifyText, createIncident } from "../api";
-import { Sparkles, X, AlertCircle } from "lucide-react";
-import type { Incident } from "../types";
 import React, { useState, useRef } from "react";
 import { classifyText, createIncident, analyzeIncidentImage } from "../api";
 import { Sparkles, X, AlertCircle, Camera, CheckCircle2, Trash2, Zap } from "lucide-react";

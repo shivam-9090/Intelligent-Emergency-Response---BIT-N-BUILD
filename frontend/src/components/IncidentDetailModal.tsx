@@ -1,7 +1,3 @@
-import React, { useState, useEffect } from "react";
-import type { Incident, ResourceBundleResponse, IncidentSummary, HospitalFacility, CascadeRiskResponse } from "../types";
-import { fetchResourceBundle, fetchSummary, fetchHospitalRecommendations, fetchCascadeRisk } from "../api";
-import { X, Sparkles, Clock, ShieldAlert, CheckCircle2, Navigation, Hospital, Bed, TrendingUp, Wind, AlertTriangle, Eye } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
 import type { Incident, ResourceBundleResponse, IncidentSummary, HospitalFacility, CascadeRiskResponse, ImageAnalysisResponse } from "../types";
 import { fetchResourceBundle, fetchSummary, fetchHospitalRecommendations, fetchCascadeRisk, analyzeIncidentImage } from "../api";
