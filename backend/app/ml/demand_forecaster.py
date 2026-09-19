@@ -329,6 +329,8 @@ class DemandForecastingEngine:
             heatmap_grid=heatmap_points,
             staging_recommendations=staging_points,
             total_projected_eta_savings_minutes=total_eta_savings,
+            algorithm="Scenario KDE with heuristic temporal weighting",
+            validation_status="Not calibrated against historical dispatch outcomes",
         )
 
 

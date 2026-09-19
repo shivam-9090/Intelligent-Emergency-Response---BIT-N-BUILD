@@ -67,6 +67,10 @@ class PredictiveDemandResponse(BaseModel):
         description="Cumulative minutes shaved off first-arrival response across all staging zones"
     )
     algorithm: str = Field(
-        default="Spatio-Temporal Kernel Density Estimation (KDE) + Diurnal Poisson Surge Modeling",
-        description="Predictive model architecture",
+        default="Scenario KDE with heuristic temporal weighting",
+        description="Scenario-planning method; not a calibrated probabilistic forecast",
+    )
+    validation_status: str = Field(
+        default="Not calibrated against historical dispatch outcomes",
+        description="Evidence status for operational interpretation",
     )

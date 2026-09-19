@@ -4,7 +4,9 @@ Uses TF-IDF feature extraction with Logistic Regression classifiers trained on
 the synthetic emergency incidents dataset. Serializes the trained models for fast inference.
 """
 
+import hashlib
 import json
+from datetime import UTC, datetime
 from pathlib import Path
 
 import joblib
@@ -15,22 +17,22 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
 BASE_DIR = Path(__file__).resolve().parent
-CONTAINER_DATASET_PATH = BASE_DIR / "data" / "emergency_incidents.json"
-REPO_DATASET_PATH = BASE_DIR.parents[2] / "data" / "synthetic" / "emergency_incidents.json"
+DATASET_CANDIDATE_PATHS = [
+    BASE_DIR / "data" / "emergency_incidents.json",
+    BASE_DIR.parent / "data" / "synthetic" / "emergency_incidents.json",
+    BASE_DIR.parents[2] / "data" / "synthetic" / "emergency_incidents.json",
+]
 MODEL_DIR = BASE_DIR / "model_weights"
 MODEL_PATH = MODEL_DIR / "incident_classifier.joblib"
 
 
 def load_dataset() -> list[dict]:
-    if CONTAINER_DATASET_PATH.exists():
-        path = CONTAINER_DATASET_PATH
-    elif REPO_DATASET_PATH.exists():
-        path = REPO_DATASET_PATH
-    else:
-        msg = f"Dataset not found at {CONTAINER_DATASET_PATH} or {REPO_DATASET_PATH}"
-        raise FileNotFoundError(msg)
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
+    for path in DATASET_CANDIDATE_PATHS:
+        if path.exists():
+            with open(path, encoding="utf-8") as f:
+                return json.load(f)
+    msg = f"Dataset not found at any candidate location: {[str(p) for p in DATASET_CANDIDATE_PATHS]}"
+    raise FileNotFoundError(msg)
 
 
 def build_pipeline() -> Pipeline:
@@ -63,13 +65,15 @@ def train_models():
     type_pipeline = build_pipeline()
     type_pipeline.fit(X_train_type, y_train_type)
     type_preds = type_pipeline.predict(X_test_type)
-    print(classification_report(y_test_type, type_preds))
+    type_report = classification_report(y_test_type, type_preds, output_dict=True, zero_division=0)
+    print(classification_report(y_test_type, type_preds, zero_division=0))
 
     print("--- Training Incident Severity Classifier ---")
     severity_pipeline = build_pipeline()
     severity_pipeline.fit(X_train_sev, y_train_sev)
     sev_preds = severity_pipeline.predict(X_test_sev)
-    print(classification_report(y_test_sev, sev_preds))
+    severity_report = classification_report(y_test_sev, sev_preds, output_dict=True, zero_division=0)
+    print(classification_report(y_test_sev, sev_preds, zero_division=0))
 
     # Retrain on full dataset for production weights
     type_pipeline.fit(texts, types)
@@ -81,7 +85,14 @@ def train_models():
     artifacts = {
         "type_pipeline": type_pipeline,
         "severity_pipeline": severity_pipeline,
-        "version": "1.0.0",
+        "version": "1.1.0",
+        "trained_at": datetime.now(UTC).isoformat(),
+        "dataset_sha256": hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest(),
+        "evaluation": {
+            "split": "stratified 80/20 holdout, random_state=42",
+            "type": type_report,
+            "severity": severity_report,
+        },
     }
     joblib.dump(artifacts, MODEL_PATH)
     print(f"Models successfully trained and exported to: {MODEL_PATH}")

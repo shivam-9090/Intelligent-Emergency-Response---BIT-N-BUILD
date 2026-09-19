@@ -1,80 +1,89 @@
-<div align="center">
+# RESPONDR / COMMAND
 
-<img src="https://raw.githubusercontent.com/twbs/icons/main/icons/broadcast-pin.svg" width="56" height="56" alt="platform icon" />
+**Emergency operations command center for consolidating reports, triaging risk, coordinating resources, and keeping dispatchers informed.**
 
-# Intelligent Emergency Response & Resource Coordination Platform
+Built for **PS-9: Intelligent Emergency Response & Resource Coordination Platform**.
 
-**A unified platform for real-time emergency intake, classification, and resource coordination.**
+> Status: hackathon prototype for simulation, evaluation, and controlled demonstrations—not live public-safety dispatch.
 
-![Status](https://img.shields.io/badge/status-in--development-orange)
-![Hackathon](https://img.shields.io/badge/state--level-hackathon-blueviolet)
-![Backend](https://img.shields.io/badge/backend-FastAPI-009688)
-![Frontend](https://img.shields.io/badge/frontend-React-61DAFB)
-![Database](https://img.shields.io/badge/database-PostgreSQL-336791)
-![License](https://img.shields.io/badge/license-TBD-lightgrey)
+## What it does
 
-</div>
+- Consolidates citizen, field-team, sensor, hospital, government, and emergency-call reports.
+- Classifies incident type, severity, and priority with ML-assisted safety floors.
+- Detects duplicate reports with an auditable similarity score and reason.
+- Recommends teams, vehicles, equipment, and facilities; includes fleet optimization.
+- Shows incidents, resource readiness, alerts, response delays, and capacity in a map-first dashboard.
+- Creates critical, delayed-response, and escalation alerts; authenticated operators receive WebSocket events.
 
----
+## Model boundary
 
-## Overview
+The demand layer is a **scenario KDE with heuristic temporal weighting**. It is not calibrated or validated as a Bengaluru prediction model.
 
-During large-scale emergencies, incident information arrives from many disconnected sources — emergency calls, citizen reports, field teams, sensors, hospitals, and government departments. This fragmentation slows down situational awareness and delays coordinated response.
+- The UI calls it a scenario and asks operators to validate before dispatch.
+- Training artifacts store holdout metrics, model version, training time, and dataset SHA-256.
+- `backend/app/ml/backtest_classifier.py` runs chronological holdout evaluation on real labelled history.
+- Public external data remains separate from synthetic data and is never represented as Bengaluru dispatch history.
 
-This platform consolidates incoming reports into a single operational picture. It classifies incidents, estimates severity, detects duplicate or related reports, and recommends the appropriate emergency teams, vehicles, equipment, and facilities — all surfaced through a real-time monitoring dashboard.
+## Data provenance
 
-Built for a state-level hackathon submission.
-
-## Core capabilities
-
-- **Multi-source incident intake** — citizen reports, sensor feeds, emergency calls, and field team updates funneled into one pipeline.
-- **AI-driven classification** — incident type, severity estimation, and priority assignment.
-- **Duplicate detection** — consolidates related reports of the same event into a single incident record.
-- **Resource recommendation** — matches incidents to the nearest suitable teams, vehicles, equipment, and facilities.
-- **Real-time dashboard** — live view of active emergencies, severity, assigned teams, and response status.
-- **Alerts and escalation** — flags critical incidents, delayed responses, and cases requiring escalation.
-- **AI-generated summaries** — concise situational briefings and recommendations for response teams.
-- **Analytics** — trends across incident types, response delays, resource shortages, and frequently affected areas.
-- **Notifications** — timely updates delivered to emergency personnel and relevant authorities.
-
-## Tech stack
-
-| Layer | Technology |
-|---|---|
-| Backend | FastAPI (Python) |
-| AI / ML | Python, scikit-learn, LLM APIs |
-| Frontend | React |
-| Database | PostgreSQL |
-| Maps | OpenStreetMap, Leaflet / MapLibre |
-| Real-time | WebSockets |
-| Notifications | Email, SMS, push |
-
-## Repository structure
-
-```
-backend/        FastAPI service — API, ML pipeline, database models, business logic
-frontend/       React application
-infra/          Docker and deployment configuration
-data/           Synthetic and sensor datasets used for development
-docs/           Architecture notes and design documentation
-.github/        CI workflows
-```
-
-## Getting started
-
-Backend setup instructions are in [backend/README.md](./backend/README.md).
-Frontend setup instructions are in [frontend/README.md](./frontend/README.md).
-
-## Team and branching
-
-| Branch | Owner | Scope |
+| Source | Repository use | Boundary |
 |---|---|---|
-| `main` | Protected | Stable, deploy-ready code only |
-| `develop` | Shivam Vaghani | Backend, AI/ML, database, infrastructure |
-| `develop-ved` | Ved Goyani | Frontend and related scope |
+| `data/synthetic/` | Local development and repeatable tests | Synthetic, not operational evidence |
+| India Flood Inventory–Impacts (IIT Delhi) | India flood scenario research | Flood-focused, not dispatch/ETA history |
+| FDNY Fire Incident Dispatch | External dispatch-pattern benchmark | New York City only, never Bengaluru data |
 
-Feature work branches off the relevant owner branch, is submitted as a pull request, reviewed, and merged back before periodic integration into `main`.
+Fetch review snapshots without committing external records:
 
-## Contributing
+```bash
+cd backend
+python scripts/import_external_history.py india-flood
+python scripts/import_external_history.py fdny-fire
+```
 
-This repository is maintained by a two-person team for hackathon submission. External contributions are not currently accepted.
+See [external-data guidance](data/external/README.md) before importing any source. Production calibration requires governed local incident, assignment, arrival-time, and outcome data.
+
+## Run locally
+
+```bash
+cp backend/.env.example backend/.env
+cd infra/docker
+docker compose up -d --build
+```
+
+- Dashboard: `http://localhost:5173`
+- API/docs: `http://localhost:8001/docs`
+- Adminer: `http://localhost:8081`
+
+Apply migrations after pulling updates:
+
+```bash
+cd backend
+alembic upgrade head
+```
+
+### Operator live session
+
+The public dashboard is viewable without login. Select **Connect live** and sign in with a provisioned dispatcher or administrator account to activate authenticated WebSocket updates. **Live connected** signs out and clears the active browser token.
+
+## Quality checks
+
+```bash
+cd frontend && npm run lint && npm run build
+cd ../backend && make check
+```
+
+## Repository map
+
+```text
+backend/       FastAPI API, models, migrations, ML, tests
+frontend/      React + TypeScript command center
+data/          synthetic, facilities, sensors, external-data staging
+infra/docker/  local Docker environment
+STATEMENT.MD   original hackathon statement
+```
+
+## Deployment safety
+
+- Use a strong `SECRET_KEY` outside development and configure CORS for the deployed dashboard origin.
+- SMTP is currently best-effort; delivery guarantees require a persisted outbox/retry worker and provider monitoring.
+- Do not connect this prototype to live emergency dispatch without security, governance, reliability, and domain validation.

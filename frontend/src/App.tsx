@@ -1,7 +1,8 @@
 import { lazy, Suspense, useState, useEffect, useCallback } from "react";
-import { fetchIncidents, fetchResources, fetchAlerts, fetchPredictiveDemandForecast } from "./api";
+import { fetchIncidents, fetchResources, fetchAlerts, fetchPredictiveDemandForecast, getDashboardWebSocketUrl } from "./api";
 import type { Incident, ResourceUnit, Alert, EvacuationRouteResponse, PredictiveDemandResponse } from "./types";
 import { Navbar } from "./components/Navbar";
+import { OperatorSignInModal } from "./components/OperatorSignInModal";
 import { EmergencyMap } from "./components/EmergencyMap";
 import { IncidentList } from "./components/IncidentList";
 const QuickIntakeModal = lazy(() => import("./components/QuickIntakeModal").then((module) => ({ default: module.QuickIntakeModal })));
@@ -22,6 +23,8 @@ function App() {
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
   const [isOptimizerOpen, setIsOptimizerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"map" | "analytics">("map");
+  const [isSignInOpen, setIsSignInOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => Boolean(window.localStorage.getItem("access_token")));
 
   const loadData = useCallback(async () => {
     const [incidentsResult, resourcesResult, alertsResult, demandResult] = await Promise.allSettled([
@@ -39,11 +42,36 @@ function App() {
 
   useEffect(() => {
     loadData();
+  }, [loadData, isAuthenticated]);
 
-    // Auto-refresh periodically to catch new events
-    const interval = setInterval(loadData, 4000);
-    return () => clearInterval(interval);
-  }, [loadData]);
+  useEffect(() => {
+    const token = window.localStorage.getItem("access_token");
+    if (!token) {
+      // Public dashboard deployments retain a low-frequency reconciliation path.
+      const interval = window.setInterval(loadData, 30_000);
+      return () => window.clearInterval(interval);
+    }
+
+    let socket: WebSocket | undefined;
+    let retryTimer: number | undefined;
+    let stopped = false;
+    const connect = () => {
+      if (stopped) return;
+      socket = new WebSocket(getDashboardWebSocketUrl(token));
+      socket.onopen = () => setDataStatus("live");
+      socket.onmessage = () => { void loadData(); };
+      socket.onerror = () => setDataStatus("degraded");
+      socket.onclose = () => {
+        if (!stopped) retryTimer = window.setTimeout(connect, 5_000);
+      };
+    };
+    connect();
+    return () => {
+      stopped = true;
+      if (retryTimer) window.clearTimeout(retryTimer);
+      socket?.close();
+    };
+  }, [loadData, isAuthenticated]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
@@ -59,11 +87,20 @@ function App() {
         setActiveTab={setActiveTab}
         onOpenNewIncident={() => setIsNewModalOpen(true)}
         onOpenOptimizer={() => setIsOptimizerOpen(true)}
-        alertCount={alerts.filter((a) => !a.is_resolved).length}
+        alerts={alerts}
+        onSelectAlert={(alert) => {
+          const incident = incidents.find((item) => item.id === alert.incident_id);
+          if (!incident) return;
+          setSelectedIncident(incident);
+          setActiveEvacuationRoute(null);
+        }}
         incidentCount={incidents.length}
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
         dataStatus={dataStatus}
+        isAuthenticated={isAuthenticated}
+        onOpenSignIn={() => setIsSignInOpen(true)}
+        onSignOut={() => { window.localStorage.removeItem("access_token"); setIsAuthenticated(false); setDataStatus("loading"); }}
       />
 
       <main className="relative flex flex-1 gap-2 overflow-hidden bg-[#e8edf5] p-2 sm:gap-3 sm:p-3">
@@ -130,6 +167,7 @@ function App() {
       </main>
 
       {isNewModalOpen && <Suspense fallback={null}><QuickIntakeModal isOpen onClose={() => setIsNewModalOpen(false)} onIncidentCreated={handleIncidentCreated} /></Suspense>}
+      {isSignInOpen && <OperatorSignInModal onClose={() => setIsSignInOpen(false)} onAuthenticated={() => setIsAuthenticated(true)} />}
 
       {isOptimizerOpen && <Suspense fallback={null}><FleetOptimizerModal isOpen onClose={() => {
           setIsOptimizerOpen(false);

@@ -1,0 +1,3 @@
+# Downloaded third-party snapshots are reproducible through backend/scripts/.
+# Keep provenance tooling and reports in Git, not large source extracts.
+*_snapshot.json

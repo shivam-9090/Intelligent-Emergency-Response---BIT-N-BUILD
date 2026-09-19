@@ -184,8 +184,8 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
               inc.severity === "critical"
                 ? `<div style="
                     position: absolute;
-                    width: 32px;
-                    height: 32px;
+                    width: 24px;
+                    height: 24px;
                     border: 2px solid ${color};
                     border-radius: 50%;
                     animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
@@ -511,7 +511,7 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
     <div className="relative w-full h-full">
       <div ref={mapContainerRef} className="w-full h-full z-0" />
 
-      <div className="pointer-events-none absolute left-4 top-16 z-[1000] hidden sm:block">
+      <div className="pointer-events-none absolute left-16 top-20 z-[1000] hidden sm:block">
         <div className="flex items-center gap-3 rounded-xl border border-white/75 bg-white/90 px-3 py-2 shadow-[0_10px_30px_rgba(15,23,42,0.12)] backdrop-blur-md">
           <span className="grid size-7 place-items-center rounded-lg bg-slate-950 text-cyan-300">
             <MapPinned className="size-3.5" aria-hidden="true" />
@@ -551,24 +551,24 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
       )}
 
       {/* The legend starts compact so it supports the map instead of obscuring it. */}
-      <details className="group absolute bottom-7 left-4 z-[1000] w-52 rounded-xl border border-slate-700/80 bg-slate-950/92 text-xs shadow-[0_12px_32px_rgba(15,23,42,0.28)] backdrop-blur-md pointer-events-auto" open>
-        <summary className="flex h-10 cursor-pointer list-none items-center justify-between px-3 text-xs font-semibold text-slate-100 marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cyan-300">
+      <details className="group absolute bottom-7 left-4 z-[1000] w-48 rounded-xl border border-slate-700/80 bg-slate-950/92 text-xs shadow-[0_12px_32px_rgba(15,23,42,0.28)] backdrop-blur-md pointer-events-auto" open>
+        <summary className="flex h-9 cursor-pointer list-none items-center justify-between px-2.5 text-xs font-semibold text-slate-100 marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cyan-300">
           <span className="flex items-center gap-2"><Layers3 className="size-3.5 text-cyan-300" aria-hidden="true" /> Map key</span>
           <ChevronDown className="size-3.5 text-slate-400 transition-transform group-open:rotate-180" aria-hidden="true" />
         </summary>
-        <div className="space-y-2 border-t border-slate-700/80 px-3 pb-3 pt-2.5">
+        <div className="space-y-1.5 border-t border-slate-700/80 px-2.5 pb-2.5 pt-2">
           <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-slate-500">Incident priority</p>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-[11px] text-slate-200">
+          <div className="grid grid-cols-2 gap-x-2.5 gap-y-1.5 text-[10px] text-slate-200">
             <span className="flex items-center gap-1.5"><i className="size-2 rounded-full bg-rose-500 shadow-[0_0_0_3px_rgba(244,63,94,0.18)]" />Critical</span>
             <span className="flex items-center gap-1.5"><i className="size-2 rounded-full bg-orange-500" />High</span>
             <span className="flex items-center gap-1.5"><i className="size-2 rounded-full bg-amber-400" />Medium</span>
             <span className="flex items-center gap-1.5"><i className="size-2 rounded-full bg-blue-500" />Low</span>
           </div>
-          <div className="flex items-center justify-between border-t border-slate-700/80 pt-2 text-[11px] text-slate-300">
+          <div className="flex items-center justify-between border-t border-slate-700/80 pt-1.5 text-[10px] text-slate-300">
             <span className="flex items-center gap-1.5"><i className="size-2 rounded-sm bg-emerald-500" />Ready resource</span>
             <Activity className="size-3 text-emerald-400" aria-hidden="true" />
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-slate-300">
+          <div className="flex items-center gap-1.5 text-[10px] text-slate-300">
             <i className="size-2 rounded-sm border border-orange-300 bg-orange-500/70" />Downwind plume
           </div>
         {evacuationRoute && (

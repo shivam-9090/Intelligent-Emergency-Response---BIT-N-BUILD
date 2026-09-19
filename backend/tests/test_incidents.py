@@ -44,3 +44,21 @@ def test_duplicate_detection(client):
         json=_incident_payload(title="Same fire, different caller", latitude=12.9717, longitude=77.5947),
     )
     assert second.json()["duplicate_of_id"] == first_id
+    assert second.json()["duplicate_score"] is not None
+    assert "semantic similarity" in second.json()["duplicate_reason"]
+
+
+def test_nearby_distinct_reports_are_not_auto_merged(client):
+    client.post(
+        "/incidents", json=_incident_payload(description="Kitchen fire contained inside apartment 12")
+    )
+    second = client.post(
+        "/incidents",
+        json=_incident_payload(
+            title="Separate warehouse fire",
+            description="Warehouse flames spreading across industrial storage bays",
+            latitude=12.9717,
+            longitude=77.5947,
+        ),
+    )
+    assert second.json()["duplicate_of_id"] is None

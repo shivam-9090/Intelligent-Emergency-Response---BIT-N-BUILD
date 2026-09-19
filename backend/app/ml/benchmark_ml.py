@@ -34,7 +34,8 @@ def run_benchmark():
     with open(DATA_PATH, encoding="utf-8") as f:
         dataset = json.load(f)
 
-    print(f"\n📊 [1. Holdout Benchmark on {len(dataset)} Incident Records]")
+    print(f"\n📊 [1. In-sample diagnostic on {len(dataset)} Incident Records]")
+    print("   Note: this is not a holdout metric. Use training artifact evaluation for locked split results.")
 
     latencies = []
     type_correct = 0
@@ -76,7 +77,7 @@ def run_benchmark():
     print(f"   - Emergency Type Accuracy:  {type_acc:.1f}% ({type_correct}/{len(dataset)})")
     print(f"   - Severity Accuracy:        {sev_acc:.1f}% ({sev_correct}/{len(dataset)})")
     print(f"   - Average Latency:          {avg_lat:.2f} ms / prediction")
-    print(f"   - P95 Inference Latency:    {p95_lat:.2f} ms (Real-time sub-millisecond ready)")
+    print(f"   - P95 Inference Latency:    {p95_lat:.2f} ms (local diagnostic only)")
 
     # -------------------------------------------------------------
     # 2. Stress Testing Real-World Dirty / Panic Inputs
