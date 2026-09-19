@@ -313,6 +313,36 @@ def run_demo():
     except Exception as exc:
         print(f"   Evacuation router note: {exc}")
 
+    # -------------------------------------------------------------
+    # STEP 11: Predictive Spatio-Temporal Demand Heatmap & Pre-Deployment
+    # -------------------------------------------------------------
+    print_banner("STEP 11: Predictive Demand Heatmap & Patrol Pre-Deployment Engine")
+    print("Running Gaussian KDE over incident history + diurnal surge model...")
+    try:
+        demand_res = http_get("/analytics/predictive-demand-forecast?horizon_hours=2")
+        city_risk = demand_res.get("city_risk_index", 0)
+        horizon = demand_res.get("horizon_hours", 2)
+        staging_zones = demand_res.get("pre_deployment_staging", [])
+        heatmap = demand_res.get("demand_heatmap", [])
+
+        risk_label = "🔴 CRITICAL" if city_risk > 0.7 else ("🟠 ELEVATED" if city_risk > 0.4 else "🟢 NORMAL")
+        print(f"   🏙️ City-Wide Risk Index:   {city_risk:.3f} — {risk_label}")
+        print(f"   ⏱️ Forecast Horizon:       {horizon} hours ahead")
+        print(f"   🗺️ KDE Grid Points:        {len(heatmap)} demand density cells computed")
+        print(f"   🚓 Staging Zones Selected: {len(staging_zones)} optimal pre-deployment positions")
+
+        if staging_zones:
+            print("\n   [PRE-DEPLOYMENT STAGING RECOMMENDATIONS]:")
+            for i, zone in enumerate(staging_zones[:4], 1):
+                eta_saved = zone.get("estimated_response_time_saved_minutes", 0)
+                print(f"      Zone {i}: {zone.get('zone_name')} ({zone.get('lat', 0):.4f}°N, {zone.get('lon', 0):.4f}°E)")
+                print(f"              Demand Score: {zone.get('demand_score', 0):.3f} | ETA Saved: {eta_saved:.1f} min | Priority: {zone.get('priority_rank', i)}")
+
+        print(f"\n   🔮 KDE + Diurnal Surge model enables proactive patrol positioning")
+        print(f"   📉 Predicted avg ETA improvement: {sum(z.get('estimated_response_time_saved_minutes', 0) for z in staging_zones) / max(len(staging_zones), 1):.1f} min per zone\n")
+    except Exception as exc:
+        print(f"   Demand forecast note: {exc}")
+
     print_banner("DEMO COMPLETED SUCCESSFULLY")
 
 
