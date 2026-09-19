@@ -1,10 +1,11 @@
 import React from "react";
-import { Activity, AlertTriangle, Plus, BarChart3, Radio } from "lucide-react";
+import { Activity, AlertTriangle, Plus, BarChart3, Radio, Zap } from "lucide-react";
 
 interface NavbarProps {
   activeTab: "map" | "analytics";
   setActiveTab: (tab: "map" | "analytics") => void;
   onOpenNewIncident: () => void;
+  onOpenOptimizer: () => void;
   alertCount: number;
   incidentCount: number;
 }
@@ -13,6 +14,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
   setActiveTab,
   onOpenNewIncident,
+  onOpenOptimizer,
   alertCount,
   incidentCount,
 }) => {
@@ -63,6 +65,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span>{alertCount} Alerts</span>
           </div>
         )}
+
+        <button
+          onClick={onOpenOptimizer}
+          className="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-3.5 py-2 rounded-lg flex items-center gap-1.5 shadow-lg shadow-indigo-950 transition active:scale-95 cursor-pointer border border-indigo-500/50"
+          title="Global Fleet Optimizer - Hungarian Algorithm Dispatch"
+        >
+          <Zap className="w-4 h-4 text-amber-300 animate-pulse" />
+          <span>Optimize Fleet</span>
+        </button>
 
         <button
           onClick={onOpenNewIncident}
