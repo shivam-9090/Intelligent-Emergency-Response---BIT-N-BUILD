@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, Text, Uuid
+from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, Index, Text, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
@@ -15,6 +15,11 @@ if TYPE_CHECKING:
 
 class Alert(Base):
     __tablename__ = "alerts"
+    __table_args__ = (
+        Index("ix_alerts_incident_id", "incident_id"),
+        Index("ix_alerts_resolved", "resolved"),
+        Index("ix_alerts_incident_type_resolved", "incident_id", "alert_type", "resolved"),
+    )
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
 

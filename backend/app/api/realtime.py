@@ -20,7 +20,7 @@ async def _authenticate(websocket: WebSocket, db: Session) -> User | None:
     try:
         payload = decode_access_token(token)
         user_id = payload.get("sub")
-    except jwt.PyJWTError:
+    except (jwt.PyJWTError, ValueError):
         return None
 
     if user_id is None:
