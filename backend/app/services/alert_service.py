@@ -9,6 +9,7 @@ from app.models.alert import Alert
 from app.models.enums import AlertType, IncidentStatus, Severity
 from app.models.incident import Incident
 from app.schemas.alert import AlertRead
+from app.services.notification_service import notify_alert_created
 
 DELAYED_RESPONSE_MINUTES = 30
 ESCALATION_MINUTES = 60
@@ -21,6 +22,10 @@ def create_alert(db: Session, incident_id: uuid.UUID, alert_type: AlertType, mes
     db.refresh(alert)
 
     manager.broadcast_event("alert_created", AlertRead.model_validate(alert).model_dump(mode="json"))
+
+    incident = db.get(Incident, incident_id)
+    if incident is not None:
+        notify_alert_created(db, alert, incident)
 
     return alert
 
