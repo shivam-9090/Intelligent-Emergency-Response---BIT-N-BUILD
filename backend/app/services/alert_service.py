@@ -55,11 +55,17 @@ def generate_critical_incident_alert(db: Session, incident: Incident) -> Alert |
 
 def check_delayed_responses(db: Session, threshold_minutes: int = DELAYED_RESPONSE_MINUTES) -> list[Alert]:
     cutoff = datetime.now(UTC) - timedelta(minutes=threshold_minutes)
+    already_alerted_subquery = (
+        select(Alert.incident_id)
+        .where(Alert.alert_type == AlertType.DELAYED_RESPONSE)
+        .where(Alert.resolved.is_(False))
+    )
     stale_incidents = (
         db.execute(
             select(Incident)
             .where(Incident.status.in_([IncidentStatus.REPORTED, IncidentStatus.VERIFIED]))
             .where(Incident.reported_at < cutoff)
+            .where(Incident.id.not_in(already_alerted_subquery))
         )
         .scalars()
         .all()
@@ -67,8 +73,6 @@ def check_delayed_responses(db: Session, threshold_minutes: int = DELAYED_RESPON
 
     created = []
     for incident in stale_incidents:
-        if _has_unresolved_alert(db, incident.id, AlertType.DELAYED_RESPONSE):
-            continue
         alert = create_alert(
             db,
             incident.id,
@@ -81,12 +85,18 @@ def check_delayed_responses(db: Session, threshold_minutes: int = DELAYED_RESPON
 
 def check_escalations(db: Session, threshold_minutes: int = ESCALATION_MINUTES) -> list[Alert]:
     cutoff = datetime.now(UTC) - timedelta(minutes=threshold_minutes)
+    already_escalated_subquery = (
+        select(Alert.incident_id)
+        .where(Alert.alert_type == AlertType.ESCALATION)
+        .where(Alert.resolved.is_(False))
+    )
     overdue_incidents = (
         db.execute(
             select(Incident)
             .where(Incident.status.in_([IncidentStatus.REPORTED, IncidentStatus.VERIFIED]))
             .where(Incident.priority <= 2)
             .where(Incident.reported_at < cutoff)
+            .where(Incident.id.not_in(already_escalated_subquery))
         )
         .scalars()
         .all()
@@ -94,8 +104,6 @@ def check_escalations(db: Session, threshold_minutes: int = ESCALATION_MINUTES) 
 
     created = []
     for incident in overdue_incidents:
-        if _has_unresolved_alert(db, incident.id, AlertType.ESCALATION):
-            continue
         alert = create_alert(
             db,
             incident.id,
