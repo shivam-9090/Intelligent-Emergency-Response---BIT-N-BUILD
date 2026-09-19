@@ -1,13 +1,13 @@
-import { useState, useEffect, useCallback } from "react";
+import { lazy, Suspense, useState, useEffect, useCallback } from "react";
 import { fetchIncidents, fetchResources, fetchAlerts, fetchPredictiveDemandForecast } from "./api";
 import type { Incident, ResourceUnit, Alert, EvacuationRouteResponse, PredictiveDemandResponse } from "./types";
 import { Navbar } from "./components/Navbar";
 import { EmergencyMap } from "./components/EmergencyMap";
 import { IncidentList } from "./components/IncidentList";
-import { QuickIntakeModal } from "./components/QuickIntakeModal";
-import { IncidentDetailModal } from "./components/IncidentDetailModal";
-import { AnalyticsView } from "./components/AnalyticsView";
-import { FleetOptimizerModal } from "./components/FleetOptimizerModal";
+const QuickIntakeModal = lazy(() => import("./components/QuickIntakeModal").then((module) => ({ default: module.QuickIntakeModal })));
+const IncidentDetailModal = lazy(() => import("./components/IncidentDetailModal").then((module) => ({ default: module.IncidentDetailModal })));
+const AnalyticsView = lazy(() => import("./components/AnalyticsView").then((module) => ({ default: module.AnalyticsView })));
+const FleetOptimizerModal = lazy(() => import("./components/FleetOptimizerModal").then((module) => ({ default: module.FleetOptimizerModal })));
 
 function App() {
   const [incidents, setIncidents] = useState<Incident[]>([]);
@@ -53,7 +53,7 @@ function App() {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-[#F4F7FA] text-[#263238]">
+    <div className="h-screen w-screen flex flex-col overflow-hidden bg-[#e8edf5] text-slate-950">
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -66,12 +66,12 @@ function App() {
         dataStatus={dataStatus}
       />
 
-      <main className="flex-1 relative flex overflow-hidden">
+      <main className="relative flex flex-1 gap-2 overflow-hidden bg-[#e8edf5] p-2 sm:gap-3 sm:p-3">
         {activeTab === "map" ? (
           <>
             {/* Desktop Incident Sidebar */}
             {isSidebarOpen && (
-              <div className="hidden md:block h-full animate-in slide-in-from-left duration-200">
+              <div className="hidden h-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm md:block">
                 <IncidentList
                   incidents={incidents}
                   selectedIncident={selectedIncident}
@@ -90,7 +90,7 @@ function App() {
                   className="fixed inset-0 bg-black/50 backdrop-blur-xs"
                   onClick={() => setIsSidebarOpen(false)}
                 />
-                <div className="relative z-10 w-80 max-w-[85vw] h-full shadow-2xl animate-in slide-in-from-left duration-200">
+                <div className="relative z-10 h-full w-80 max-w-[85vw] overflow-hidden rounded-r-2xl bg-white shadow-2xl animate-in slide-in-from-left duration-200">
                   <IncidentList
                     incidents={incidents}
                     selectedIncident={selectedIncident}
@@ -104,7 +104,7 @@ function App() {
               </div>
             )}
 
-            <div className="flex-1 h-full relative">
+            <div className="relative h-full min-w-0 flex-1 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-sm sm:rounded-2xl">
               <EmergencyMap
                 incidents={incidents}
                 resources={resources}
@@ -123,26 +123,20 @@ function App() {
             </div>
           </>
         ) : (
-          <AnalyticsView incidents={incidents} />
+          <Suspense fallback={<div className="flex flex-1 items-center justify-center text-sm text-slate-500">Loading intelligence workspace…</div>}>
+            <AnalyticsView incidents={incidents} />
+          </Suspense>
         )}
       </main>
 
-      <QuickIntakeModal
-        isOpen={isNewModalOpen}
-        onClose={() => setIsNewModalOpen(false)}
-        onIncidentCreated={handleIncidentCreated}
-      />
+      {isNewModalOpen && <Suspense fallback={null}><QuickIntakeModal isOpen onClose={() => setIsNewModalOpen(false)} onIncidentCreated={handleIncidentCreated} /></Suspense>}
 
-      <FleetOptimizerModal
-        isOpen={isOptimizerOpen}
-        onClose={() => {
+      {isOptimizerOpen && <Suspense fallback={null}><FleetOptimizerModal isOpen onClose={() => {
           setIsOptimizerOpen(false);
           loadData();
-        }}
-      />
+        }} /></Suspense>}
 
-      <IncidentDetailModal
-        incident={selectedIncident}
+      {selectedIncident && <Suspense fallback={null}><IncidentDetailModal incident={selectedIncident}
         onClose={() => {
           setSelectedIncident(null);
           setActivePlumePolygon(null);
@@ -152,7 +146,7 @@ function App() {
         isPlumeActive={activePlumePolygon !== null}
         onToggleEvacuationRoute={setActiveEvacuationRoute}
         isEvacuationActive={activeEvacuationRoute !== null}
-      />
+      /></Suspense>}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { Incident } from "../types";
-import { Search, ChevronDown, Flame, Droplets, AlertOctagon, Car, HeartPulse, HelpCircle, Layers, ShieldCheck } from "lucide-react";
+import { Search, ChevronDown, Flame, Droplets, AlertOctagon, Car, HeartPulse, HelpCircle, Layers, ShieldCheck, ChevronRight, MapPin } from "lucide-react";
 import { SeverityBadge } from "./SeverityBadge";
 import {
   InputGroup,
@@ -50,19 +50,17 @@ export const IncidentList: React.FC<IncidentListProps> = ({
   });
 
   return (
-    <aside className="w-88 lg:w-96 h-full bg-white border-r border-[#DCE3E8] flex flex-col z-10 select-none shrink-0 shadow-xs">
+    <aside className="z-10 flex h-full w-88 shrink-0 flex-col bg-white text-slate-900 lg:w-96">
       {/* Search and Filters Header */}
-      <div className="p-3.5 border-b border-[#DCE3E8] space-y-2.5 bg-[#F8FAFC]">
+      <div className="space-y-3 border-b border-slate-200 bg-slate-50 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h2 className="text-xs font-bold text-[#0B1F33] uppercase tracking-wider">
-              Active Incidents
-            </h2>
-            <span className="text-[10px] font-mono font-bold bg-[#EEF2F6] border border-[#DCE3E8] text-[#1565C0] px-2 py-0.5 rounded">
+            <div><p className="text-[10px] font-semibold uppercase tracking-[.14em] text-slate-500">Response queue</p><h2 className="mt-0.5 text-sm font-semibold tracking-tight text-slate-950">Active incidents</h2></div>
+            <span className="rounded-full border border-rose-100 bg-rose-50 px-2 py-0.5 font-mono text-[10px] font-bold text-rose-600">
               {filtered.length}
             </span>
           </div>
-          <span className="text-[10px] text-[#607D8B] font-mono font-semibold">LIVE FEED</span>
+          <span className="text-[10px] font-mono font-semibold text-emerald-600">● LIVE</span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -98,7 +96,7 @@ export const IncidentList: React.FC<IncidentListProps> = ({
       </div>
 
       {/* Incidents Scrollable Feed */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-[#F1F5F9]">
+      <div className="flex-1 space-y-2 overflow-y-auto bg-slate-50/70 p-3">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
             <div className="w-10 h-10 rounded-full bg-[#E8F1FA] border border-[#DCE3E8] flex items-center justify-center text-[#2E7D32] mb-3">
@@ -117,50 +115,30 @@ export const IncidentList: React.FC<IncidentListProps> = ({
                 key={inc.id}
                 onClick={() => onSelectIncident(inc)}
                 aria-pressed={isSelected}
-                className={`w-full p-3 rounded-lg border border-l-4 text-left transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1565C0] ${leftAccent} ${
+                className={`group relative w-full rounded-2xl border p-3.5 text-left transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1565C0] ${leftAccent} ${
                   isSelected
-                    ? "bg-[#EAF3FB] border-[#1565C0] ring-1 ring-[#1565C0] text-[#263238] shadow-md"
-                    : "bg-white hover:bg-[#F8FAFC] border-[#DCE3E8] text-[#263238] shadow-xs"
+                    ? "bg-slate-950 border-slate-950 text-white shadow-lg shadow-slate-300/70"
+                    : "bg-white hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md border-slate-200 text-slate-900 shadow-sm"
                 }`}
               >
-                {/* 1. Severity & Type Icon */}
-                <div className="flex items-center justify-between gap-2 mb-1.5">
-                  <div className="flex items-center gap-1.5">
+                <div className="mb-2 flex items-center justify-between gap-2">
+                  <div className={`flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[.12em] ${isSelected ? "text-cyan-300" : "text-slate-500"}`}>
                     {TYPE_ICONS[inc.incident_type] || <HelpCircle className="w-3.5 h-3.5 text-[#607D8B]" />}
-                    <span className="text-[10px] font-bold text-[#607D8B] uppercase tracking-wider">
-                      {inc.incident_type.replace(/_/g, " ")}
-                    </span>
+                    <span>{inc.incident_type.replace(/_/g, " ")}</span>
                   </div>
                   <SeverityBadge severity={inc.severity} size="sm" />
                 </div>
-
-                {/* 2. Incident Title */}
-                <h3 className="text-xs font-bold text-[#263238] line-clamp-1 leading-snug">
-                  {inc.title}
-                </h3>
-
-                {/* 3. Description */}
-                <p className="text-[11px] text-[#607D8B] mt-1 line-clamp-2 leading-relaxed">
-                  {inc.description || "No description provided."}
-                </p>
-
-                {/* 4. Location & Priority */}
-                <div className="mt-2.5 pt-2 border-t border-[#DCE3E8]/70 flex items-center justify-between text-[10px] text-[#607D8B]">
-                  <span className="truncate max-w-[170px] font-medium flex items-center gap-1">
-                    <span>📍</span>
-                    <span className="truncate">{inc.address || "Sector Coordinates"}</span>
-                  </span>
-                  <div className="flex items-center gap-1.5 shrink-0">
+                <div className="flex items-start gap-2"><div className={`mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg ${isSelected ? "bg-white/10" : "bg-slate-100"}`}>{TYPE_ICONS[inc.incident_type] || <HelpCircle className="size-3.5 text-slate-500" />}</div><div className="min-w-0 flex-1"><h3 className={`line-clamp-2 text-[13px] font-semibold leading-snug ${isSelected ? "text-white" : "text-slate-900"}`}>{inc.title}</h3><p className={`mt-1 line-clamp-2 text-[11px] leading-relaxed ${isSelected ? "text-slate-300" : "text-slate-500"}`}>{inc.description || "No description recorded."}</p></div><ChevronRight className={`mt-1 size-4 shrink-0 transition-transform group-hover:translate-x-0.5 ${isSelected ? "text-cyan-300" : "text-slate-400"}`} /></div>
+                <div className={`mt-3 flex items-center justify-between border-t pt-2.5 text-[10px] ${isSelected ? "border-white/10 text-slate-300" : "border-slate-100 text-slate-500"}`}><span className="flex min-w-0 items-center gap-1.5 font-medium"><MapPin className="size-3 shrink-0 text-rose-400" /><span className="truncate">{inc.address || "Coordinates pending"}</span></span><div className="ml-2 flex shrink-0 items-center gap-1.5">
                     {inc.duplicate_of_id && (
-                      <span className="flex items-center gap-0.5 bg-[#FFF8E1] border border-[#FFE082] text-[#F57F17] px-1.5 py-0.5 rounded font-medium">
+                      <span className="flex items-center gap-0.5 rounded bg-amber-50 px-1.5 py-0.5 font-medium text-amber-700">
                         <Layers className="w-3 h-3" /> Merged
                       </span>
                     )}
-                    <span className="text-[#0B1F33] bg-[#EEF2F6] border border-[#DCE3E8] px-1.5 py-0.5 rounded font-mono font-bold">
+                    <span className={`rounded px-1.5 py-0.5 font-mono font-bold ${isSelected ? "bg-white/10 text-white" : "bg-slate-100 text-slate-700"}`}>
                       P{inc.priority}
                     </span>
-                  </div>
-                </div>
+                  </div></div>
               </button>
             );
           })

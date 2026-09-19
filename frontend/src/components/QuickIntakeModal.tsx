@@ -161,16 +161,16 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4" role="presentation">
-      <div role="dialog" aria-modal="true" aria-labelledby="new-incident-title" className="bg-white border border-[#DCE3E8] w-full max-w-xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] text-[#263238] animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 p-0 backdrop-blur-xs sm:p-4" role="presentation">
+      <div role="dialog" aria-modal="true" aria-labelledby="new-incident-title" className="flex h-[100dvh] w-full flex-col overflow-hidden bg-white text-slate-900 shadow-2xl animate-in fade-in duration-200 sm:h-auto sm:max-h-[min(86vh,780px)] sm:max-w-2xl sm:rounded-2xl sm:border sm:border-slate-200 sm:zoom-in-95">
         {/* Header */}
-        <div className="p-4 md:p-5 border-b border-[#DCE3E8] flex items-center justify-between bg-[#F8FAFC] shrink-0">
+        <div className="flex shrink-0 items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-3.5 sm:px-5 sm:py-4">
           <div>
-            <h2 id="new-incident-title" className="text-sm font-bold text-[#0B1F33]">
-              Report New Incident
+            <p className="text-[10px] font-semibold uppercase tracking-[.16em] text-rose-600">New operations intake</p><h2 id="new-incident-title" className="mt-1 font-heading text-lg font-semibold tracking-tight text-slate-950">
+              Report an incident
             </h2>
-            <p className="text-[11px] text-[#607D8B] mt-0.5">
-              Live intake for dispatch routing, atmospheric risk analysis & resource allocation.
+            <p className="mt-0.5 text-[11px] text-slate-500">
+              Capture the signal first; decision support follows after submission.
             </p>
           </div>
           <button
@@ -184,9 +184,9 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
         </div>
 
         {/* Scrollable Form Body */}
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-5 space-y-4">
+        <form onSubmit={handleSubmit} className="flex-1 space-y-5 overflow-y-auto p-4 sm:p-5 md:p-6">
           {error && (
-            <div className="flex items-center gap-2 p-3 rounded-lg bg-[#FDECEC] border border-[#EF9A9A] text-[#B71C1C] text-xs">
+            <div role="alert" className="flex items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800">
               <AlertCircle className="w-4 h-4 text-[#D32F2F] shrink-0" />
               <span>{error}</span>
             </div>
@@ -194,26 +194,26 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
 
           <FieldGroup>
             {/* SECTION 1: Caller Transcript & Evidence */}
-            <FieldSet>
+            <FieldSet className="rounded-2xl border border-slate-200 bg-slate-50/60 p-4">
               <div className="flex items-center justify-between">
-                <FieldLegend>Caller Transcript / Emergency Description</FieldLegend>
+                <FieldLegend className="text-slate-900">Caller transcript / scene description</FieldLegend>
                 <button
                   type="button"
                   onClick={handleAiAutoDetect}
                   disabled={isClassifying}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#1565C0] hover:text-[#0D47A1] bg-[#EAF3FB] border border-[#90CAF9] px-2.5 py-1 rounded-md transition hover:bg-[#D6E7F7] cursor-pointer disabled:opacity-50"
+                  className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-lg border border-sky-200 bg-white px-2.5 text-[11px] font-semibold text-sky-700 shadow-sm transition hover:bg-sky-50 disabled:opacity-50"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-[#1565C0]" />
                   {isClassifying ? "Analyzing incident..." : "AI Auto-Detect"}
                 </button>
               </div>
               <FieldDescription>
-                Transcribe caller audio or describe scene observation. AI will auto-classify type and priority.
+                Use the caller’s words or a concise field observation. AI can suggest a type and priority; confirm before submitting.
               </FieldDescription>
 
               <Field>
                 <Textarea
-                  rows={3}
+                  rows={4}
                   placeholder="e.g. Explosion at chemical factory! Workers trapped inside and dense black smoke spreading..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
@@ -222,7 +222,7 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
 
               {/* AI Auto-Detect Result Banner */}
               {aiClassification && (
-                <div className="p-3 bg-[#EAF3FB] border border-[#90CAF9] rounded-lg space-y-1.5 text-xs">
+                <div className="space-y-2 rounded-xl border border-sky-200 bg-sky-50 p-3 text-xs">
                   <div className="flex items-center justify-between font-semibold text-[#1565C0]">
                     <span className="flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-[#1565C0]" />
@@ -264,7 +264,7 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full flex items-center justify-center gap-2 py-2 px-3 border border-dashed border-[#DCE3E8] hover:border-[#1565C0] rounded-lg bg-[#F8FAFC] hover:bg-[#EAF3FB] text-xs text-[#607D8B] hover:text-[#0B1F33] transition cursor-pointer"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 bg-white px-3 py-3 text-xs text-slate-500 transition hover:border-sky-400 hover:bg-sky-50 hover:text-sky-800"
                   >
                     <Camera className="w-4 h-4 text-[#1565C0]" />
                     <span>Attach Scene Photo / Camera Evidence</span>
@@ -354,10 +354,10 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
             <FieldSeparator />
 
             {/* SECTION 2: Incident Information (Two-column layout) */}
-            <FieldSet>
-              <FieldLegend>Incident Information</FieldLegend>
+            <FieldSet className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <FieldLegend className="text-slate-900">Incident details & location</FieldLegend>
               <FieldDescription>
-                Specify exact operational parameters and geographical coordinates.
+                Add the minimum location detail required for routing and resource matching.
               </FieldDescription>
 
               <Field>
@@ -438,7 +438,9 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
         </form>
 
         {/* Sticky Footer */}
-        <div className="p-4 border-t border-[#DCE3E8] bg-[#F8FAFC] flex justify-end gap-2 shrink-0">
+        <div className="flex shrink-0 items-center justify-between gap-3 border-t border-slate-200 bg-slate-50 px-4 py-3 sm:px-5">
+          <p className="hidden text-[10px] text-slate-500 sm:block">Required: title, description, address, and coordinates.</p>
+          <div className="ml-auto flex gap-2">
           <Button
             type="button"
             variant="outline"
@@ -447,12 +449,13 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
             Cancel
           </Button>
           <Button
-            type="button"
-            onClick={handleSubmit}
+            type="submit"
             disabled={isSubmitting}
+            className="bg-slate-950 text-white hover:bg-slate-800"
           >
-            {isSubmitting ? "Dispatching..." : "Submit Incident"}
+            {isSubmitting ? "Submitting..." : "Submit incident"}
           </Button>
+          </div>
         </div>
       </div>
     </div>
