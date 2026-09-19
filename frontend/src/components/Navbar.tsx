@@ -1,5 +1,5 @@
 import React from "react";
-import { Activity, AlertTriangle, Plus, BarChart3, Radio, Zap } from "lucide-react";
+import { Activity, AlertTriangle, Plus, BarChart3, Radio, Zap, Menu } from "lucide-react";
 
 interface NavbarProps {
   activeTab: "map" | "analytics";
@@ -8,6 +8,7 @@ interface NavbarProps {
   onOpenOptimizer: () => void;
   alertCount: number;
   incidentCount: number;
+  onToggleSidebar?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -17,10 +18,20 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenOptimizer,
   alertCount,
   incidentCount,
+  onToggleSidebar,
 }) => {
   return (
-    <header className="bg-white border-b border-[#DCE3E8] px-6 py-3 flex items-center justify-between text-[#263238] select-none shadow-xs">
-      <div className="flex items-center space-x-4">
+    <header className="bg-white border-b border-[#DCE3E8] px-4 md:px-6 py-2.5 flex items-center justify-between text-[#263238] select-none shadow-xs">
+      <div className="flex items-center space-x-3 md:space-x-4">
+        {onToggleSidebar && (
+          <button
+            onClick={onToggleSidebar}
+            className="md:hidden p-1.5 rounded-lg border border-[#DCE3E8] hover:bg-[#EEF2F6] text-[#607D8B] cursor-pointer"
+            aria-label="Toggle incident list"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+        )}
         <div className="flex items-center space-x-2 text-[#0B1F33] font-black text-xl tracking-tight">
           <Activity className="w-6 h-6 animate-pulse text-[#1565C0]" />
           <span>RESPONDR<span className="text-[#1565C0] font-semibold text-xs ml-1.5 px-2 py-0.5 bg-[#E3F2FD] border border-[#90CAF9] rounded">AI</span></span>

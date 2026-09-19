@@ -13,6 +13,8 @@ import {
   Shield,
 } from "lucide-react";
 
+import { SeverityBadge } from "./SeverityBadge";
+
 interface FleetOptimizerModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -49,18 +51,18 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-      <div className="bg-white border border-[#DCE3E8] w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col text-[#263238] animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-white border border-[#DCE3E8] w-full max-w-3xl rounded-xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col text-[#263238] animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="p-5 border-b border-[#DCE3E8] flex items-start justify-between bg-[#EEF2F6]">
+        <div className="p-4 md:p-5 border-b border-[#DCE3E8] flex items-start justify-between bg-[#F8FAFC] shrink-0">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-[#E3F2FD] text-[#1565C0] border border-[#90CAF9]">
+              <span className="p-1 rounded-md bg-[#E3F2FD] text-[#1565C0] border border-[#90CAF9]">
                 <Zap className="w-4 h-4" />
               </span>
-              <h2 className="text-base font-bold text-[#263238]">
+              <h2 className="text-base font-bold text-[#0B1F33]">
                 Global Fleet Optimization Engine
               </h2>
-              <span className="text-[10px] font-mono bg-[#E8F1FA] text-[#1565C0] border border-[#90CAF9] px-2 py-0.5 rounded-full font-semibold">
+              <span className="text-[10px] font-mono bg-[#E8F1FA] text-[#1565C0] border border-[#90CAF9] px-2 py-0.5 rounded font-bold">
                 Hungarian Algorithm
               </span>
             </div>
@@ -70,7 +72,8 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="text-[#607D8B] hover:text-[#263238] p-1 rounded-lg hover:bg-[#E8F1FA] transition cursor-pointer"
+            className="text-[#607D8B] hover:text-[#263238] p-1.5 rounded-lg hover:bg-[#EEF2F6] transition cursor-pointer"
+            aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
           </button>
@@ -154,26 +157,18 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
                     {plan.assignments.map((item, idx) => (
                       <div
                         key={idx}
-                        className="bg-white border border-[#DCE3E8] p-3 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs hover:bg-[#F4F8FC] transition"
+                        className="bg-white border border-[#DCE3E8] p-3 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs hover:bg-[#F8FAFC] transition shadow-xs"
                       >
                         {/* Incident Info */}
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2">
-                            <span
-                              className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded border ${
-                                item.severity === "critical"
-                                  ? "bg-[#FDECEC] text-[#B71C1C] border-[#EF9A9A]"
-                                  : "bg-[#FFF3E0] text-[#E65100] border-[#FFCC80]"
-                              }`}
-                            >
-                              {item.severity}
-                            </span>
-                            <span className="font-semibold text-[#263238] truncate">
+                            <SeverityBadge severity={item.severity} size="sm" />
+                            <span className="font-semibold text-[#0B1F33] truncate">
                               {item.incident_title}
                             </span>
                           </div>
                           <div className="text-[11px] text-[#607D8B] mt-0.5">
-                            Sector Type: <span className="capitalize text-[#263238]">{item.incident_type}</span> | Priority {item.priority}
+                            Sector Type: <span className="capitalize text-[#263238] font-medium">{item.incident_type.replace(/_/g, " ")}</span> | Priority {item.priority}
                           </div>
                         </div>
 

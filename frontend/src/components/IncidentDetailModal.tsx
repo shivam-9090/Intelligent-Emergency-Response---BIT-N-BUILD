@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import type { Incident, ResourceBundleResponse, IncidentSummary, HospitalFacility, CascadeRiskResponse, ImageAnalysisResponse, EvacuationRouteResponse } from "../types";
 import { fetchResourceBundle, fetchSummary, fetchHospitalRecommendations, fetchCascadeRisk, fetchEvacuationRoute, analyzeIncidentImage } from "../api";
 import { X, Sparkles, Clock, ShieldAlert, CheckCircle2, Navigation, Hospital, Bed, TrendingUp, Wind, AlertTriangle, Eye, Camera, Trash2, Zap, Route } from "lucide-react";
+import { SeverityBadge } from "./SeverityBadge";
 
 interface IncidentDetailModalProps {
   incident: Incident | null;
@@ -139,37 +140,27 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
     <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
       <div className="bg-white border border-[#DCE3E8] w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col text-[#263238] animate-in fade-in zoom-in-95 duration-200">
         {/* Modal Header */}
-        <div className="p-5 border-b border-[#DCE3E8] flex items-start justify-between bg-[#EEF2F6]">
+        <div className="p-4 md:p-5 border-b border-[#DCE3E8] flex items-start justify-between bg-[#F8FAFC] shrink-0">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono uppercase bg-white px-2 py-0.5 rounded text-[#263238] font-semibold border border-[#DCE3E8]">
-                {incident.incident_type}
+              <span className="text-[10px] font-mono uppercase bg-white px-2 py-0.5 rounded text-[#0B1F33] font-bold border border-[#DCE3E8]">
+                {incident.incident_type.replace(/_/g, " ")}
               </span>
-              <span
-                className={`text-xs font-bold uppercase px-2 py-0.5 rounded-full border ${
-                  incident.severity === "critical"
-                    ? "bg-[#FDECEC] text-[#B71C1C] border-[#EF9A9A]"
-                    : incident.severity === "high"
-                    ? "bg-[#FFF3E0] text-[#E65100] border-[#FFCC80]"
-                    : incident.severity === "medium"
-                    ? "bg-[#FFF8E1] text-[#F57F17] border-[#FFE082]"
-                    : "bg-[#E3F2FD] text-[#1565C0] border-[#90CAF9]"
-                }`}
-              >
-                {incident.severity}
-              </span>
-              <span className="text-xs font-mono text-[#607D8B]">
+              <SeverityBadge severity={incident.severity} size="sm" />
+              <span className="text-[11px] font-mono text-[#607D8B] bg-[#EEF2F6] px-2 py-0.5 rounded border border-[#DCE3E8]">
                 Priority {incident.priority}
               </span>
             </div>
-            <h2 className="text-base font-bold text-[#263238] mt-1.5">{incident.title}</h2>
-            <p className="text-xs text-[#607D8B] mt-0.5">
-              📍 {incident.address || `${incident.latitude}, ${incident.longitude}`}
+            <h2 className="text-base font-bold text-[#0B1F33] mt-2 leading-snug">{incident.title}</h2>
+            <p className="text-xs text-[#607D8B] mt-1 flex items-center gap-1">
+              <span>📍</span>
+              <span>{incident.address || `${incident.latitude}, ${incident.longitude}`}</span>
             </p>
           </div>
           <button
             onClick={onClose}
-            className="text-[#607D8B] hover:text-[#263238] p-1 rounded-lg hover:bg-[#E8F1FA] transition cursor-pointer"
+            className="text-[#607D8B] hover:text-[#263238] p-1.5 rounded-lg hover:bg-[#EEF2F6] transition cursor-pointer"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
