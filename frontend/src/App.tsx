@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { fetchIncidents, fetchResources, fetchAlerts } from "./api";
-import type { Incident, ResourceUnit, Alert, EvacuationRouteResponse } from "./types";
+import { fetchIncidents, fetchResources, fetchAlerts, fetchPredictiveDemandForecast } from "./api";
+import type { Incident, ResourceUnit, Alert, EvacuationRouteResponse, PredictiveDemandResponse } from "./types";
 import { Navbar } from "./components/Navbar";
 import { EmergencyMap } from "./components/EmergencyMap";
 import { IncidentList } from "./components/IncidentList";
@@ -16,20 +16,24 @@ function App() {
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
   const [activePlumePolygon, setActivePlumePolygon] = useState<[number, number][] | null>(null);
   const [activeEvacuationRoute, setActiveEvacuationRoute] = useState<EvacuationRouteResponse | null>(null);
+  const [predictiveDemand, setPredictiveDemand] = useState<PredictiveDemandResponse | null>(null);
+  const [showDemandHeatmap, setShowDemandHeatmap] = useState(false);
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
   const [isOptimizerOpen, setIsOptimizerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"map" | "analytics">("map");
 
   const loadData = useCallback(async () => {
     try {
-      const [incData, resData, alertData] = await Promise.all([
+      const [incData, resData, alertData, demandData] = await Promise.all([
         fetchIncidents(),
         fetchResources(),
         fetchAlerts(),
+        fetchPredictiveDemandForecast(2).catch(() => null),
       ]);
       setIncidents(incData);
       setResources(resData);
       setAlerts(alertData);
+      if (demandData) setPredictiveDemand(demandData);
     } catch (err) {
       console.error("Failed to load initial data:", err);
     }
@@ -81,6 +85,9 @@ function App() {
                 }}
                 activePlumePolygon={activePlumePolygon}
                 evacuationRoute={activeEvacuationRoute}
+                predictiveDemand={predictiveDemand}
+                showDemandHeatmap={showDemandHeatmap}
+                onToggleDemandHeatmap={() => setShowDemandHeatmap((prev) => !prev)}
               />
             </div>
           </>

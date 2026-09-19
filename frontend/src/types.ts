@@ -237,4 +237,36 @@ export interface EvacuationRouteResponse {
   routing_algorithm: string;
 }
 
+export interface DemandHeatmapPoint {
+  latitude: number;
+  longitude: number;
+  intensity: number;
+  risk_level: "low" | "medium" | "high" | "critical";
+  predicted_incident_type: string;
+  historical_event_count: number;
+}
+
+export interface PreDeploymentStagingPoint {
+  staging_id: string;
+  zone_name: string;
+  latitude: number;
+  longitude: number;
+  target_incident_type: string;
+  recommended_unit_type: string;
+  predicted_demand_intensity: number;
+  projected_eta_savings_minutes: number;
+  tactical_rationale: string;
+}
+
+export interface PredictiveDemandResponse {
+  forecast_horizon_hours: number;
+  generated_at: string;
+  city_wide_risk_index: number;
+  active_incidents_considered: number;
+  heatmap_grid: DemandHeatmapPoint[];
+  staging_recommendations: PreDeploymentStagingPoint[];
+  total_projected_eta_savings_minutes: number;
+  algorithm: string;
+}
+
 
