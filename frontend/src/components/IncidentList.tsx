@@ -57,7 +57,6 @@ export const IncidentList: React.FC<IncidentListProps> = ({
       <div className="p-4 border-b border-[#102A43] space-y-3 bg-[#0B1F33]">
         <div className="flex items-center justify-between">
           <h2 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#D32F2F] animate-pulse" />
             Active Incidents ({filtered.length})
           </h2>
         </div>

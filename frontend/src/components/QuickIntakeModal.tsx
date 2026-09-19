@@ -129,7 +129,6 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
       <div className="bg-white border border-[#DCE3E8] w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 text-[#263238]">
         <div className="p-5 border-b border-[#DCE3E8] flex items-center justify-between bg-[#EEF2F6]">
           <div className="text-sm font-bold text-[#263238] flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#D32F2F] animate-pulse" />
             Report New Incident
           </div>
           <button

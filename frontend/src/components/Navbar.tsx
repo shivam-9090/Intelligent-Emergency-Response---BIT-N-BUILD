@@ -26,8 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <span>RESPONDR<span className="text-[#1565C0] font-semibold text-xs ml-1.5 px-2 py-0.5 bg-[#E3F2FD] border border-[#90CAF9] rounded">AI</span></span>
         </div>
         <div className="hidden md:flex items-center text-xs text-[#607D8B] border-l border-[#DCE3E8] pl-4 space-x-2">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#E8F5E9] border border-[#A5D6A7] text-[#2E7D32] font-medium">
-            <span className="w-2 h-2 rounded-full bg-[#2E7D32] animate-ping" />
+          <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-[#E8F5E9] border border-[#A5D6A7] text-[#2E7D32] font-medium">
             Live Dispatch Connected
           </span>
           <span className="text-[#90A4AE]">|</span>

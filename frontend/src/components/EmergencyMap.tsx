@@ -474,20 +474,19 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
           Incident Severity
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#D32F2F] animate-ping inline-block" />
-          <span className="w-2.5 h-2.5 rounded-full bg-[#D32F2F] inline-block -ml-4.5" />
+          <span className="w-2.5 h-2.5 rounded-xs bg-[#D32F2F] inline-block" />
           <span className="text-[#263238] font-medium">Critical (Immediate)</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#F57C00] inline-block" />
+          <span className="w-2.5 h-2.5 rounded-xs bg-[#F57C00] inline-block" />
           <span className="text-[#263238]">High Severity</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#F9A825] inline-block" />
+          <span className="w-2.5 h-2.5 rounded-xs bg-[#F9A825] inline-block" />
           <span className="text-[#263238]">Medium Severity</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#1565C0] inline-block" />
+          <span className="w-2.5 h-2.5 rounded-xs bg-[#1565C0] inline-block" />
           <span className="text-[#263238]">Low Severity</span>
         </div>
         <div className="border-t border-[#DCE3E8] pt-1.5 mt-1 flex items-center gap-2">
@@ -513,7 +512,7 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
         {showDemandHeatmap && (
           <>
             <div className="border-t border-[#DCE3E8] pt-1.5 mt-1 flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#1565C0] inline-block" />
+              <span className="w-2.5 h-2.5 rounded-xs bg-[#1565C0] inline-block" />
               <span className="text-[#1565C0] font-medium">KDE Demand Surge Zone</span>
             </div>
             <div className="flex items-center gap-2">

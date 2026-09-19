@@ -239,7 +239,7 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                         : "bg-[#FFF8E1] text-[#F57F17] border-[#FFE082]"
                     }`}
                   >
-                    {cascadeRisk.cascade_risk_score}% RISK • {cascadeRisk.escalation_level.toUpperCase()}
+                    {cascadeRisk.cascade_risk_score}% RISK | {cascadeRisk.escalation_level.toUpperCase()}
                   </span>
                   {onTogglePlume && (
                     <button
