@@ -20,6 +20,14 @@ class Settings(BaseSettings):
     enable_scheduler: bool = True
     alert_check_interval_minutes: int = 5
 
+    enable_email_notifications: bool = False
+    smtp_host: str = ""
+    smtp_port: int = 587
+    smtp_username: str = ""
+    smtp_password: str = ""
+    smtp_from_email: str = "alerts@emergency-response.local"
+    smtp_use_tls: bool = True
+
 
 @lru_cache
 def get_settings() -> Settings:
