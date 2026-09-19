@@ -9,7 +9,7 @@ export function InputGroup({
 }: InputGroupProps) {
   return (
     <div
-      className={`relative flex items-center w-full rounded-lg border border-[#163A59] bg-[#102A43] focus-within:border-[#1565C0] focus-within:ring-1 focus-within:ring-[#1565C0] transition ${className}`}
+      className={`relative flex items-center w-full rounded-lg border border-[#DCE3E8] bg-white focus-within:border-[#1565C0] focus-within:ring-1 focus-within:ring-[#1565C0] transition shadow-xs ${className}`}
       {...props}
     >
       {children}
@@ -27,7 +27,7 @@ export const InputGroupInput = React.forwardRef<
   return (
     <input
       ref={ref}
-      className={`flex-1 bg-transparent px-3 py-1.5 text-xs text-white placeholder-[#90A4AE] focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+      className={`flex-1 bg-transparent px-3 py-1.5 text-xs text-[#0B1F33] placeholder-[#90A4AE] focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 font-normal ${className}`}
       {...props}
     />
   )
@@ -47,8 +47,8 @@ export function InputGroupAddon({
 }: InputGroupAddonProps) {
   return (
     <div
-      className={`flex items-center text-[#90A4AE] text-xs px-2.5 shrink-0 ${
-        align === "inline-end" ? "order-last border-l border-[#163A59]" : "order-first"
+      className={`flex items-center text-[#607D8B] text-xs px-2.5 shrink-0 ${
+        align === "inline-end" ? "order-last border-l border-[#DCE3E8]" : "order-first"
       } ${className}`}
       {...props}
     >

@@ -12,7 +12,7 @@ interface NavbarProps {
   onOpenNewIncident: () => void;
   onOpenOptimizer: () => void;
   alertCount: number;
-  incidentCount: number;
+  incidentCount?: number;
   isSidebarOpen?: boolean;
   onToggleSidebar?: () => void;
 }
@@ -23,7 +23,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenNewIncident,
   onOpenOptimizer,
   alertCount,
-  incidentCount,
   isSidebarOpen = true,
   onToggleSidebar,
 }) => {
@@ -51,10 +50,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             </span>
           </button>
         )}
-
-        <div className="hidden md:flex items-center text-xs text-[#607D8B] border-l border-[#DCE3E8] pl-3">
-          <span className="font-medium text-[#607D8B]">{incidentCount} active incidents</span>
-        </div>
       </div>
 
       <div className="flex items-center space-x-2 md:space-x-3">

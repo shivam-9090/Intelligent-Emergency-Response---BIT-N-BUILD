@@ -74,7 +74,7 @@ export const IncidentList: React.FC<IncidentListProps> = ({
               placeholder="Search..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="text-[#263238] placeholder:text-[#90A4AE]"
+              className="text-[#0B1F33] font-medium placeholder:text-[#90A4AE]"
             />
           </InputGroup>
 
