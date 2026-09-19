@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.ml.cascade_forecaster import forecast_cascade_risk
 from app.ml.classification import classify_raw_text
+from app.ml.vision_analyzer import analyze_incident_image
 from app.schemas.cascade import CascadeRiskResponse
 from app.schemas.incident import (
     ClassifyTextRequest,
@@ -19,6 +20,7 @@ from app.schemas.resource import (
     ResourceUnitRead,
 )
 from app.schemas.summary import IncidentSummary
+from app.schemas.vision import ImageAnalysisRequest, ImageAnalysisResponse
 from app.services import incident_service, resource_service, summary_service
 
 router = APIRouter(prefix="/incidents", tags=["incidents"])
@@ -125,3 +127,37 @@ def get_incident_cascade_risk(
     )
 
     return CascadeRiskResponse(incident_id=incident_id, **forecast)
+
+
+@router.post("/analyze-image", response_model=ImageAnalysisResponse)
+def analyze_image(payload: ImageAnalysisRequest) -> ImageAnalysisResponse:
+    """Perform multi-modal visual damage assessment and false-alarm verification."""
+    try:
+        return analyze_incident_image(
+            image_base64=payload.image_base64,
+            incident_type=payload.incident_type_hint,
+            context_description=payload.context_description,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.post("/{incident_id}/analyze-image", response_model=ImageAnalysisResponse)
+def analyze_incident_image_attachment(
+    incident_id: uuid.UUID,
+    payload: ImageAnalysisRequest,
+    db: Session = Depends(get_db),
+) -> ImageAnalysisResponse:
+    """Analyze emergency photo attached to an active incident."""
+    incident = incident_service.get_incident(db, incident_id)
+    if incident is None:
+        raise HTTPException(status_code=404, detail="Incident not found")
+
+    try:
+        return analyze_incident_image(
+            image_base64=payload.image_base64,
+            incident_type=payload.incident_type_hint or incident.incident_type,
+            context_description=payload.context_description or incident.description,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc

@@ -4,6 +4,7 @@ import type {
   ClassifyResult,
   FleetOptimizationResponse,
   HospitalRecommendationResponse,
+  ImageAnalysisResponse,
   Incident,
   IncidentSummary,
   ResourceBundleResponse,
@@ -116,5 +117,26 @@ export async function optimizeFleet(): Promise<FleetOptimizationResponse> {
     headers: { "Content-Type": "application/json" },
   });
   if (!res.ok) throw new Error("Failed to execute global fleet optimization");
+  return res.json();
+}
+
+export async function analyzeIncidentImage(
+  imageBase64: string,
+  incidentTypeHint?: string,
+  contextDescription?: string
+): Promise<ImageAnalysisResponse> {
+  const res = await fetch(`${API_BASE}/incidents/analyze-image`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      image_base64: imageBase64,
+      incident_type_hint: incidentTypeHint,
+      context_description: contextDescription,
+    }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Visual analysis request failed" }));
+    throw new Error(err.detail || "Visual analysis request failed");
+  }
   return res.json();
 }
