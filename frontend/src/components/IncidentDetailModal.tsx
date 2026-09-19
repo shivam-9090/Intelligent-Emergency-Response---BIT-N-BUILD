@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from "react";
-import type { Incident, ResourceBundleResponse, IncidentSummary, HospitalFacility } from "../types";
-import { fetchResourceBundle, fetchSummary, fetchHospitalRecommendations } from "../api";
-import { X, Sparkles, Clock, ShieldAlert, CheckCircle2, Navigation, Hospital, Bed } from "lucide-react";
+import type { Incident, ResourceBundleResponse, IncidentSummary, HospitalFacility, CascadeRiskResponse } from "../types";
+import { fetchResourceBundle, fetchSummary, fetchHospitalRecommendations, fetchCascadeRisk } from "../api";
+import { X, Sparkles, Clock, ShieldAlert, CheckCircle2, Navigation, Hospital, Bed, TrendingUp, Wind, AlertTriangle, Eye } from "lucide-react";
 
 interface IncidentDetailModalProps {
   incident: Incident | null;
   onClose: () => void;
+  onTogglePlume?: (polygon: [number, number][] | null) => void;
+  isPlumeActive?: boolean;
 }
 
 export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
   incident,
   onClose,
+  onTogglePlume,
+  isPlumeActive = false,
 }) => {
   const [bundle, setBundle] = useState<ResourceBundleResponse | null>(null);
   const [summary, setSummary] = useState<IncidentSummary | null>(null);
   const [hospitals, setHospitals] = useState<HospitalFacility[]>([]);
+  const [cascadeRisk, setCascadeRisk] = useState<CascadeRiskResponse | null>(null);
   const [isLoadingBundle, setIsLoadingBundle] = useState(false);
   const [isLoadingSummary, setIsLoadingSummary] = useState(false);
   const [isLoadingHospitals, setIsLoadingHospitals] = useState(false);
+  const [isLoadingCascade, setIsLoadingCascade] = useState(false);
   const [isDispatched, setIsDispatched] = useState(false);
 
   useEffect(() => {
@@ -25,6 +31,7 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
       setBundle(null);
       setSummary(null);
       setHospitals([]);
+      setCascadeRisk(null);
       setIsDispatched(false);
       return;
     }
@@ -42,6 +49,13 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
       .then((res) => setHospitals(res.facilities))
       .catch((err) => console.error("Hospitals error:", err))
       .finally(() => setIsLoadingHospitals(false));
+
+    // Load predictive cascade risk
+    setIsLoadingCascade(true);
+    fetchCascadeRisk(incident.id)
+      .then((res) => setCascadeRisk(res))
+      .catch((err) => console.error("Cascade risk error:", err))
+      .finally(() => setIsLoadingCascade(false));
   }, [incident]);
 
   if (!incident) return null;
@@ -141,6 +155,127 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
               <p className="text-[11px] text-slate-400 italic">
                 Click "Generate AI Brief" to synthesize incoming audio logs and get tactical recommendations for field responders.
               </p>
+            )}
+          </div>
+
+          {/* Predictive Cascade & Secondary Hazard Forecaster Card */}
+          <div className="p-4 rounded-xl bg-gradient-to-br from-amber-950/30 via-slate-900 to-slate-900 border border-amber-800/60 space-y-3.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-amber-300 font-bold text-xs">
+                <TrendingUp className="w-4 h-4 text-amber-400" />
+                Predictive Cascade & Secondary Risk Forecaster
+              </div>
+              {cascadeRisk && (
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${
+                      cascadeRisk.escalation_level === "critical"
+                        ? "bg-rose-950 text-rose-300 border-rose-700"
+                        : cascadeRisk.escalation_level === "high"
+                        ? "bg-orange-950 text-orange-300 border-orange-700"
+                        : "bg-amber-950 text-amber-300 border-amber-700"
+                    }`}
+                  >
+                    {cascadeRisk.cascade_risk_score}% RISK • {cascadeRisk.escalation_level.toUpperCase()}
+                  </span>
+                  {onTogglePlume && (
+                    <button
+                      onClick={() =>
+                        onTogglePlume(
+                          isPlumeActive
+                            ? null
+                            : cascadeRisk.evacuation_corridor.polygon_coordinates
+                        )
+                      }
+                      className={`inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded-md border transition cursor-pointer ${
+                        isPlumeActive
+                          ? "bg-orange-600 text-white border-orange-500 shadow-md shadow-orange-900"
+                          : "bg-slate-800 text-orange-300 border-orange-800/60 hover:bg-slate-700"
+                      }`}
+                    >
+                      <Eye className="w-3 h-3" />
+                      {isPlumeActive ? "Hide Plume" : "Show Plume on Map"}
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {isLoadingCascade ? (
+              <div className="text-xs text-slate-400 text-center py-3">
+                Calculating atmospheric dispersion vectors and secondary hazard timelines...
+              </div>
+            ) : cascadeRisk ? (
+              <div className="space-y-3">
+                {/* Weather & Advice */}
+                <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] bg-slate-950/60 p-2.5 rounded-lg border border-slate-800">
+                  <div className="flex items-center gap-1.5 text-cyan-300">
+                    <Wind className="w-3.5 h-3.5 text-cyan-400" />
+                    <span>
+                      Wind: <b>{cascadeRisk.weather.wind_speed_kmh} km/h</b> blowing <b>{cascadeRisk.weather.wind_direction_deg}° (NE)</b>
+                    </span>
+                  </div>
+                  <div className="text-slate-400">
+                    Temp: <span className="text-slate-200">{cascadeRisk.weather.temperature_c}°C</span> | Humidity: <span className="text-slate-200">{cascadeRisk.weather.humidity_pct}%</span>
+                  </div>
+                </div>
+
+                {/* Secondary Hazards Timeline */}
+                <div className="space-y-1.5">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                    Predicted Secondary Cascade Events:
+                  </div>
+                  <div className="space-y-1.5">
+                    {cascadeRisk.secondary_hazards.map((haz, idx) => (
+                      <div
+                        key={idx}
+                        className="bg-slate-800/60 border border-slate-700/60 p-2 rounded-lg text-xs flex flex-col gap-1"
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="font-semibold text-slate-200 flex items-center gap-1.5">
+                            <AlertTriangle className="w-3 h-3 text-amber-400 shrink-0" />
+                            {haz.hazard_type}
+                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-mono text-amber-300 bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-800/60">
+                              {(haz.probability * 100).toFixed(0)}% Probability
+                            </span>
+                            <span className="text-[10px] font-mono text-slate-400">
+                              Onset ~{haz.estimated_onset_minutes}m
+                            </span>
+                          </div>
+                        </div>
+                        <p className="text-[11px] text-slate-400 pl-4.5">
+                          👉 {haz.recommended_action}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Vulnerable Civic Infrastructure in Zone */}
+                {cascadeRisk.vulnerable_infrastructure.length > 0 && (
+                  <div className="pt-1">
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                      Civic Infrastructure within Plume Perimeter:
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {cascadeRisk.vulnerable_infrastructure.map((inf) => (
+                        <span
+                          key={inf.id}
+                          className="text-[10px] bg-slate-800/90 text-slate-300 border border-slate-700 px-2 py-0.5 rounded-md flex items-center gap-1"
+                        >
+                          🏛️ {inf.name} ({inf.distance_km}km, ~{inf.occupancy_estimate} occupants)
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-xs text-slate-500 text-center py-2">
+                Atmospheric telemetry offline.
+              </div>
             )}
           </div>
 
