@@ -1,5 +1,6 @@
 import type {
   Alert,
+  IncidentBreakdownResponse,
   CascadeRiskResponse,
   ClassifyResult,
   EvacuationRouteResponse,
@@ -10,7 +11,9 @@ import type {
   IncidentSummary,
   PredictiveDemandResponse,
   ResourceBundleResponse,
+  ResourceShortage,
   ResourceUnit,
+  ResponseDelayStats,
 } from "./types";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8001";
@@ -95,21 +98,21 @@ export async function fetchCascadeRisk(
   return res.json();
 }
 
-export async function fetchAnalyticsBreakdown(): Promise<Record<string, number>> {
-  const res = await fetch(`${API_BASE}/analytics/incident-breakdown`);
-  if (!res.ok) return {};
+export async function fetchAnalyticsBreakdown(): Promise<IncidentBreakdownResponse> {
+  const res = await fetch(`${API_BASE}/analytics/incidents`);
+  if (!res.ok) throw new Error("Failed to fetch incident breakdown");
   return res.json();
 }
 
-export async function fetchAnalyticsDelays(): Promise<any> {
+export async function fetchAnalyticsDelays(): Promise<ResponseDelayStats> {
   const res = await fetch(`${API_BASE}/analytics/response-delays`);
-  if (!res.ok) return [];
+  if (!res.ok) throw new Error("Failed to fetch response delay statistics");
   return res.json();
 }
 
-export async function fetchAnalyticsShortages(): Promise<any> {
+export async function fetchAnalyticsShortages(): Promise<ResourceShortage[]> {
   const res = await fetch(`${API_BASE}/analytics/resource-shortages`);
-  if (!res.ok) return [];
+  if (!res.ok) throw new Error("Failed to fetch resource shortages");
   return res.json();
 }
 

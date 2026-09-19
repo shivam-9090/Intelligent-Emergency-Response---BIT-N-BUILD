@@ -22,6 +22,14 @@ const SEVERITY_COLORS = {
   low: "#3b82f6",
 };
 
+const escapeHtml = (value: string) => value.replace(/[&<>'"]/g, (character) => ({
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  "'": "&#39;",
+  '"': "&quot;",
+})[character] ?? character);
+
 export const EmergencyMap: React.FC<EmergencyMapProps> = ({
   incidents,
   resources,
@@ -192,10 +200,10 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
 
       const popupContent = `
         <div style="color: #0f172a; font-family: sans-serif; min-width: 180px;">
-          <div style="font-weight: 700; font-size: 14px;">${inc.title}</div>
-          <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Type: <b>${inc.incident_type.toUpperCase()}</b></div>
+          <div style="font-weight: 700; font-size: 14px;">${escapeHtml(inc.title)}</div>
+          <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Type: <b>${escapeHtml(inc.incident_type.toUpperCase())}</b></div>
           <div style="font-size: 12px; color: ${color}; font-weight: 600;">Severity: ${inc.severity.toUpperCase()}</div>
-          <div style="font-size: 11px; color: #475569; margin-top: 4px;">Status: ${inc.status}</div>
+          <div style="font-size: 11px; color: #475569; margin-top: 4px;">Status: ${escapeHtml(inc.status)}</div>
           ${inc.duplicate_of_id ? `<div style="font-size: 10px; background: #fef08a; color: #854d0e; padding: 2px 4px; border-radius: 4px; margin-top: 4px;">⚠️ Duplicate Report</div>` : ""}
         </div>
       `;
@@ -227,9 +235,9 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
       const marker = L.marker([res.latitude, res.longitude], { icon });
       marker.bindPopup(`
         <div style="color: #0f172a; font-family: sans-serif;">
-          <div style="font-weight: 600;">${res.name}</div>
-          <div style="font-size: 11px; color: #64748b;">Type: ${res.resource_type}</div>
-          <div style="font-size: 11px; color: ${isAvail ? "#16a34a" : "#64748b"}; font-weight: 600;">Status: ${res.status}</div>
+          <div style="font-weight: 600;">${escapeHtml(res.name)}</div>
+          <div style="font-size: 11px; color: #64748b;">Type: ${escapeHtml(res.resource_type)}</div>
+          <div style="font-size: 11px; color: ${isAvail ? "#16a34a" : "#64748b"}; font-weight: 600;">Status: ${escapeHtml(res.status)}</div>
         </div>
       `);
       layerGroup.addLayer(marker);

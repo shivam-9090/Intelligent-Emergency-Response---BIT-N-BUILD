@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchAnalyticsBreakdown, fetchAnalyticsDelays, fetchAnalyticsShortages, fetchPredictiveDemandForecast } from "../api";
-import type { Incident, PredictiveDemandResponse } from "../types";
+import type { Incident, IncidentBreakdownResponse, PredictiveDemandResponse, ResourceShortage, ResponseDelayStats } from "../types";
 import { ShieldCheck, AlertTriangle, Clock, Flame, Users, Radio } from "lucide-react";
 
 interface AnalyticsViewProps {
@@ -8,16 +8,30 @@ interface AnalyticsViewProps {
 }
 
 export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
-  const [breakdown, setBreakdown] = useState<Record<string, number>>({});
-  const [delays, setDelays] = useState<any[]>([]);
-  const [shortages, setShortages] = useState<any[]>([]);
+  const [breakdown, setBreakdown] = useState<IncidentBreakdownResponse | null>(null);
+  const [delays, setDelays] = useState<ResponseDelayStats | null>(null);
+  const [shortages, setShortages] = useState<ResourceShortage[] | null>(null);
+  const [analyticsError, setAnalyticsError] = useState(false);
   const [predictiveDemand, setPredictiveDemand] = useState<PredictiveDemandResponse | null>(null);
 
   useEffect(() => {
-    fetchAnalyticsBreakdown().then(setBreakdown).catch(console.error);
-    fetchAnalyticsDelays().then(setDelays).catch(console.error);
-    fetchAnalyticsShortages().then(setShortages).catch(console.error);
-    fetchPredictiveDemandForecast(2).then(setPredictiveDemand).catch(console.error);
+    let isCurrent = true;
+    const loadAnalytics = async () => {
+      const [breakdownResult, delaysResult, shortagesResult, demandResult] = await Promise.allSettled([
+        fetchAnalyticsBreakdown(),
+        fetchAnalyticsDelays(),
+        fetchAnalyticsShortages(),
+        fetchPredictiveDemandForecast(2),
+      ]);
+      if (!isCurrent) return;
+      if (breakdownResult.status === "fulfilled") setBreakdown(breakdownResult.value);
+      if (delaysResult.status === "fulfilled") setDelays(delaysResult.value);
+      if (shortagesResult.status === "fulfilled") setShortages(shortagesResult.value);
+      if (demandResult.status === "fulfilled") setPredictiveDemand(demandResult.value);
+      setAnalyticsError([breakdownResult, delaysResult, shortagesResult, demandResult].some((result) => result.status === "rejected"));
+    };
+    void loadAnalytics();
+    return () => { isCurrent = false; };
   }, []);
 
   const totalIncidents = incidents.length;
@@ -35,6 +49,12 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
           Real-time incident frequency, severity distribution, delay metrics, and resource availability.
         </p>
       </div>
+
+      {analyticsError && (
+        <div role="alert" className="rounded-lg border border-[#EF9A9A] bg-[#FDECEC] px-4 py-3 text-xs text-[#B71C1C]">
+          Some analytics data is unavailable. Figures shown below may be incomplete; retry the page when the service recovers.
+        </div>
+      )}
 
       {/* Top Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -81,15 +101,15 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
           Incidents by Emergency Category
         </h3>
         <div className="space-y-3">
-          {Object.entries(breakdown).length === 0 ? (
+          {!breakdown || breakdown.by_type.length === 0 ? (
             <div className="text-xs text-[#90A4AE] py-4">No category data yet.</div>
           ) : (
-            Object.entries(breakdown).map(([cat, count]) => {
-              const pct = totalIncidents > 0 ? (count / totalIncidents) * 100 : 0;
+            breakdown.by_type.map(({ incident_type, count }) => {
+              const pct = breakdown.total > 0 ? (count / breakdown.total) * 100 : 0;
               return (
-                <div key={cat} className="space-y-1">
+                <div key={incident_type} className="space-y-1">
                   <div className="flex justify-between text-xs text-[#263238] capitalize font-medium">
-                    <span>{cat.replace("_", " ")}</span>
+                    <span>{incident_type.replace("_", " ")}</span>
                     <span className="font-mono text-[#607D8B]">{count} ({pct.toFixed(0)}%)</span>
                   </div>
                   <div className="w-full h-2 bg-[#EEF2F6] rounded-full overflow-hidden">
@@ -174,14 +194,14 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
             <Clock className="w-4 h-4 text-[#F57C00]" />
             Response Delay Alerts
           </h3>
-          {delays.length === 0 ? (
+          {!delays || delays.by_type.length === 0 ? (
             <div className="text-xs text-[#90A4AE] py-4">All response teams are currently within optimal response windows.</div>
           ) : (
             <div className="space-y-2">
-              {delays.map((d, i) => (
-                <div key={i} className="p-3 bg-[#EEF2F6] border border-[#DCE3E8] rounded-lg text-xs flex justify-between items-center">
-                  <span className="text-[#263238] font-semibold">{d.title || `Incident #${i+1}`}</span>
-                  <span className="text-[#D32F2F] font-mono font-bold">Delay: {d.delay_minutes || 15}m</span>
+              {delays.by_type.map((delay) => (
+                <div key={delay.incident_type} className="p-3 bg-[#EEF2F6] border border-[#DCE3E8] rounded-lg text-xs flex justify-between items-center">
+                  <span className="text-[#263238] font-semibold capitalize">{delay.incident_type.replace(/_/g, " ")} <span className="font-normal text-[#607D8B]">({delay.sample_size} responses)</span></span>
+                  <span className="text-[#D32F2F] font-mono font-bold">Avg: {delay.average_minutes.toFixed(1)}m</span>
                 </div>
               ))}
             </div>
@@ -193,14 +213,14 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
             <Users className="w-4 h-4 text-[#1565C0]" />
             Sector Resource Constraints
           </h3>
-          {shortages.length === 0 ? (
+          {!shortages || shortages.length === 0 ? (
             <div className="text-xs text-[#90A4AE] py-4">Resource unit capacity is healthy across all operational sectors.</div>
           ) : (
             <div className="space-y-2">
               {shortages.map((s, i) => (
                 <div key={i} className="p-3 bg-[#EEF2F6] border border-[#DCE3E8] rounded-lg text-xs flex justify-between items-center">
                   <span className="text-[#263238] capitalize font-medium">{s.resource_type || "Units"}</span>
-                  <span className="text-[#F57C00] font-bold">Capacity low in Sector</span>
+                  <span className={s.shortage ? "text-[#F57C00] font-bold" : "text-[#2E7D32] font-bold"}>{s.available}/{s.total} available</span>
                 </div>
               ))}
             </div>
