@@ -31,6 +31,8 @@ class IncidentRead(BaseModel):
     longitude: float | None
     address: str | None
     duplicate_of_id: uuid.UUID | None
+    duplicate_score: float | None
+    duplicate_reason: str | None
     reported_at: datetime
     created_at: datetime
     updated_at: datetime

@@ -33,6 +33,8 @@ export interface Incident {
   longitude: number | null;
   address: string | null;
   duplicate_of_id: string | null;
+  duplicate_score: number | null;
+  duplicate_reason: string | null;
   reported_at: string;
   created_at: string;
   updated_at: string;
@@ -64,7 +66,7 @@ export interface Alert {
   incident_id: string;
   alert_type: "critical_incident" | "delayed_response" | "escalation";
   message: string;
-  is_resolved: boolean;
+  resolved: boolean;
   created_at: string;
 }
 
@@ -267,6 +269,7 @@ export interface PredictiveDemandResponse {
   staging_recommendations: PreDeploymentStagingPoint[];
   total_projected_eta_savings_minutes: number;
   algorithm: string;
+  validation_status: string;
 }
 
 export interface IncidentTypeCount {
@@ -298,4 +301,3 @@ export interface ResourceShortage {
   unavailable: number;
   shortage: boolean;
 }
-

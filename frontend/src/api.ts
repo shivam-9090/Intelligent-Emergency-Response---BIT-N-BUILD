@@ -18,6 +18,25 @@ import type {
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8001";
 
+export function getDashboardWebSocketUrl(token: string): string {
+  const url = new URL(API_BASE);
+  url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
+  url.pathname = `${url.pathname.replace(/\/$/, "")}/ws/dashboard`;
+  url.searchParams.set("token", token);
+  return url.toString();
+}
+
+export async function loginOperator(email: string, password: string): Promise<{ access_token: string }> {
+  const body = new URLSearchParams({ username: email, password });
+  const res = await fetch(`${API_BASE}/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body,
+  });
+  if (!res.ok) throw new Error("Sign-in failed. Check your operator credentials.");
+  return res.json();
+}
+
 export async function fetchIncidents(): Promise<Incident[]> {
   const res = await fetch(`${API_BASE}/incidents`);
   if (!res.ok) throw new Error("Failed to fetch incidents");

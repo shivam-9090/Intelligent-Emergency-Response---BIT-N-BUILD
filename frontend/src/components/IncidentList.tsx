@@ -96,7 +96,7 @@ export const IncidentList: React.FC<IncidentListProps> = ({
       </div>
 
       {/* Incidents Scrollable Feed */}
-      <div className="flex-1 space-y-2 overflow-y-auto bg-slate-50/70 p-3">
+      <div className="flex-1 space-y-1.5 overflow-y-auto bg-slate-50/70 p-2.5">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
             <div className="w-10 h-10 rounded-full bg-[#E8F1FA] border border-[#DCE3E8] flex items-center justify-center text-[#2E7D32] mb-3">
@@ -115,21 +115,21 @@ export const IncidentList: React.FC<IncidentListProps> = ({
                 key={inc.id}
                 onClick={() => onSelectIncident(inc)}
                 aria-pressed={isSelected}
-                className={`group relative w-full rounded-2xl border p-3.5 text-left transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1565C0] ${leftAccent} ${
+                className={`group relative w-full rounded-2xl border p-3 text-left transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1565C0] ${leftAccent} ${
                   isSelected
                     ? "bg-slate-950 border-slate-950 text-white shadow-lg shadow-slate-300/70"
                     : "bg-white hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md border-slate-200 text-slate-900 shadow-sm"
                 }`}
               >
-                <div className="mb-2 flex items-center justify-between gap-2">
+                <div className="mb-1.5 flex items-center justify-between gap-2">
                   <div className={`flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[.12em] ${isSelected ? "text-cyan-300" : "text-slate-500"}`}>
                     {TYPE_ICONS[inc.incident_type] || <HelpCircle className="w-3.5 h-3.5 text-[#607D8B]" />}
                     <span>{inc.incident_type.replace(/_/g, " ")}</span>
                   </div>
                   <SeverityBadge severity={inc.severity} size="sm" />
                 </div>
-                <div className="flex items-start gap-2"><div className={`mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg ${isSelected ? "bg-white/10" : "bg-slate-100"}`}>{TYPE_ICONS[inc.incident_type] || <HelpCircle className="size-3.5 text-slate-500" />}</div><div className="min-w-0 flex-1"><h3 className={`line-clamp-2 text-[13px] font-semibold leading-snug ${isSelected ? "text-white" : "text-slate-900"}`}>{inc.title}</h3><p className={`mt-1 line-clamp-2 text-[11px] leading-relaxed ${isSelected ? "text-slate-300" : "text-slate-500"}`}>{inc.description || "No description recorded."}</p></div><ChevronRight className={`mt-1 size-4 shrink-0 transition-transform group-hover:translate-x-0.5 ${isSelected ? "text-cyan-300" : "text-slate-400"}`} /></div>
-                <div className={`mt-3 flex items-center justify-between border-t pt-2.5 text-[10px] ${isSelected ? "border-white/10 text-slate-300" : "border-slate-100 text-slate-500"}`}><span className="flex min-w-0 items-center gap-1.5 font-medium"><MapPin className="size-3 shrink-0 text-rose-400" /><span className="truncate">{inc.address || "Coordinates pending"}</span></span><div className="ml-2 flex shrink-0 items-center gap-1.5">
+                <div className="flex items-start gap-2"><div className={`mt-0.5 grid size-6 shrink-0 place-items-center rounded-lg ${isSelected ? "bg-white/10" : "bg-slate-100"}`}>{TYPE_ICONS[inc.incident_type] || <HelpCircle className="size-3.5 text-slate-500" />}</div><div className="min-w-0 flex-1"><h3 className={`line-clamp-2 text-[13px] font-semibold leading-snug ${isSelected ? "text-white" : "text-slate-900"}`}>{inc.title}</h3><p className={`mt-0.5 line-clamp-2 text-[11px] leading-relaxed ${isSelected ? "text-slate-300" : "text-slate-500"}`}>{inc.description || "No description recorded."}</p></div><ChevronRight className={`mt-1 size-4 shrink-0 transition-transform group-hover:translate-x-0.5 ${isSelected ? "text-cyan-300" : "text-slate-400"}`} /></div>
+                <div className={`mt-2 flex items-center justify-between border-t pt-2 text-[10px] ${isSelected ? "border-white/10 text-slate-300" : "border-slate-100 text-slate-500"}`}><span className="flex min-w-0 items-center gap-1.5 font-medium"><MapPin className="size-3 shrink-0 text-rose-400" /><span className="truncate">{inc.address || "Coordinates pending"}</span></span><div className="ml-2 flex shrink-0 items-center gap-1.5">
                     {inc.duplicate_of_id && (
                       <span className="flex items-center gap-0.5 rounded bg-amber-50 px-1.5 py-0.5 font-medium text-amber-700">
                         <Layers className="w-3 h-3" /> Merged

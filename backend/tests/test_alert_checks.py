@@ -36,6 +36,14 @@ def test_check_delayed_responses_ignores_recent_incident(db_session):
     assert check_delayed_responses(db_session, threshold_minutes=30) == []
 
 
+def test_check_delayed_responses_ignores_duplicate_report(db_session):
+    canonical = _stale_incident(db_session)
+    _stale_incident(db_session, duplicate_of_id=canonical.id)
+    alerts = check_delayed_responses(db_session, threshold_minutes=30)
+    assert len(alerts) == 1
+    assert alerts[0].incident_id == canonical.id
+
+
 def test_check_delayed_responses_does_not_duplicate_alerts(db_session):
     _stale_incident(db_session)
     first = check_delayed_responses(db_session, threshold_minutes=30)

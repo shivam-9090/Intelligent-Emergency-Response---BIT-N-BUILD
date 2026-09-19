@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.core.realtime import manager
 from app.ml.classification import classify_incident
-from app.ml.duplicate_detection import find_duplicate
+from app.ml.duplicate_detection import find_duplicate_match
 from app.models.incident import Incident
 from app.schemas.incident import IncidentCreate, IncidentRead
 from app.services.alert_service import generate_critical_incident_alert
@@ -39,16 +39,20 @@ def create_incident(db: Session, payload: IncidentCreate) -> Incident:
         .scalars()
         .all()
     )
-    duplicate = find_duplicate(incident, list(recent_candidates))
-    if duplicate is not None:
-        incident.duplicate_of_id = duplicate.id
+    duplicate_match = find_duplicate_match(incident, list(recent_candidates))
+    if duplicate_match is not None:
+        incident.duplicate_of_id = duplicate_match.incident.id
+        incident.duplicate_score = duplicate_match.score
+        incident.duplicate_reason = duplicate_match.reason
 
     db.commit()
     db.refresh(incident)
 
     manager.broadcast_event("incident_created", IncidentRead.model_validate(incident).model_dump(mode="json"))
 
-    generate_critical_incident_alert(db, incident)
+    # Alerts belong to the canonical incident; duplicate reports must not amplify operator noise.
+    if incident.duplicate_of_id is None:
+        generate_critical_incident_alert(db, incident)
 
     return incident
 

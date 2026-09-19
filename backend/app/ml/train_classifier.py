@@ -5,6 +5,8 @@ the synthetic emergency incidents dataset. Serializes the trained models for fas
 """
 
 import json
+import hashlib
+from datetime import UTC, datetime
 from pathlib import Path
 
 import joblib
@@ -63,13 +65,15 @@ def train_models():
     type_pipeline = build_pipeline()
     type_pipeline.fit(X_train_type, y_train_type)
     type_preds = type_pipeline.predict(X_test_type)
-    print(classification_report(y_test_type, type_preds))
+    type_report = classification_report(y_test_type, type_preds, output_dict=True, zero_division=0)
+    print(classification_report(y_test_type, type_preds, zero_division=0))
 
     print("--- Training Incident Severity Classifier ---")
     severity_pipeline = build_pipeline()
     severity_pipeline.fit(X_train_sev, y_train_sev)
     sev_preds = severity_pipeline.predict(X_test_sev)
-    print(classification_report(y_test_sev, sev_preds))
+    severity_report = classification_report(y_test_sev, sev_preds, output_dict=True, zero_division=0)
+    print(classification_report(y_test_sev, sev_preds, zero_division=0))
 
     # Retrain on full dataset for production weights
     type_pipeline.fit(texts, types)
@@ -81,7 +85,14 @@ def train_models():
     artifacts = {
         "type_pipeline": type_pipeline,
         "severity_pipeline": severity_pipeline,
-        "version": "1.0.0",
+        "version": "1.1.0",
+        "trained_at": datetime.now(UTC).isoformat(),
+        "dataset_sha256": hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest(),
+        "evaluation": {
+            "split": "stratified 80/20 holdout, random_state=42",
+            "type": type_report,
+            "severity": severity_report,
+        },
     }
     joblib.dump(artifacts, MODEL_PATH)
     print(f"Models successfully trained and exported to: {MODEL_PATH}")

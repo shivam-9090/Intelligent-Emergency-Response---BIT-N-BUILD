@@ -64,6 +64,7 @@ def check_delayed_responses(db: Session, threshold_minutes: int = DELAYED_RESPON
         db.execute(
             select(Incident)
             .where(Incident.status.in_([IncidentStatus.REPORTED, IncidentStatus.VERIFIED]))
+            .where(Incident.duplicate_of_id.is_(None))
             .where(Incident.reported_at < cutoff)
             .where(Incident.id.not_in(already_alerted_subquery))
         )
@@ -94,6 +95,7 @@ def check_escalations(db: Session, threshold_minutes: int = ESCALATION_MINUTES) 
         db.execute(
             select(Incident)
             .where(Incident.status.in_([IncidentStatus.REPORTED, IncidentStatus.VERIFIED]))
+            .where(Incident.duplicate_of_id.is_(None))
             .where(Incident.priority <= 2)
             .where(Incident.reported_at < cutoff)
             .where(Incident.id.not_in(already_escalated_subquery))
@@ -116,7 +118,8 @@ def check_escalations(db: Session, threshold_minutes: int = ESCALATION_MINUTES) 
 
 
 def list_alerts(db: Session, resolved: bool | None = None, limit: int = 100, offset: int = 0) -> list[Alert]:
-    query = select(Alert)
+    # Suppress legacy alerts attached to duplicate reports. The canonical incident owns the queue.
+    query = select(Alert).join(Incident, Alert.incident_id == Incident.id).where(Incident.duplicate_of_id.is_(None))
     if resolved is not None:
         query = query.where(Alert.resolved.is_(resolved))
     query = query.order_by(Alert.created_at.desc()).offset(offset).limit(limit)

@@ -125,7 +125,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
                 <div><p className="text-[10px] font-semibold uppercase tracking-[.14em] text-cyan-300">Forecast window</p><h3 className="mt-0.5 text-sm font-semibold">Pre-deployment recommendations</h3></div>
               </div>
               <p className="mt-2 text-xs text-slate-300">
-                Forward {predictiveDemand.forecast_horizon_hours}h demand model identifies where standby capacity protects response time.
+                A {predictiveDemand.forecast_horizon_hours}h scenario layer suggests where standby capacity may protect response time; validate before dispatch.
               </p>
             </div>
             <div className="flex items-center gap-2 text-xs">
@@ -167,7 +167,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
 
           <div className="flex items-center justify-between border-t border-white/10 pt-3 font-mono text-[10px] text-slate-400">
             <span>Grid Points Calculated: {predictiveDemand.heatmap_grid.length} cells</span>
-            <span>Algorithm: {predictiveDemand.algorithm}</span>
+              <span title={predictiveDemand.validation_status}>Scenario only · {predictiveDemand.validation_status}</span>
           </div>
         </section>
       )}
