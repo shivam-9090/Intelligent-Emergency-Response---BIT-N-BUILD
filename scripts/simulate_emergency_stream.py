@@ -293,6 +293,26 @@ def run_demo():
     except Exception as exc:
         print(f"   Vision analysis note: {exc}")
 
+    # -------------------------------------------------------------
+    # STEP 10: Hazard-Aware Dynamic Evacuation Router (A* Plume Bypass)
+    # -------------------------------------------------------------
+    print_banner("STEP 10: Hazard-Aware Dynamic Evacuation Router (A* Plume Bypass)")
+    print("Computing zero-exposure evacuation corridor around active toxic plume...")
+    try:
+        evac_res = http_get(f"/incidents/{inc_id}/evacuation-route")
+        naive = evac_res.get("naive_direct_route", {})
+        safe = evac_res.get("safe_evacuation_corridor", {})
+        print(f"   🧭 Routing Engine:         {evac_res.get('routing_algorithm')}")
+        print(f"   🏥 Target Destination:     {evac_res.get('target_destination_name')} ({evac_res.get('target_destination_category')})")
+        print(f"   ⚠️ Naive Direct Exposure:  {naive.get('hazard_exposure_meters', 0):.0f} meters (CRITICAL PLUME PENETRATION)")
+        print(f"   🛡️ Safe Corridor Exposure: {safe.get('hazard_exposure_meters', 0):.0f} meters (GUARANTEED ZERO EXPOSURE)")
+        print(f"   💡 Plume Exposure Avoided: +{evac_res.get('safety_delta_meters_avoided', 0):.0f} meters of toxic air eliminated")
+        print(f"   ⏱️ Transit Time Delta:     {safe.get('eta_minutes', 0):.1f} mins vs {naive.get('eta_minutes', 0):.1f} mins naive")
+        print(f"   🗺️ Safe Corridor Distance: {safe.get('total_distance_km', 0):.2f} km across {len(safe.get('waypoints', []))} tactical waypoints")
+        print(f"   📢 Tactical Advice:        \"{evac_res.get('tactical_advice')}\"\n")
+    except Exception as exc:
+        print(f"   Evacuation router note: {exc}")
+
     print_banner("DEMO COMPLETED SUCCESSFULLY")
 
 

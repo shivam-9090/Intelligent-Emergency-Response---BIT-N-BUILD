@@ -208,4 +208,33 @@ export interface ImageAnalysisResponse {
   analysis_provider: string;
 }
 
+export interface RouteWaypoint {
+  step_index: number;
+  latitude: number;
+  longitude: number;
+  description: string;
+  inside_hazard: boolean;
+}
+
+export interface RoutePath {
+  waypoints: RouteWaypoint[];
+  total_distance_km: number;
+  eta_minutes: number;
+  hazard_exposure_meters: number;
+  is_safe: boolean;
+}
+
+export interface EvacuationRouteResponse {
+  incident_id: string;
+  incident_title: string;
+  target_destination_name: string;
+  target_destination_category: string;
+  target_destination_coords: [number, number];
+  naive_direct_route: RoutePath;
+  safe_evacuation_corridor: RoutePath;
+  safety_delta_meters_avoided: number;
+  tactical_advice: string;
+  routing_algorithm: string;
+}
+
 
