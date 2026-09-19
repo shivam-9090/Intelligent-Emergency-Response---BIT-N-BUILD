@@ -3,10 +3,11 @@ import uuid
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.core.realtime import manager
 from app.ml.classification import classify_incident
 from app.ml.duplicate_detection import find_duplicate
 from app.models.incident import Incident
-from app.schemas.incident import IncidentCreate
+from app.schemas.incident import IncidentCreate, IncidentRead
 from app.services.alert_service import generate_critical_incident_alert
 
 
@@ -44,6 +45,8 @@ def create_incident(db: Session, payload: IncidentCreate) -> Incident:
 
     db.commit()
     db.refresh(incident)
+
+    manager.broadcast_event("incident_created", IncidentRead.model_validate(incident).model_dump(mode="json"))
 
     generate_critical_incident_alert(db, incident)
 

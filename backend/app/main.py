@@ -1,3 +1,4 @@
+import asyncio
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
@@ -6,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import alerts, assignments, auth, incidents, realtime, resources
 from app.core.config import get_settings
+from app.core.realtime import manager
 from app.core.scheduler import start_scheduler, stop_scheduler
 
 settings = get_settings()
@@ -13,6 +15,7 @@ settings = get_settings()
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    manager.bind_loop(asyncio.get_running_loop())
     start_scheduler()
     yield
     stop_scheduler()

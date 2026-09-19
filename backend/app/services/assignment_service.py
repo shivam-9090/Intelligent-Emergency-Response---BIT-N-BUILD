@@ -3,11 +3,13 @@ import uuid
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.core.realtime import manager
 from app.models.assignment import Assignment
 from app.models.enums import AssignmentStatus, IncidentStatus, ResourceStatus
 from app.models.incident import Incident
 from app.models.resource import ResourceUnit
-from app.schemas.assignment import AssignmentCreate
+from app.schemas.assignment import AssignmentCreate, AssignmentRead
+from app.schemas.incident import IncidentRead
 
 
 class ResourceUnavailableError(Exception):
@@ -39,6 +41,11 @@ def create_assignment(db: Session, payload: AssignmentCreate) -> Assignment:
 
     db.commit()
     db.refresh(assignment)
+
+    manager.broadcast_event(
+        "assignment_created", AssignmentRead.model_validate(assignment).model_dump(mode="json")
+    )
+
     return assignment
 
 
@@ -50,6 +57,7 @@ def update_assignment_status(db: Session, assignment_id: uuid.UUID, status: Assi
     assignment.status = status
     resource = db.get(ResourceUnit, assignment.resource_id)
     incident = db.get(Incident, assignment.incident_id)
+    incident_status_before = incident.status if incident is not None else None
 
     if resource is not None and status in (AssignmentStatus.COMPLETED, AssignmentStatus.CANCELLED):
         resource.status = ResourceStatus.AVAILABLE
@@ -75,6 +83,16 @@ def update_assignment_status(db: Session, assignment_id: uuid.UUID, status: Assi
 
     db.commit()
     db.refresh(assignment)
+
+    manager.broadcast_event(
+        "assignment_status_updated", AssignmentRead.model_validate(assignment).model_dump(mode="json")
+    )
+    if incident is not None and incident.status != incident_status_before:
+        db.refresh(incident)
+        manager.broadcast_event(
+            "incident_updated", IncidentRead.model_validate(incident).model_dump(mode="json")
+        )
+
     return assignment
 
 
