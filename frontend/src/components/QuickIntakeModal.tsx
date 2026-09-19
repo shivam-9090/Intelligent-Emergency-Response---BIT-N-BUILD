@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { classifyText, createIncident } from "../api";
-import { Sparkles, X, AlertCircle } from "lucide-react";
-import type { Incident } from "../types";
+import React, { useState, useRef } from "react";
+import { classifyText, createIncident, analyzeIncidentImage } from "../api";
+import { Sparkles, X, AlertCircle, Camera, CheckCircle2, Trash2, Zap } from "lucide-react";
+import type { Incident, ImageAnalysisResponse } from "../types";
 
 interface QuickIntakeModalProps {
   isOpen: boolean;
@@ -26,6 +26,12 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Multi-Modal Vision State
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isAnalyzingImage, setIsAnalyzingImage] = useState(false);
+  const [visualAudit, setVisualAudit] = useState<ImageAnalysisResponse | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   if (!isOpen) return null;
 
   const handleAiAutoDetect = async () => {
@@ -46,6 +52,45 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
       setError(err.message || "Failed to classify text with AI");
     } finally {
       setIsClassifying(false);
+    }
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setError("Please select a valid image file (JPEG, PNG, WebP).");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const dataUrl = reader.result as string;
+      setImagePreview(dataUrl);
+      setIsAnalyzingImage(true);
+      setError(null);
+      try {
+        const audit = await analyzeIncidentImage(dataUrl, incidentType, description);
+        setVisualAudit(audit);
+        if (!title.trim()) {
+          setTitle(`Visual Verified: ${audit.damage_severity.toUpperCase()} ${incidentType.toUpperCase()} Incident`);
+        }
+      } catch (err: any) {
+        console.error("Image analysis failed:", err);
+        setError(err.message || "Visual analysis failed");
+      } finally {
+        setIsAnalyzingImage(false);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+    setVisualAudit(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
@@ -122,6 +167,106 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
               onChange={(e) => setDescription(e.target.value)}
               className="w-full bg-slate-800/90 border border-slate-700 rounded-lg p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-rose-500 transition"
             />
+          </div>
+
+          {/* Multi-Modal Scene Photo Upload & Visual Audit */}
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              className="hidden"
+            />
+
+            {!imagePreview ? (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 border border-dashed border-slate-700 hover:border-rose-500/80 rounded-xl bg-slate-800/40 hover:bg-slate-800/80 text-xs text-slate-400 hover:text-slate-200 transition cursor-pointer"
+              >
+                <Camera className="w-4 h-4 text-rose-400" />
+                <span>Attach Scene Photo / Camera Evidence (Multi-Modal Vision AI)</span>
+              </button>
+            ) : (
+              <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3 space-y-2.5">
+                <div className="flex items-start gap-3">
+                  <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-slate-700 shrink-0 bg-slate-900">
+                    <img
+                      src={imagePreview}
+                      alt="Incident Evidence"
+                      className="w-full h-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleRemoveImage}
+                      className="absolute top-0.5 right-0.5 bg-black/70 hover:bg-rose-900 text-slate-300 hover:text-white p-0.5 rounded transition"
+                      title="Remove photo"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </button>
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                        <Camera className="w-3.5 h-3.5 text-rose-400" />
+                        Visual Evidence Audit
+                      </span>
+                      {visualAudit && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-700 text-emerald-300">
+                          <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                          {visualAudit.authenticity_status.replace("_", " ").toUpperCase()}
+                        </span>
+                      )}
+                    </div>
+
+                    {isAnalyzingImage ? (
+                      <div className="flex items-center gap-2 mt-2 text-[11px] text-amber-400 animate-pulse">
+                        <Zap className="w-3.5 h-3.5 animate-bounce" />
+                        Analyzing photo with Vision AI...
+                      </div>
+                    ) : visualAudit ? (
+                      <div className="mt-1 space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded ${
+                            visualAudit.damage_severity === "critical"
+                              ? "bg-rose-900/80 text-rose-200 border border-rose-700"
+                              : "bg-amber-900/80 text-amber-200 border border-amber-700"
+                          }`}>
+                            {visualAudit.damage_severity.toUpperCase()} DAMAGE ({visualAudit.damage_score}%)
+                          </span>
+                          <span className="text-[10px] text-slate-400 font-mono">
+                            {visualAudit.analysis_provider.split(" ")[0]}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-300 line-clamp-2 leading-tight">
+                          {visualAudit.tactical_assessment}
+                        </p>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+
+                {visualAudit && visualAudit.detected_hazards.length > 0 && (
+                  <div className="pt-2 border-t border-slate-800/80">
+                    <span className="text-[10px] font-semibold text-slate-400 block mb-1">
+                      Detected Visual Hazards:
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {visualAudit.detected_hazards.map((h, i) => (
+                        <span
+                          key={i}
+                          className="bg-slate-800 border border-slate-700 text-slate-300 text-[10px] px-2 py-0.5 rounded-md font-mono"
+                        >
+                          ⚠️ {h.hazard_type.replace(/_/g, " ")}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* AI Detection Result Pill */}

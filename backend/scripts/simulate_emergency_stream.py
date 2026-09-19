@@ -252,6 +252,47 @@ def run_demo():
     except Exception as exc:
         print(f"   Fleet optimization note: {exc}")
 
+    # -------------------------------------------------------------
+    # STEP 9: Multi-Modal Computer Vision & Damage Assessment
+    # -------------------------------------------------------------
+    print_banner("STEP 9: Multi-Modal Computer Vision & False-Alarm Verification")
+    print("Simulating citizen camera capture transmission to Vision-Language Model...")
+    sample_png_b64 = (
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAA"
+        "CklEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+    )
+    try:
+        vis_payload = {
+            "image_base64": sample_png_b64,
+            "incident_type_hint": "fire",
+            "context_description": "Explosion at industrial chemical plant with heavy smoke and workers trapped",
+        }
+        vis_res = http_post(f"/incidents/{inc_id}/analyze-image", vis_payload)
+        print(f"   📷 Vision Engine:          {vis_res.get('analysis_provider')}")
+        print(f"   🔥 Assessed Damage:        {vis_res.get('damage_severity').upper()} ({vis_res.get('damage_score')}%)")
+        auth_status = vis_res.get("authenticity_status", "").replace("_", " ").upper()
+        auth_conf = (vis_res.get("authenticity_confidence", 0) * 100)
+        print(f"   🛡️ Authenticity Status:    {auth_status} ({auth_conf:.1f}% confidence)")
+        print(f"   🔍 Authenticity Reasoning: \"{vis_res.get('authenticity_reasoning')}\"")
+        
+        hazards = vis_res.get("detected_hazards", [])
+        if hazards:
+            print("\n   [DETECTED VISUAL HAZARDS]:")
+            for h in hazards:
+                print(f"      • {h.get('hazard_type')} ({(h.get('confidence', 0)*100):.0f}% conf) - {h.get('description')}")
+        
+        gear = vis_res.get("recommended_tactical_gear", [])
+        if gear:
+            print("\n   [RECOMMENDED TACTICAL GEAR & PPE]:")
+            for g in gear:
+                print(f"      🦺 {g}")
+
+        print(f"\n   Trapped Victims Likely:    {vis_res.get('trapped_victims_likely')} (Est. casualties: {vis_res.get('estimated_casualty_count')})")
+        print(f"   Accessibility:             {vis_res.get('accessibility_status').upper()}")
+        print(f"   Tactical Field Brief:      \"{vis_res.get('tactical_assessment')}\"\n")
+    except Exception as exc:
+        print(f"   Vision analysis note: {exc}")
+
     print_banner("DEMO COMPLETED SUCCESSFULLY")
 
 
