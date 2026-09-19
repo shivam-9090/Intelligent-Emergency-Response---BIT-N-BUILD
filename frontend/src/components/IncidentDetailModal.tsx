@@ -102,7 +102,7 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
         );
         setVisualAudit(audit);
       } catch (err) {
-        console.error("Image analysis error:", err);
+        console.error("Visual analysis error:", err);
       } finally {
         setIsAnalyzingImage(false);
       }
@@ -119,6 +119,7 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
   };
 
   const handleGenerateSummary = async () => {
+    if (!incident) return;
     setIsLoadingSummary(true);
     try {
       const res = await fetchSummary(incident.id);
@@ -135,36 +136,40 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <div className="bg-slate-900 border border-slate-700 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
+      <div className="bg-white border border-[#DCE3E8] w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col text-[#263238] animate-in fade-in zoom-in-95 duration-200">
         {/* Modal Header */}
-        <div className="p-5 border-b border-slate-800 flex items-start justify-between bg-slate-950/60">
+        <div className="p-5 border-b border-[#DCE3E8] flex items-start justify-between bg-[#EEF2F6]">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono uppercase bg-slate-800 px-2 py-0.5 rounded text-slate-300 font-semibold border border-slate-700">
+              <span className="text-xs font-mono uppercase bg-white px-2 py-0.5 rounded text-[#263238] font-semibold border border-[#DCE3E8]">
                 {incident.incident_type}
               </span>
               <span
                 className={`text-xs font-bold uppercase px-2 py-0.5 rounded-full border ${
                   incident.severity === "critical"
-                    ? "bg-rose-950 text-rose-300 border-rose-700"
-                    : "bg-amber-950 text-amber-300 border-amber-700"
+                    ? "bg-[#FDECEC] text-[#B71C1C] border-[#EF9A9A]"
+                    : incident.severity === "high"
+                    ? "bg-[#FFF3E0] text-[#E65100] border-[#FFCC80]"
+                    : incident.severity === "medium"
+                    ? "bg-[#FFF8E1] text-[#F57F17] border-[#FFE082]"
+                    : "bg-[#E3F2FD] text-[#1565C0] border-[#90CAF9]"
                 }`}
               >
                 {incident.severity}
               </span>
-              <span className="text-xs font-mono text-slate-400">
+              <span className="text-xs font-mono text-[#607D8B]">
                 Priority {incident.priority}
               </span>
             </div>
-            <h2 className="text-base font-bold text-white mt-1.5">{incident.title}</h2>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <h2 className="text-base font-bold text-[#263238] mt-1.5">{incident.title}</h2>
+            <p className="text-xs text-[#607D8B] mt-0.5">
               📍 {incident.address || `${incident.latitude}, ${incident.longitude}`}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition cursor-pointer"
+            className="text-[#607D8B] hover:text-[#263238] p-1 rounded-lg hover:bg-[#E8F1FA] transition cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -174,26 +179,26 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
         <div className="p-6 overflow-y-auto space-y-6">
           {/* Description */}
           <div>
-            <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
+            <h4 className="text-xs font-semibold text-[#607D8B] uppercase tracking-wider mb-1">
               Incident Overview
             </h4>
-            <p className="text-xs text-slate-200 bg-slate-800/60 p-3.5 rounded-xl border border-slate-800 leading-relaxed">
+            <p className="text-xs text-[#263238] bg-[#EEF2F6] p-3.5 rounded-xl border border-[#DCE3E8] leading-relaxed">
               {incident.description || "No full incident description recorded."}
             </p>
           </div>
 
           {/* AI Situational Brief Card */}
-          <div className="p-4 rounded-xl bg-gradient-to-br from-purple-950/40 via-slate-900 to-slate-900 border border-purple-800/60 space-y-3">
+          <div className="p-4 rounded-xl bg-[#EAF3FB] border border-[#90CAF9] space-y-3">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-purple-300 font-bold text-xs">
-                <Sparkles className="w-4 h-4 text-purple-400" />
+              <div className="flex items-center gap-2 text-[#1565C0] font-bold text-xs">
+                <Sparkles className="w-4 h-4 text-[#1565C0]" />
                 AI Situational Summary & Tactics
               </div>
               {!summary && (
                 <button
                   onClick={handleGenerateSummary}
                   disabled={isLoadingSummary}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-300 hover:text-white bg-purple-900/60 hover:bg-purple-800 border border-purple-700 px-3 py-1 rounded-lg transition cursor-pointer disabled:opacity-50"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-[#1565C0] hover:bg-[#0D47A1] px-3 py-1 rounded-lg transition cursor-pointer disabled:opacity-50 shadow-xs"
                 >
                   <Sparkles className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: isLoadingSummary ? '1s' : '0s' }} />
                   {isLoadingSummary ? "Generating..." : "Generate AI Brief"}
@@ -202,25 +207,25 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
             </div>
 
             {summary ? (
-              <div className="text-xs text-slate-200 leading-relaxed border-t border-purple-900/50 pt-2.5 space-y-2">
-                <p className="italic text-purple-200/90">"{summary.summary}"</p>
-                <div className="flex items-center gap-1.5 text-[10px] text-purple-400">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-purple-400" />
+              <div className="text-xs text-[#263238] leading-relaxed border-t border-[#90CAF9]/40 pt-2.5 space-y-2">
+                <p className="italic text-[#263238]">"{summary.summary}"</p>
+                <div className="flex items-center gap-1.5 text-[10px] text-[#1565C0] font-medium">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#1565C0]" />
                   <span>Powered by NVIDIA Llama-3.2 Vision-Instruct</span>
                 </div>
               </div>
             ) : (
-              <p className="text-[11px] text-slate-400 italic">
+              <p className="text-[11px] text-[#607D8B] italic">
                 Click "Generate AI Brief" to synthesize incoming audio logs and get tactical recommendations for field responders.
               </p>
             )}
           </div>
 
           {/* Predictive Cascade & Secondary Hazard Forecaster Card */}
-          <div className="p-4 rounded-xl bg-gradient-to-br from-amber-950/30 via-slate-900 to-slate-900 border border-amber-800/60 space-y-3.5">
+          <div className="p-4 rounded-xl bg-white border border-[#DCE3E8] space-y-3.5 shadow-xs">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-amber-300 font-bold text-xs">
-                <TrendingUp className="w-4 h-4 text-amber-400" />
+              <div className="flex items-center gap-2 text-[#263238] font-bold text-xs">
+                <TrendingUp className="w-4 h-4 text-[#F57C00]" />
                 Predictive Cascade & Secondary Risk Forecaster
               </div>
               {cascadeRisk && (
@@ -228,10 +233,10 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                   <span
                     className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${
                       cascadeRisk.escalation_level === "critical"
-                        ? "bg-rose-950 text-rose-300 border-rose-700"
+                        ? "bg-[#FDECEC] text-[#B71C1C] border-[#EF9A9A]"
                         : cascadeRisk.escalation_level === "high"
-                        ? "bg-orange-950 text-orange-300 border-orange-700"
-                        : "bg-amber-950 text-amber-300 border-amber-700"
+                        ? "bg-[#FFF3E0] text-[#E65100] border-[#FFCC80]"
+                        : "bg-[#FFF8E1] text-[#F57F17] border-[#FFE082]"
                     }`}
                   >
                     {cascadeRisk.cascade_risk_score}% RISK • {cascadeRisk.escalation_level.toUpperCase()}
@@ -247,8 +252,8 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                       }
                       className={`inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded-md border transition cursor-pointer ${
                         isPlumeActive
-                          ? "bg-orange-600 text-white border-orange-500 shadow-md shadow-orange-900"
-                          : "bg-slate-800 text-orange-300 border-orange-800/60 hover:bg-slate-700"
+                          ? "bg-[#F57C00] text-white border-[#F57C00] shadow-sm"
+                          : "bg-[#E8F1FA] text-[#1565C0] border-[#DCE3E8] hover:bg-[#D6E7F7]"
                       }`}
                     >
                       <Eye className="w-3 h-3" />
@@ -260,50 +265,50 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
             </div>
 
             {isLoadingCascade ? (
-              <div className="text-xs text-slate-400 text-center py-3">
+              <div className="text-xs text-[#607D8B] text-center py-3">
                 Calculating atmospheric dispersion vectors and secondary hazard timelines...
               </div>
             ) : cascadeRisk ? (
               <div className="space-y-3">
                 {/* Weather & Advice */}
-                <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] bg-slate-950/60 p-2.5 rounded-lg border border-slate-800">
-                  <div className="flex items-center gap-1.5 text-cyan-300">
-                    <Wind className="w-3.5 h-3.5 text-cyan-400" />
+                <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] bg-[#EEF2F6] p-2.5 rounded-lg border border-[#DCE3E8]">
+                  <div className="flex items-center gap-1.5 text-[#1565C0]">
+                    <Wind className="w-3.5 h-3.5 text-[#1565C0]" />
                     <span>
                       Wind: <b>{cascadeRisk.weather.wind_speed_kmh} km/h</b> blowing <b>{cascadeRisk.weather.wind_direction_deg}° (NE)</b>
                     </span>
                   </div>
-                  <div className="text-slate-400">
-                    Temp: <span className="text-slate-200">{cascadeRisk.weather.temperature_c}°C</span> | Humidity: <span className="text-slate-200">{cascadeRisk.weather.humidity_pct}%</span>
+                  <div className="text-[#607D8B]">
+                    Temp: <span className="text-[#263238] font-semibold">{cascadeRisk.weather.temperature_c}°C</span> | Humidity: <span className="text-[#263238] font-semibold">{cascadeRisk.weather.humidity_pct}%</span>
                   </div>
                 </div>
 
                 {/* Secondary Hazards Timeline */}
                 <div className="space-y-1.5">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-[#607D8B]">
                     Predicted Secondary Cascade Events:
                   </div>
                   <div className="space-y-1.5">
                     {cascadeRisk.secondary_hazards.map((haz, idx) => (
                       <div
                         key={idx}
-                        className="bg-slate-800/60 border border-slate-700/60 p-2 rounded-lg text-xs flex flex-col gap-1"
+                        className="bg-[#EEF2F6] border border-[#DCE3E8] p-2 rounded-lg text-xs flex flex-col gap-1"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="font-semibold text-slate-200 flex items-center gap-1.5">
-                            <AlertTriangle className="w-3 h-3 text-amber-400 shrink-0" />
+                          <span className="font-semibold text-[#263238] flex items-center gap-1.5">
+                            <AlertTriangle className="w-3 h-3 text-[#F57C00] shrink-0" />
                             {haz.hazard_type}
                           </span>
                           <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-mono text-amber-300 bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-800/60">
+                            <span className="text-[10px] font-mono text-[#F57F17] bg-[#FFF8E1] px-1.5 py-0.5 rounded border border-[#FFE082]">
                               {(haz.probability * 100).toFixed(0)}% Probability
                             </span>
-                            <span className="text-[10px] font-mono text-slate-400">
+                            <span className="text-[10px] font-mono text-[#607D8B]">
                               Onset ~{haz.estimated_onset_minutes}m
                             </span>
                           </div>
                         </div>
-                        <p className="text-[11px] text-slate-400 pl-4.5">
+                        <p className="text-[11px] text-[#607D8B] pl-4.5">
                           👉 {haz.recommended_action}
                         </p>
                       </div>
@@ -314,14 +319,14 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                 {/* Vulnerable Civic Infrastructure in Zone */}
                 {cascadeRisk.vulnerable_infrastructure.length > 0 && (
                   <div className="pt-1">
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-[#607D8B] mb-1">
                       Civic Infrastructure within Plume Perimeter:
                     </div>
                     <div className="flex flex-wrap gap-1.5">
                       {cascadeRisk.vulnerable_infrastructure.map((inf) => (
                         <span
                           key={inf.id}
-                          className="text-[10px] bg-slate-800/90 text-slate-300 border border-slate-700 px-2 py-0.5 rounded-md flex items-center gap-1"
+                          className="text-[10px] bg-[#EEF2F6] text-[#263238] border border-[#DCE3E8] px-2 py-0.5 rounded-md flex items-center gap-1"
                         >
                           🏛️ {inf.name} ({inf.distance_km}km, ~{inf.occupancy_estimate} occupants)
                         </span>
@@ -331,18 +336,18 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                 )}
               </div>
             ) : (
-              <div className="text-xs text-slate-500 text-center py-2">
+              <div className="text-xs text-[#90A4AE] text-center py-2">
                 Atmospheric telemetry offline.
               </div>
             )}
           </div>
 
           {/* Hazard-Aware Dynamic Evacuation Router Card */}
-          <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-4 space-y-3">
+          <div className="bg-white border border-[#DCE3E8] rounded-xl p-4 space-y-3 shadow-xs">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Route className="w-4 h-4 text-emerald-400" />
-                <h4 className="text-xs font-semibold text-slate-200 uppercase tracking-wider">
+                <Route className="w-4 h-4 text-[#2E7D32]" />
+                <h4 className="text-xs font-semibold text-[#263238] uppercase tracking-wider">
                   Hazard-Aware Evacuation Router (Plume Bypass)
                 </h4>
               </div>
@@ -352,25 +357,25 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                   onClick={() => onToggleEvacuationRoute(isEvacuationActive ? null : evacuationRoute)}
                   className={`inline-flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-md border transition cursor-pointer ${
                     isEvacuationActive
-                      ? "bg-emerald-900/80 text-emerald-300 border-emerald-500"
-                      : "bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700"
+                      ? "bg-[#2E7D32] text-white border-[#2E7D32]"
+                      : "bg-[#E8F1FA] text-[#1565C0] border-[#DCE3E8] hover:bg-[#D6E7F7]"
                   }`}
                 >
-                  <Sparkles className="w-3 h-3 text-emerald-400" />
+                  <Sparkles className="w-3 h-3 text-[#1565C0]" />
                   <span>{isEvacuationActive ? "Hide Corridor on Map" : "Plot Corridor on Map"}</span>
                 </button>
               )}
             </div>
 
             {isLoadingEvacuation ? (
-              <div className="text-xs text-slate-400 text-center py-3 animate-pulse">
+              <div className="text-xs text-[#607D8B] text-center py-3 animate-pulse">
                 Calculating tangent bypass corridor around active plume...
               </div>
             ) : evacuationRoute ? (
               <div className="space-y-3">
-                <div className="flex items-center justify-between text-xs bg-slate-950/60 p-2.5 rounded-lg border border-slate-800">
-                  <span className="text-slate-400">Target Terminal Facility:</span>
-                  <span className="font-semibold text-emerald-300">
+                <div className="flex items-center justify-between text-xs bg-[#EEF2F6] p-2.5 rounded-lg border border-[#DCE3E8]">
+                  <span className="text-[#607D8B]">Target Terminal Facility:</span>
+                  <span className="font-semibold text-[#2E7D32]">
                     🏥 {evacuationRoute.target_destination_name} ({evacuationRoute.target_destination_category})
                   </span>
                 </div>
@@ -378,73 +383,73 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                 {/* Comparative Cards: Naive vs Safe */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {/* Naive Direct Route */}
-                  <div className="bg-rose-950/25 border border-rose-900/50 p-2.5 rounded-lg space-y-1.5">
+                  <div className="bg-[#FDECEC] border border-[#EF9A9A] p-2.5 rounded-lg space-y-1.5">
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-bold text-rose-400 uppercase tracking-wider">
+                      <span className="text-[11px] font-bold text-[#B71C1C] uppercase tracking-wider">
                         ⚠️ Naive Direct Path
                       </span>
-                      <span className="text-[10px] bg-rose-950 border border-rose-800 text-rose-300 px-1.5 py-0.5 rounded font-mono">
+                      <span className="text-[10px] bg-[#FDECEC] border border-[#EF9A9A] text-[#B71C1C] px-1.5 py-0.5 rounded font-mono font-bold">
                         UNSAFE
                       </span>
                     </div>
-                    <div className="text-xs font-semibold text-rose-300">
+                    <div className="text-xs font-semibold text-[#B71C1C]">
                       {Math.round(evacuationRoute.naive_direct_route.hazard_exposure_meters)}m Toxic Plume Exposure
                     </div>
-                    <div className="text-[11px] text-slate-400 flex items-center justify-between">
+                    <div className="text-[11px] text-[#607D8B] flex items-center justify-between">
                       <span>Distance: {evacuationRoute.naive_direct_route.total_distance_km.toFixed(1)} km</span>
                       <span>ETA: ~{Math.round(evacuationRoute.naive_direct_route.eta_minutes)} min</span>
                     </div>
-                    <div className="text-[10px] text-rose-400/80">
+                    <div className="text-[10px] text-[#B71C1C]">
                       ❌ Directly penetrates the chemical / smoke dispersion cone.
                     </div>
                   </div>
 
                   {/* Safe Detour Corridor */}
-                  <div className="bg-emerald-950/30 border border-emerald-800/60 p-2.5 rounded-lg space-y-1.5">
+                  <div className="bg-[#E8F5E9] border border-[#A5D6A7] p-2.5 rounded-lg space-y-1.5">
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">
+                      <span className="text-[11px] font-bold text-[#2E7D32] uppercase tracking-wider">
                         🛡️ Safe Detour Corridor
                       </span>
-                      <span className="text-[10px] bg-emerald-950 border border-emerald-700 text-emerald-300 px-1.5 py-0.5 rounded font-mono">
+                      <span className="text-[10px] bg-[#E8F5E9] border border-[#A5D6A7] text-[#2E7D32] px-1.5 py-0.5 rounded font-mono font-bold">
                         ZERO EXPOSURE
                       </span>
                     </div>
-                    <div className="text-xs font-semibold text-emerald-300">
+                    <div className="text-xs font-semibold text-[#2E7D32]">
                       0.0m Hazard Penetration ({Math.round(evacuationRoute.safety_delta_meters_avoided)}m saved)
                     </div>
-                    <div className="text-[11px] text-slate-400 flex items-center justify-between">
+                    <div className="text-[11px] text-[#607D8B] flex items-center justify-between">
                       <span>Distance: {evacuationRoute.safe_evacuation_corridor.total_distance_km.toFixed(1)} km</span>
                       <span>ETA: ~{Math.round(evacuationRoute.safe_evacuation_corridor.eta_minutes)} min</span>
                     </div>
-                    <div className="text-[10px] text-emerald-400/90">
+                    <div className="text-[10px] text-[#2E7D32]">
                       ✅ Upwind / crosswind tangent vector bypasses plume boundary.
                     </div>
                   </div>
                 </div>
 
-                <div className="text-[11px] text-slate-300 bg-slate-800/60 border border-slate-700/60 p-2.5 rounded-lg">
-                  <span className="font-semibold text-amber-300">Tactical Guidance: </span>
+                <div className="text-[11px] text-[#263238] bg-[#EEF2F6] border border-[#DCE3E8] p-2.5 rounded-lg">
+                  <span className="font-semibold text-[#E65100]">Tactical Guidance: </span>
                   {evacuationRoute.tactical_advice}
                 </div>
 
-                <div className="flex items-center justify-between text-[10px] text-slate-500 font-mono">
+                <div className="flex items-center justify-between text-[10px] text-[#607D8B] font-mono">
                   <span>Waypoints: {evacuationRoute.safe_evacuation_corridor.waypoints.length} nodes</span>
                   <span>Algorithm: {evacuationRoute.routing_algorithm}</span>
                 </div>
               </div>
             ) : (
-              <div className="text-xs text-slate-500 text-center py-2">
+              <div className="text-xs text-[#90A4AE] text-center py-2">
                 Evacuation routing inactive.
               </div>
             )}
           </div>
 
           {/* Visual Evidence & Multimodal AI Audit */}
-          <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-4 space-y-3">
+          <div className="bg-white border border-[#DCE3E8] rounded-xl p-4 space-y-3 shadow-xs">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Camera className="w-4 h-4 text-rose-400" />
-                <h4 className="text-xs font-semibold text-slate-200 uppercase tracking-wider">
+                <Camera className="w-4 h-4 text-[#1565C0]" />
+                <h4 className="text-xs font-semibold text-[#263238] uppercase tracking-wider">
                   Scene Photo & Multi-Modal Damage Audit
                 </h4>
               </div>
@@ -458,28 +463,28 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-rose-300 bg-rose-950/80 border border-rose-800 hover:bg-rose-900 px-2.5 py-1 rounded-md transition cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-[#1565C0] bg-[#E8F1FA] border border-[#DCE3E8] hover:bg-[#D6E7F7] px-2.5 py-1 rounded-md transition cursor-pointer"
               >
-                <Camera className="w-3 h-3 text-rose-400" />
+                <Camera className="w-3 h-3 text-[#1565C0]" />
                 <span>{imagePreview ? "Replace Photo" : "Upload Scene Photo"}</span>
               </button>
             </div>
 
             {isAnalyzingImage ? (
-              <div className="py-4 text-center text-xs text-amber-400 flex items-center justify-center gap-2 animate-pulse">
+              <div className="py-4 text-center text-xs text-[#E65100] flex items-center justify-center gap-2 animate-pulse">
                 <Zap className="w-4 h-4 animate-bounce" />
                 <span>Running Llama-3.2 Vision Multi-Modal Damage Assessment...</span>
               </div>
             ) : visualAudit ? (
               <div className="space-y-3">
-                <div className="flex items-start gap-3 bg-slate-950/60 p-3 rounded-xl border border-slate-800">
+                <div className="flex items-start gap-3 bg-[#EEF2F6] p-3 rounded-xl border border-[#DCE3E8]">
                   {imagePreview && (
-                    <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-slate-700 shrink-0 bg-slate-900">
+                    <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-[#DCE3E8] shrink-0 bg-white">
                       <img src={imagePreview} alt="Scene Evidence" className="w-full h-full object-cover" />
                       <button
                         type="button"
                         onClick={handleRemoveImage}
-                        className="absolute top-0.5 right-0.5 bg-black/70 hover:bg-rose-900 text-slate-300 hover:text-white p-0.5 rounded"
+                        className="absolute top-0.5 right-0.5 bg-black/70 hover:bg-[#D32F2F] text-white p-0.5 rounded"
                       >
                         <Trash2 className="w-3 h-3" />
                       </button>
@@ -489,20 +494,20 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                     <div className="flex flex-wrap items-center justify-between gap-1.5">
                       <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded ${
                         visualAudit.damage_severity === "critical"
-                          ? "bg-rose-900/80 text-rose-200 border border-rose-700"
-                          : "bg-amber-900/80 text-amber-200 border border-amber-700"
+                          ? "bg-[#FDECEC] text-[#B71C1C] border border-[#EF9A9A]"
+                          : "bg-[#FFF3E0] text-[#E65100] border border-[#FFCC80]"
                       }`}>
                         {visualAudit.damage_severity.toUpperCase()} DAMAGE ({visualAudit.damage_score}%)
                       </span>
-                      <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-700 text-emerald-300">
-                        <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#E8F5E9] border border-[#A5D6A7] text-[#2E7D32]">
+                        <CheckCircle2 className="w-3 h-3 text-[#2E7D32]" />
                         {visualAudit.authenticity_status.replace("_", " ").toUpperCase()} ({(visualAudit.authenticity_confidence * 100).toFixed(0)}%)
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-300 leading-snug">
+                    <p className="text-[11px] text-[#263238] leading-snug">
                       {visualAudit.tactical_assessment}
                     </p>
-                    <div className="text-[10px] text-slate-500 font-mono">
+                    <div className="text-[10px] text-[#607D8B] font-mono">
                       Engine: {visualAudit.analysis_provider}
                     </div>
                   </div>
@@ -510,14 +515,14 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
 
                 {visualAudit.detected_hazards.length > 0 && (
                   <div className="space-y-1">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#607D8B]">
                       Observed Visual Hazards:
                     </span>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
                       {visualAudit.detected_hazards.map((haz, idx) => (
-                        <div key={idx} className="bg-slate-800/80 border border-slate-700/70 px-2 py-1 rounded text-xs">
-                          <span className="text-amber-300 font-semibold">⚠️ {haz.hazard_type.replace(/_/g, " ")}: </span>
-                          <span className="text-slate-300 text-[11px]">{haz.description}</span>
+                        <div key={idx} className="bg-white border border-[#DCE3E8] px-2 py-1 rounded text-xs">
+                          <span className="text-[#E65100] font-semibold">⚠️ {haz.hazard_type.replace(/_/g, " ")}: </span>
+                          <span className="text-[#607D8B] text-[11px]">{haz.description}</span>
                         </div>
                       ))}
                     </div>
@@ -525,7 +530,7 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                 )}
               </div>
             ) : (
-              <div className="text-xs text-slate-500 text-center py-2 bg-slate-950/40 rounded-lg border border-dashed border-slate-800">
+              <div className="text-xs text-[#607D8B] text-center py-2 bg-[#EEF2F6] rounded-lg border border-dashed border-[#DCE3E8]">
                 No visual evidence attached yet. Upload a scene photo to trigger automated damage assessment.
               </div>
             )}
@@ -534,41 +539,41 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
           {/* Recommended Resource Bundle */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                <ShieldAlert className="w-4 h-4 text-rose-400" />
+              <h4 className="text-xs font-semibold text-[#263238] uppercase tracking-wider flex items-center gap-1.5">
+                <ShieldAlert className="w-4 h-4 text-[#1565C0]" />
                 ML Recommended Response Package
               </h4>
-              <span className="text-[11px] text-slate-400">
+              <span className="text-[11px] text-[#607D8B]">
                 Sorted by Urban Road ETA
               </span>
             </div>
 
             {isLoadingBundle ? (
-              <div className="text-xs text-slate-400 text-center py-6">
+              <div className="text-xs text-[#607D8B] text-center py-6">
                 Calculating closest optimal units...
               </div>
             ) : bundle && Object.keys(bundle.bundle).length > 0 ? (
               <div className="space-y-3">
                 {Object.entries(bundle.bundle).map(([rType, items]) => (
                   <div key={rType} className="space-y-1.5">
-                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                    <div className="text-[11px] font-bold text-[#607D8B] uppercase tracking-wider">
                       {rType} units ({items.length} matched)
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       {items.map((it) => (
                         <div
                           key={it.unit.id}
-                          className="bg-slate-800/80 border border-slate-700 p-2.5 rounded-lg flex items-center justify-between text-xs"
+                          className="bg-[#EEF2F6] border border-[#DCE3E8] p-2.5 rounded-lg flex items-center justify-between text-xs"
                         >
                           <div>
-                            <div className="font-semibold text-slate-200">{it.unit.name}</div>
-                            <div className="text-[10px] text-slate-400">
-                              Status: <span className="text-emerald-400 capitalize">{it.unit.status}</span>
+                            <div className="font-semibold text-[#263238]">{it.unit.name}</div>
+                            <div className="text-[10px] text-[#607D8B]">
+                              Status: <span className="text-[#2E7D32] capitalize font-medium">{it.unit.status}</span>
                             </div>
                           </div>
                           {it.eta_minutes !== null && (
-                            <div className="flex items-center gap-1 bg-slate-900 border border-slate-700 px-2 py-1 rounded text-[11px] font-mono text-amber-300">
-                              <Clock className="w-3 h-3 text-amber-400" />
+                            <div className="flex items-center gap-1 bg-white border border-[#DCE3E8] px-2 py-1 rounded text-[11px] font-mono text-[#1565C0] font-bold">
+                              <Clock className="w-3 h-3 text-[#1565C0]" />
                               <span>{it.eta_minutes.toFixed(1)}m</span>
                             </div>
                           )}
@@ -579,7 +584,7 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                 ))}
               </div>
             ) : (
-              <div className="text-xs text-slate-500 text-center py-4 bg-slate-800/30 rounded-xl border border-slate-800">
+              <div className="text-xs text-[#90A4AE] text-center py-4 bg-[#EEF2F6] rounded-xl border border-[#DCE3E8]">
                 No active resources available for assignment in this sector.
               </div>
             )}
@@ -588,17 +593,17 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
           {/* Designated Medical & Trauma Facilities */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                <Hospital className="w-4 h-4 text-cyan-400" />
+              <h4 className="text-xs font-semibold text-[#263238] uppercase tracking-wider flex items-center gap-1.5">
+                <Hospital className="w-4 h-4 text-[#2E7D32]" />
                 Designated Trauma & Burn Facilities
               </h4>
-              <span className="text-[11px] text-slate-400">
+              <span className="text-[11px] text-[#607D8B]">
                 Live ICU Beds & Road ETAs
               </span>
             </div>
 
             {isLoadingHospitals ? (
-              <div className="text-xs text-slate-400 text-center py-4">
+              <div className="text-xs text-[#607D8B] text-center py-4">
                 Matching closest specialized facilities with bed capacity...
               </div>
             ) : hospitals.length > 0 ? (
@@ -606,30 +611,30 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                 {hospitals.map((hosp) => (
                   <div
                     key={hosp.id}
-                    className="bg-slate-800/80 border border-slate-700/80 p-3 rounded-xl flex items-center justify-between gap-3 text-xs hover:border-slate-600 transition"
+                    className="bg-white border border-[#DCE3E8] p-3 rounded-xl flex items-center justify-between gap-3 text-xs hover:bg-[#F4F8FC] hover:border-[#B0BEC5] transition"
                   >
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-slate-100 truncate">{hosp.name}</span>
+                        <span className="font-semibold text-[#263238] truncate">{hosp.name}</span>
                         {hosp.burn_unit_available && (
-                          <span className="text-[10px] bg-amber-950/80 border border-amber-700/80 text-amber-300 px-1.5 py-0.5 rounded font-medium">
+                          <span className="text-[10px] bg-[#FFF3E0] border border-[#FFCC80] text-[#E65100] px-1.5 py-0.5 rounded font-medium">
                             Burn ICU
                           </span>
                         )}
                         {hosp.heliport && (
-                          <span className="text-[10px] bg-blue-950/80 border border-blue-700/80 text-blue-300 px-1.5 py-0.5 rounded font-medium">
+                          <span className="text-[10px] bg-[#E3F2FD] border border-[#90CAF9] text-[#1565C0] px-1.5 py-0.5 rounded font-medium">
                             Heliport
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] text-slate-400 mt-0.5 truncate">
+                      <div className="text-[11px] text-[#607D8B] mt-0.5 truncate">
                         📍 {hosp.address} ({hosp.distance_km} km away)
                       </div>
                       <div className="flex flex-wrap gap-1 mt-1.5">
                         {hosp.matched_capabilities.map((cap) => (
                           <span
                             key={cap}
-                            className="text-[9px] font-mono bg-slate-900/80 text-slate-300 border border-slate-700/60 px-1.5 py-0.5 rounded"
+                            className="text-[9px] font-mono bg-[#EEF2F6] text-[#607D8B] border border-[#DCE3E8] px-1.5 py-0.5 rounded"
                           >
                             {cap.replace(/_/g, " ")}
                           </span>
@@ -638,12 +643,12 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                     </div>
 
                     <div className="flex flex-col items-end gap-1.5 shrink-0">
-                      <div className="flex items-center gap-1 bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 px-2 py-0.5 rounded text-[11px] font-semibold">
-                        <Bed className="w-3 h-3 text-emerald-400" />
+                      <div className="flex items-center gap-1 bg-[#E8F5E9] border border-[#A5D6A7] text-[#2E7D32] px-2 py-0.5 rounded text-[11px] font-semibold">
+                        <Bed className="w-3 h-3 text-[#2E7D32]" />
                         <span>{hosp.available_icu_beds} ICU beds</span>
                       </div>
-                      <div className="flex items-center gap-1 bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-[11px] font-mono text-cyan-300">
-                        <Clock className="w-3 h-3 text-cyan-400" />
+                      <div className="flex items-center gap-1 bg-[#EEF2F6] border border-[#DCE3E8] px-2 py-0.5 rounded text-[11px] font-mono text-[#1565C0] font-bold">
+                        <Clock className="w-3 h-3 text-[#1565C0]" />
                         <span>{hosp.eta_minutes.toFixed(1)}m ETA</span>
                       </div>
                     </div>
@@ -651,7 +656,7 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
                 ))}
               </div>
             ) : (
-              <div className="text-xs text-slate-500 text-center py-3 bg-slate-800/30 rounded-xl border border-slate-800">
+              <div className="text-xs text-[#90A4AE] text-center py-3 bg-[#EEF2F6] rounded-xl border border-[#DCE3E8]">
                 No facility data currently matched for this incident sector.
               </div>
             )}
@@ -659,11 +664,11 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 border-t border-slate-800 bg-slate-950/60 flex items-center justify-between">
-          <div className="text-xs text-slate-400">
+        <div className="p-4 border-t border-[#DCE3E8] bg-[#EEF2F6] flex items-center justify-between">
+          <div className="text-xs text-[#607D8B]">
             {isDispatched ? (
-              <span className="text-emerald-400 font-semibold flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <span className="text-[#2E7D32] font-semibold flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-[#2E7D32]" />
                 Units Dispatched & In-Route
               </span>
             ) : (
@@ -673,7 +678,7 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
           <div className="flex gap-2">
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-lg text-xs font-medium text-slate-300 hover:bg-slate-800 transition cursor-pointer"
+              className="px-4 py-2 rounded-lg text-xs font-medium text-[#263238] bg-white border border-[#DCE3E8] hover:bg-[#E8F1FA] transition cursor-pointer"
             >
               Close
             </button>
@@ -682,8 +687,8 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
               disabled={isDispatched}
               className={`text-xs font-semibold px-4 py-2 rounded-lg transition flex items-center gap-1.5 cursor-pointer ${
                 isDispatched
-                  ? "bg-emerald-700 text-white cursor-default"
-                  : "bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-950"
+                  ? "bg-[#2E7D32] text-white cursor-default"
+                  : "bg-[#1565C0] hover:bg-[#0D47A1] text-white shadow-sm"
               }`}
             >
               <Navigation className="w-3.5 h-3.5" />

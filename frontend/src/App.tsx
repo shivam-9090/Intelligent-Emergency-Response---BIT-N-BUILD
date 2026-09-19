@@ -53,7 +53,7 @@ function App() {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-950 text-slate-100">
+    <div className="h-screen w-screen flex flex-col overflow-hidden bg-[#F4F7FA] text-[#263238]">
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}

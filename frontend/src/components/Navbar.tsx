@@ -19,40 +19,40 @@ export const Navbar: React.FC<NavbarProps> = ({
   incidentCount,
 }) => {
   return (
-    <header className="bg-slate-900 border-b border-slate-800 px-6 py-3 flex items-center justify-between text-white select-none">
+    <header className="bg-white border-b border-[#DCE3E8] px-6 py-3 flex items-center justify-between text-[#263238] select-none shadow-xs">
       <div className="flex items-center space-x-4">
-        <div className="flex items-center space-x-2 text-rose-500 font-black text-xl tracking-tight">
-          <Activity className="w-6 h-6 animate-pulse text-rose-500" />
-          <span>RESPONDR<span className="text-rose-400 font-light text-sm ml-1.5 px-2 py-0.5 bg-rose-950/60 border border-rose-800 rounded">AI</span></span>
+        <div className="flex items-center space-x-2 text-[#0B1F33] font-black text-xl tracking-tight">
+          <Activity className="w-6 h-6 animate-pulse text-[#1565C0]" />
+          <span>RESPONDR<span className="text-[#1565C0] font-semibold text-xs ml-1.5 px-2 py-0.5 bg-[#E3F2FD] border border-[#90CAF9] rounded">AI</span></span>
         </div>
-        <div className="hidden md:flex items-center text-xs text-slate-400 border-l border-slate-700 pl-4 space-x-2">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-700 text-emerald-300 font-medium">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+        <div className="hidden md:flex items-center text-xs text-[#607D8B] border-l border-[#DCE3E8] pl-4 space-x-2">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#E8F5E9] border border-[#A5D6A7] text-[#2E7D32] font-medium">
+            <span className="w-2 h-2 rounded-full bg-[#2E7D32] animate-ping" />
             Live Dispatch Connected
           </span>
-          <span className="text-slate-400">|</span>
+          <span className="text-[#90A4AE]">|</span>
           <span>{incidentCount} active incidents</span>
         </div>
       </div>
 
       <div className="flex items-center space-x-3">
-        <div className="flex bg-slate-800/80 p-1 rounded-lg border border-slate-700 text-sm">
+        <div className="flex bg-[#EEF2F6] p-1 rounded-lg border border-[#DCE3E8] text-sm">
           <button
             onClick={() => setActiveTab("map")}
-            className={`px-3 py-1.5 rounded-md font-medium transition flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-md font-medium transition flex items-center gap-1.5 cursor-pointer ${
               activeTab === "map"
-                ? "bg-rose-600 text-white shadow-sm"
-                : "text-slate-300 hover:text-white"
+                ? "bg-[#1565C0] text-white shadow-sm"
+                : "text-[#607D8B] hover:text-[#263238] hover:bg-[#E8F1FA]"
             }`}
           >
             <Radio className="w-4 h-4" /> Live Map
           </button>
           <button
             onClick={() => setActiveTab("analytics")}
-            className={`px-3 py-1.5 rounded-md font-medium transition flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-md font-medium transition flex items-center gap-1.5 cursor-pointer ${
               activeTab === "analytics"
-                ? "bg-rose-600 text-white shadow-sm"
-                : "text-slate-300 hover:text-white"
+                ? "bg-[#1565C0] text-white shadow-sm"
+                : "text-[#607D8B] hover:text-[#263238] hover:bg-[#E8F1FA]"
             }`}
           >
             <BarChart3 className="w-4 h-4" /> Analytics
@@ -60,24 +60,24 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {alertCount > 0 && (
-          <div className="flex items-center gap-1.5 bg-amber-950/80 border border-amber-600 text-amber-300 text-xs px-3 py-1.5 rounded-lg font-medium">
-            <AlertTriangle className="w-4 h-4 text-amber-400 animate-bounce" />
+          <div className="flex items-center gap-1.5 bg-[#FFF3E0] border border-[#FFCC80] text-[#E65100] text-xs px-3 py-1.5 rounded-lg font-medium">
+            <AlertTriangle className="w-4 h-4 text-[#F57C00] animate-bounce" />
             <span>{alertCount} Alerts</span>
           </div>
         )}
 
         <button
           onClick={onOpenOptimizer}
-          className="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-3.5 py-2 rounded-lg flex items-center gap-1.5 shadow-lg shadow-indigo-950 transition active:scale-95 cursor-pointer border border-indigo-500/50"
+          className="bg-[#1565C0] hover:bg-[#0D47A1] text-white text-sm font-semibold px-3.5 py-2 rounded-lg flex items-center gap-1.5 shadow-sm transition active:scale-95 cursor-pointer"
           title="Global Fleet Optimizer - Hungarian Algorithm Dispatch"
         >
-          <Zap className="w-4 h-4 text-amber-300 animate-pulse" />
+          <Zap className="w-4 h-4 text-[#FFF8E1] animate-pulse" />
           <span>Optimize Fleet</span>
         </button>
 
         <button
           onClick={onOpenNewIncident}
-          className="bg-rose-600 hover:bg-rose-500 text-white text-sm font-semibold px-3.5 py-2 rounded-lg flex items-center gap-1.5 shadow-lg shadow-rose-950 transition active:scale-95 cursor-pointer"
+          className="bg-[#D32F2F] hover:bg-[#B71C1C] text-white text-sm font-semibold px-3.5 py-2 rounded-lg flex items-center gap-1.5 shadow-sm transition active:scale-95 cursor-pointer"
         >
           <Plus className="w-4 h-4" /> Report Emergency
         </button>
@@ -85,4 +85,3 @@ export const Navbar: React.FC<NavbarProps> = ({
     </header>
   );
 };
-

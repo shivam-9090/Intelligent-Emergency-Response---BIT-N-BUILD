@@ -9,19 +9,28 @@ interface IncidentListProps {
 }
 
 const TYPE_ICONS: Record<string, React.ReactNode> = {
-  fire: <Flame className="w-4 h-4 text-rose-500" />,
-  flood: <Droplets className="w-4 h-4 text-blue-400" />,
-  industrial_accident: <AlertOctagon className="w-4 h-4 text-purple-400" />,
-  road_accident: <Car className="w-4 h-4 text-amber-400" />,
-  medical: <HeartPulse className="w-4 h-4 text-emerald-400" />,
-  other: <HelpCircle className="w-4 h-4 text-slate-400" />,
+  fire: <Flame className="w-4 h-4 text-[#D32F2F]" />,
+  flood: <Droplets className="w-4 h-4 text-[#1565C0]" />,
+  industrial_accident: <AlertOctagon className="w-4 h-4 text-[#F57C00]" />,
+  road_accident: <Car className="w-4 h-4 text-[#F9A825]" />,
+  medical: <HeartPulse className="w-4 h-4 text-[#2E7D32]" />,
+  other: <HelpCircle className="w-4 h-4 text-[#607D8B]" />,
 };
 
 const SEVERITY_BADGES: Record<string, string> = {
-  critical: "bg-rose-950/80 text-rose-300 border-rose-700",
-  high: "bg-orange-950/80 text-orange-300 border-orange-700",
-  medium: "bg-amber-950/80 text-amber-300 border-amber-700",
-  low: "bg-blue-950/80 text-blue-300 border-blue-700",
+  critical: "bg-[#FDECEC] text-[#B71C1C] border-[#EF9A9A]",
+  high: "bg-[#FFF3E0] text-[#E65100] border-[#FFCC80]",
+  medium: "bg-[#FFF8E1] text-[#F57F17] border-[#FFE082]",
+  low: "bg-[#E3F2FD] text-[#1565C0] border-[#90CAF9]",
+  resolved: "bg-[#E8F5E9] text-[#2E7D32] border-[#A5D6A7]",
+};
+
+const SEVERITY_LEFT_ACCENTS: Record<string, string> = {
+  critical: "border-l-[#D32F2F]",
+  high: "border-l-[#F57C00]",
+  medium: "border-l-[#F9A825]",
+  low: "border-l-[#1565C0]",
+  resolved: "border-l-[#2E7D32]",
 };
 
 export const IncidentList: React.FC<IncidentListProps> = ({
@@ -43,24 +52,24 @@ export const IncidentList: React.FC<IncidentListProps> = ({
   });
 
   return (
-    <div className="w-96 h-full bg-slate-900/95 backdrop-blur border-r border-slate-800 flex flex-col z-10">
+    <div className="w-96 h-full bg-[#0B1F33] border-r border-[#102A43] flex flex-col z-10 select-none">
       {/* Search and Filters Header */}
-      <div className="p-4 border-b border-slate-800 space-y-3">
+      <div className="p-4 border-b border-[#102A43] space-y-3 bg-[#0B1F33]">
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+          <h2 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#D32F2F] animate-pulse" />
             Active Incidents ({filtered.length})
           </h2>
         </div>
 
         <div className="relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-[#90A4AE] absolute left-3 top-2.5" />
           <input
             type="text"
             placeholder="Search address, keywords..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-slate-800 border border-slate-700 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-rose-500 transition"
+            className="w-full bg-[#102A43] border border-[#163A59] rounded-lg pl-9 pr-3 py-1.5 text-xs text-white placeholder-[#90A4AE] focus:outline-none focus:border-[#1565C0] transition"
           />
         </div>
 
@@ -69,10 +78,10 @@ export const IncidentList: React.FC<IncidentListProps> = ({
             <button
               key={sev}
               onClick={() => setSeverityFilter(sev)}
-              className={`px-2.5 py-1 rounded-md capitalize font-medium transition whitespace-nowrap ${
+              className={`px-2.5 py-1 rounded-md capitalize font-medium transition whitespace-nowrap cursor-pointer ${
                 severityFilter === sev
-                  ? "bg-rose-600 text-white"
-                  : "bg-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-700"
+                  ? "bg-[#1565C0] text-white shadow-sm"
+                  : "bg-[#102A43] text-[#B0BEC5] hover:text-white hover:bg-[#163A59]"
               }`}
             >
               {sev}
@@ -82,55 +91,56 @@ export const IncidentList: React.FC<IncidentListProps> = ({
       </div>
 
       {/* Incidents Scrollable Feed */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-2.5 divide-y divide-slate-800/50">
+      <div className="flex-1 overflow-y-auto p-3 space-y-2.5 divide-y divide-[#102A43]/50 bg-[#0B1F33]">
         {filtered.length === 0 ? (
-          <div className="text-center py-12 text-slate-500 text-xs">
+          <div className="text-center py-12 text-[#90A4AE] text-xs">
             No emergency incidents match current filter.
           </div>
         ) : (
           filtered.map((inc) => {
             const isSelected = selectedIncident?.id === inc.id;
+            const leftAccent = SEVERITY_LEFT_ACCENTS[inc.severity] || "border-l-[#90A4AE]";
             return (
               <div
                 key={inc.id}
                 onClick={() => onSelectIncident(inc)}
-                className={`pt-2.5 p-3 rounded-xl border transition cursor-pointer ${
+                className={`pt-2.5 p-3 rounded-xl border border-l-4 transition cursor-pointer ${leftAccent} ${
                   isSelected
-                    ? "bg-rose-950/30 border-rose-600/80 shadow-md shadow-rose-950/50"
-                    : "bg-slate-800/50 hover:bg-slate-800 border-slate-700/60"
+                    ? "bg-[#E8F1FA] border-[#1565C0] ring-1 ring-[#1565C0] text-[#263238] shadow-md"
+                    : "bg-white hover:bg-[#F4F8FC] border-[#DCE3E8] text-[#263238] shadow-sm"
                 }`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    {TYPE_ICONS[inc.incident_type] || <HelpCircle className="w-4 h-4 text-slate-400" />}
-                    <h3 className="text-xs font-bold text-slate-100 line-clamp-1">
+                    {TYPE_ICONS[inc.incident_type] || <HelpCircle className="w-4 h-4 text-[#607D8B]" />}
+                    <h3 className="text-xs font-bold text-[#263238] line-clamp-1">
                       {inc.title}
                     </h3>
                   </div>
                   <span
                     className={`text-[10px] px-2 py-0.5 rounded-full font-semibold border uppercase tracking-wider ${
-                      SEVERITY_BADGES[inc.severity] || "bg-slate-800 text-slate-400"
+                      SEVERITY_BADGES[inc.severity] || "bg-[#EEF2F6] text-[#607D8B] border-[#DCE3E8]"
                     }`}
                   >
                     {inc.severity}
                   </span>
                 </div>
 
-                <p className="text-[11px] text-slate-400 mt-1.5 line-clamp-2 leading-relaxed">
+                <p className="text-[11px] text-[#607D8B] mt-1.5 line-clamp-2 leading-relaxed">
                   {inc.description || "No description provided."}
                 </p>
 
-                <div className="mt-2.5 flex items-center justify-between text-[10px] text-slate-500">
+                <div className="mt-2.5 flex items-center justify-between text-[10px] text-[#607D8B]">
                   <span className="truncate max-w-[180px]">
                     📍 {inc.address || "Sector Coordinates"}
                   </span>
                   <div className="flex items-center gap-1.5">
                     {inc.duplicate_of_id && (
-                      <span className="flex items-center gap-1 bg-amber-950/60 border border-amber-800 text-amber-300 px-1.5 py-0.5 rounded font-medium">
+                      <span className="flex items-center gap-1 bg-[#FFF8E1] border border-[#FFE082] text-[#F57F17] px-1.5 py-0.5 rounded font-medium">
                         <Layers className="w-3 h-3" /> Merged
                       </span>
                     )}
-                    <span className="text-slate-400 font-mono">P{inc.priority}</span>
+                    <span className="text-[#607D8B] bg-[#EEF2F6] border border-[#DCE3E8] px-1.5 py-0.5 rounded font-mono">P{inc.priority}</span>
                   </div>
                 </div>
               </div>

@@ -1,10 +1,76 @@
 @import "tailwindcss";
 @import "leaflet/dist/leaflet.css";
 
+:root {
+  /* Brand Navy */
+  --color-primary-navy: #0B1F33;
+  --color-secondary-navy: #102A43;
+  --color-navy-hover: #163A59;
+
+  /* Primary Blue */
+  --color-primary-blue: #1565C0;
+  --color-primary-blue-hover: #0D47A1;
+  --color-bright-blue: #2196F3;
+
+  /* Emergency Severity Colors */
+  --color-critical: #D32F2F;
+  --color-critical-bg: #FDECEC;
+  --color-critical-border: #EF9A9A;
+  --color-critical-text: #B71C1C;
+
+  --color-high: #F57C00;
+  --color-high-bg: #FFF3E0;
+  --color-high-border: #FFCC80;
+  --color-high-text: #E65100;
+
+  --color-medium: #F9A825;
+  --color-medium-bg: #FFF8E1;
+  --color-medium-border: #FFE082;
+  --color-medium-text: #F57F17;
+
+  --color-low: #1565C0;
+  --color-low-bg: #E3F2FD;
+  --color-low-border: #90CAF9;
+  --color-low-text: #1565C0;
+
+  --color-resolved: #2E7D32;
+  --color-resolved-bg: #E8F5E9;
+  --color-resolved-border: #A5D6A7;
+  --color-resolved-text: #2E7D32;
+
+  /* Surfaces & Backgrounds */
+  --color-bg-app: #F4F7FA;
+  --color-bg-card: #FFFFFF;
+  --color-bg-secondary: #EEF2F6;
+  --color-bg-hover: #E8F1FA;
+  --color-bg-hover-row: #F4F8FC;
+
+  /* Text Colors */
+  --color-text-primary: #263238;
+  --color-text-secondary: #607D8B;
+  --color-text-muted: #90A4AE;
+
+  /* Borders */
+  --color-border-default: #DCE3E8;
+  --color-border-strong: #B0BEC5;
+}
+
 body {
   margin: 0;
   font-family: system-ui, "Segoe UI", Roboto, sans-serif;
-  background-color: #0f172a;
-  color: #f8fafc;
+  background-color: var(--color-bg-app);
+  color: var(--color-text-primary);
 }
 
+/* Leaflet Map Controls and Popups */
+.leaflet-popup-content-wrapper {
+  background-color: #FFFFFF;
+  color: #263238;
+  border-radius: 8px;
+  border: 1px solid #DCE3E8;
+  box-shadow: 0 4px 12px rgba(11, 31, 51, 0.12);
+}
+
+.leaflet-popup-tip {
+  background-color: #FFFFFF;
+}
