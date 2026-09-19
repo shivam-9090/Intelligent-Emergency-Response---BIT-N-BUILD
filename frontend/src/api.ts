@@ -10,7 +10,7 @@ import type {
   ResourceUnit,
 } from "./types";
 
-const API_BASE = "http://localhost:8001";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8001";
 
 export async function fetchIncidents(): Promise<Incident[]> {
   const res = await fetch(`${API_BASE}/incidents`);
