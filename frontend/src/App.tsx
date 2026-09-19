@@ -119,6 +119,7 @@ function App() {
                 predictiveDemand={predictiveDemand}
                 showDemandHeatmap={showDemandHeatmap}
                 onToggleDemandHeatmap={() => setShowDemandHeatmap((prev) => !prev)}
+                isSidebarOpen={isSidebarOpen}
               />
             </div>
           </>
