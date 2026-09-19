@@ -8,6 +8,7 @@ from app.schemas.analytics import (
 from app.schemas.assignment import AssignmentCreate, AssignmentRead, AssignmentStatusUpdate
 from app.schemas.incident import IncidentCreate, IncidentRead
 from app.schemas.resource import ResourceUnitCreate, ResourceUnitRead
+from app.schemas.summary import IncidentSummary
 from app.schemas.user import Token, UserCreate, UserRead
 
 __all__ = [
@@ -19,6 +20,7 @@ __all__ = [
     "IncidentBreakdown",
     "IncidentCreate",
     "IncidentRead",
+    "IncidentSummary",
     "ResourceShortage",
     "ResourceUnitCreate",
     "ResourceUnitRead",

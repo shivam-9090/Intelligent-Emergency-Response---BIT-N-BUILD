@@ -6,7 +6,8 @@ from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.schemas.incident import IncidentCreate, IncidentRead
 from app.schemas.resource import ResourceUnitRead
-from app.services import incident_service, resource_service
+from app.schemas.summary import IncidentSummary
+from app.services import incident_service, resource_service, summary_service
 
 router = APIRouter(prefix="/incidents", tags=["incidents"])
 
@@ -37,3 +38,12 @@ def recommended_resources(
 ) -> list[ResourceUnitRead]:
     resources = resource_service.recommend_for_incident(db, incident_id, limit=limit)
     return [ResourceUnitRead.model_validate(r) for r in resources]
+
+
+@router.get("/{incident_id}/summary", response_model=IncidentSummary)
+def incident_summary(incident_id: uuid.UUID, db: Session = Depends(get_db)) -> IncidentSummary:
+    incident = incident_service.get_incident(db, incident_id)
+    if incident is None:
+        raise HTTPException(status_code=404, detail="Incident not found")
+    summary, ai_generated = summary_service.generate_summary(incident)
+    return IncidentSummary(incident_id=incident.id, summary=summary, ai_generated=ai_generated)
