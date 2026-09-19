@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import type { Incident, ResourceBundleResponse, IncidentSummary, HospitalFacility, CascadeRiskResponse, ImageAnalysisResponse } from "../types";
-import { fetchResourceBundle, fetchSummary, fetchHospitalRecommendations, fetchCascadeRisk, analyzeIncidentImage } from "../api";
-import { X, Sparkles, Clock, ShieldAlert, CheckCircle2, Navigation, Hospital, Bed, TrendingUp, Wind, AlertTriangle, Eye, Camera, Trash2, Zap } from "lucide-react";
+import type { Incident, ResourceBundleResponse, IncidentSummary, HospitalFacility, CascadeRiskResponse, ImageAnalysisResponse, EvacuationRouteResponse } from "../types";
+import { fetchResourceBundle, fetchSummary, fetchHospitalRecommendations, fetchCascadeRisk, fetchEvacuationRoute, analyzeIncidentImage } from "../api";
+import { X, Sparkles, Clock, ShieldAlert, CheckCircle2, Navigation, Hospital, Bed, TrendingUp, Wind, AlertTriangle, Eye, Camera, Trash2, Zap, Route } from "lucide-react";
 
 interface IncidentDetailModalProps {
   incident: Incident | null;
   onClose: () => void;
   onTogglePlume?: (polygon: [number, number][] | null) => void;
   isPlumeActive?: boolean;
+  onToggleEvacuationRoute?: (route: EvacuationRouteResponse | null) => void;
+  isEvacuationActive?: boolean;
 }
 
 export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
@@ -15,15 +17,19 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
   onClose,
   onTogglePlume,
   isPlumeActive = false,
+  onToggleEvacuationRoute,
+  isEvacuationActive = false,
 }) => {
   const [bundle, setBundle] = useState<ResourceBundleResponse | null>(null);
   const [summary, setSummary] = useState<IncidentSummary | null>(null);
   const [hospitals, setHospitals] = useState<HospitalFacility[]>([]);
   const [cascadeRisk, setCascadeRisk] = useState<CascadeRiskResponse | null>(null);
+  const [evacuationRoute, setEvacuationRoute] = useState<EvacuationRouteResponse | null>(null);
   const [isLoadingBundle, setIsLoadingBundle] = useState(false);
   const [isLoadingSummary, setIsLoadingSummary] = useState(false);
   const [isLoadingHospitals, setIsLoadingHospitals] = useState(false);
   const [isLoadingCascade, setIsLoadingCascade] = useState(false);
+  const [isLoadingEvacuation, setIsLoadingEvacuation] = useState(false);
   const [isDispatched, setIsDispatched] = useState(false);
 
   // Vision Analysis State
@@ -38,6 +44,7 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
       setSummary(null);
       setHospitals([]);
       setCascadeRisk(null);
+      setEvacuationRoute(null);
       setIsDispatched(false);
       setImagePreview(null);
       setVisualAudit(null);
@@ -67,6 +74,13 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
       .then((res) => setCascadeRisk(res))
       .catch((err) => console.error("Cascade risk error:", err))
       .finally(() => setIsLoadingCascade(false));
+
+    // Load hazard-aware evacuation route
+    setIsLoadingEvacuation(true);
+    fetchEvacuationRoute(incident.id)
+      .then((res) => setEvacuationRoute(res))
+      .catch((err) => console.error("Evacuation error:", err))
+      .finally(() => setIsLoadingEvacuation(false));
   }, [incident]);
 
   if (!incident) return null;
@@ -319,6 +333,108 @@ export const IncidentDetailModal: React.FC<IncidentDetailModalProps> = ({
             ) : (
               <div className="text-xs text-slate-500 text-center py-2">
                 Atmospheric telemetry offline.
+              </div>
+            )}
+          </div>
+
+          {/* Hazard-Aware Dynamic Evacuation Router Card */}
+          <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Route className="w-4 h-4 text-emerald-400" />
+                <h4 className="text-xs font-semibold text-slate-200 uppercase tracking-wider">
+                  Hazard-Aware Evacuation Router (Plume Bypass)
+                </h4>
+              </div>
+              {evacuationRoute && onToggleEvacuationRoute && (
+                <button
+                  type="button"
+                  onClick={() => onToggleEvacuationRoute(isEvacuationActive ? null : evacuationRoute)}
+                  className={`inline-flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-md border transition cursor-pointer ${
+                    isEvacuationActive
+                      ? "bg-emerald-900/80 text-emerald-300 border-emerald-500"
+                      : "bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700"
+                  }`}
+                >
+                  <Sparkles className="w-3 h-3 text-emerald-400" />
+                  <span>{isEvacuationActive ? "Hide Corridor on Map" : "Plot Corridor on Map"}</span>
+                </button>
+              )}
+            </div>
+
+            {isLoadingEvacuation ? (
+              <div className="text-xs text-slate-400 text-center py-3 animate-pulse">
+                Calculating tangent bypass corridor around active plume...
+              </div>
+            ) : evacuationRoute ? (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between text-xs bg-slate-950/60 p-2.5 rounded-lg border border-slate-800">
+                  <span className="text-slate-400">Target Terminal Facility:</span>
+                  <span className="font-semibold text-emerald-300">
+                    🏥 {evacuationRoute.target_destination_name} ({evacuationRoute.target_destination_category})
+                  </span>
+                </div>
+
+                {/* Comparative Cards: Naive vs Safe */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {/* Naive Direct Route */}
+                  <div className="bg-rose-950/25 border border-rose-900/50 p-2.5 rounded-lg space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-rose-400 uppercase tracking-wider">
+                        ⚠️ Naive Direct Path
+                      </span>
+                      <span className="text-[10px] bg-rose-950 border border-rose-800 text-rose-300 px-1.5 py-0.5 rounded font-mono">
+                        UNSAFE
+                      </span>
+                    </div>
+                    <div className="text-xs font-semibold text-rose-300">
+                      {Math.round(evacuationRoute.naive_direct_route.hazard_exposure_meters)}m Toxic Plume Exposure
+                    </div>
+                    <div className="text-[11px] text-slate-400 flex items-center justify-between">
+                      <span>Distance: {evacuationRoute.naive_direct_route.total_distance_km.toFixed(1)} km</span>
+                      <span>ETA: ~{Math.round(evacuationRoute.naive_direct_route.eta_minutes)} min</span>
+                    </div>
+                    <div className="text-[10px] text-rose-400/80">
+                      ❌ Directly penetrates the chemical / smoke dispersion cone.
+                    </div>
+                  </div>
+
+                  {/* Safe Detour Corridor */}
+                  <div className="bg-emerald-950/30 border border-emerald-800/60 p-2.5 rounded-lg space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">
+                        🛡️ Safe Detour Corridor
+                      </span>
+                      <span className="text-[10px] bg-emerald-950 border border-emerald-700 text-emerald-300 px-1.5 py-0.5 rounded font-mono">
+                        ZERO EXPOSURE
+                      </span>
+                    </div>
+                    <div className="text-xs font-semibold text-emerald-300">
+                      0.0m Hazard Penetration ({Math.round(evacuationRoute.safety_delta_meters_avoided)}m saved)
+                    </div>
+                    <div className="text-[11px] text-slate-400 flex items-center justify-between">
+                      <span>Distance: {evacuationRoute.safe_evacuation_corridor.total_distance_km.toFixed(1)} km</span>
+                      <span>ETA: ~{Math.round(evacuationRoute.safe_evacuation_corridor.eta_minutes)} min</span>
+                    </div>
+                    <div className="text-[10px] text-emerald-400/90">
+                      ✅ Upwind / crosswind tangent vector bypasses plume boundary.
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-[11px] text-slate-300 bg-slate-800/60 border border-slate-700/60 p-2.5 rounded-lg">
+                  <span className="font-semibold text-amber-300">Tactical Guidance: </span>
+                  {evacuationRoute.tactical_advice}
+                </div>
+
+                <div className="flex items-center justify-between text-[10px] text-slate-500 font-mono">
+                  <span>Waypoints: {evacuationRoute.safe_evacuation_corridor.waypoints.length} nodes</span>
+                  <span>Algorithm: {evacuationRoute.routing_algorithm}</span>
+                </div>
+              </div>
+            ) : (
+              <div className="text-xs text-slate-500 text-center py-2">
+                Evacuation routing inactive.
               </div>
             )}
           </div>

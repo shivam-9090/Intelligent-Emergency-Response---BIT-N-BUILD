@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import L from "leaflet";
-import type { Incident, ResourceUnit } from "../types";
+import type { EvacuationRouteResponse, Incident, ResourceUnit } from "../types";
 
 interface EmergencyMapProps {
   incidents: Incident[];
@@ -8,6 +8,7 @@ interface EmergencyMapProps {
   selectedIncident: Incident | null;
   onSelectIncident: (inc: Incident) => void;
   activePlumePolygon?: [number, number][] | null;
+  evacuationRoute?: EvacuationRouteResponse | null;
 }
 
 const SEVERITY_COLORS = {
@@ -23,6 +24,7 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
   selectedIncident,
   onSelectIncident,
   activePlumePolygon,
+  evacuationRoute,
 }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -168,15 +170,139 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
       `);
       layerGroup.addLayer(polygon);
     }
-  }, [incidents, resources, selectedIncident, onSelectIncident, activePlumePolygon]);
 
-  // Center on selected incident if changed
+    // 4. Render Hazard-Aware Evacuation Routes
+    if (evacuationRoute) {
+      // 4a. Naive Direct Path (Red Dashed Line - Plume Penetration)
+      const naiveWaypoints = evacuationRoute.naive_direct_route.waypoints.map(
+        (w) => [w.latitude, w.longitude] as [number, number]
+      );
+      if (naiveWaypoints.length > 1) {
+        const naiveLine = L.polyline(naiveWaypoints, {
+          color: "#f43f5e",
+          weight: 3,
+          dashArray: "6, 8",
+          opacity: 0.85,
+        });
+        naiveLine.bindPopup(`
+          <div style="color: #0f172a; font-family: sans-serif; min-width: 200px;">
+            <div style="font-weight: 700; color: #e11d48; font-size: 13px;">⚠️ Naive Direct Path (Hazard Penetration)</div>
+            <div style="font-size: 11px; color: #475569; margin-top: 3px;">
+              Direct trajectory penetrates the active toxic plume corridor.
+            </div>
+            <div style="margin-top: 5px; font-size: 12px; font-weight: 700; color: #be123c;">
+              Toxic Exposure: ${Math.round(evacuationRoute.naive_direct_route.hazard_exposure_meters)}m
+            </div>
+            <div style="font-size: 11px; color: #64748b; margin-top: 2px;">
+              Distance: ${evacuationRoute.naive_direct_route.total_distance_km.toFixed(1)} km | Transit: ${Math.round(evacuationRoute.naive_direct_route.eta_minutes)} min
+            </div>
+          </div>
+        `);
+        layerGroup.addLayer(naiveLine);
+      }
+
+      // 4b. Safe Evacuation Corridor (Glowing Emerald Line - Zero Plume Exposure)
+      const safeWaypoints = evacuationRoute.safe_evacuation_corridor.waypoints.map(
+        (w) => [w.latitude, w.longitude] as [number, number]
+      );
+      if (safeWaypoints.length > 1) {
+        const safeLine = L.polyline(safeWaypoints, {
+          color: "#10b981",
+          weight: 4.5,
+          opacity: 0.95,
+        });
+        safeLine.bindPopup(`
+          <div style="color: #0f172a; font-family: sans-serif; min-width: 220px;">
+            <div style="font-weight: 700; color: #059669; font-size: 13px;">🛡️ Safe Evacuation Corridor (Zero Exposure)</div>
+            <div style="font-size: 11px; color: #047857; font-weight: 700; margin-top: 2px;">
+              ✅ 0.0m Plume Penetration Guaranteed
+            </div>
+            <div style="font-size: 11px; color: #475569; margin-top: 4px; line-height: 1.3;">
+              ${evacuationRoute.tactical_advice}
+            </div>
+            <div style="margin-top: 6px; font-size: 11px; color: #334155; border-top: 1px solid #e2e8f0; padding-top: 4px;">
+              Distance: <b>${evacuationRoute.safe_evacuation_corridor.total_distance_km.toFixed(1)} km</b> | 
+              ETA: <b>${Math.round(evacuationRoute.safe_evacuation_corridor.eta_minutes)} min</b> | 
+              Exposure Avoided: <b style="color: #059669;">${Math.round(evacuationRoute.safety_delta_meters_avoided)}m</b>
+            </div>
+          </div>
+        `);
+        layerGroup.addLayer(safeLine);
+
+        // Render Detour Waypoint Nodes
+        evacuationRoute.safe_evacuation_corridor.waypoints.forEach((wp) => {
+          const wpIcon = L.divIcon({
+            className: "custom-wp-icon",
+            html: `
+              <div style="
+                width: 10px;
+                height: 10px;
+                background-color: #10b981;
+                border: 2px solid white;
+                border-radius: 50%;
+                box-shadow: 0 0 6px #10b981;
+              "></div>
+            `,
+            iconSize: [10, 10],
+            iconAnchor: [5, 5],
+          });
+          const wpMarker = L.marker([wp.latitude, wp.longitude], { icon: wpIcon });
+          wpMarker.bindPopup(`
+            <div style="color: #0f172a; font-family: sans-serif; font-size: 11px;">
+              <span style="font-weight: 700; color: #059669;">Waypoint #${wp.step_index}:</span> ${wp.description}
+            </div>
+          `);
+          layerGroup.addLayer(wpMarker);
+        });
+
+        // Render Target Destination Terminal Pin
+        const destCoords = evacuationRoute.target_destination_coords;
+        const destIcon = L.divIcon({
+          className: "custom-dest-icon",
+          html: `
+            <div style="
+              background-color: #065f46;
+              color: #ecfdf5;
+              padding: 3px 7px;
+              border-radius: 4px;
+              border: 1.5px solid #34d399;
+              font-size: 10px;
+              font-weight: 700;
+              box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+              white-space: nowrap;
+            ">
+              🏥 ${evacuationRoute.target_destination_name}
+            </div>
+          `,
+          iconSize: [90, 24],
+          iconAnchor: [45, 12],
+        });
+        const destMarker = L.marker(destCoords, { icon: destIcon });
+        destMarker.bindPopup(`
+          <div style="color: #0f172a; font-family: sans-serif;">
+            <div style="font-weight: 700; font-size: 13px;">${evacuationRoute.target_destination_name}</div>
+            <div style="font-size: 11px; color: #059669; font-weight: 600;">Destination ${evacuationRoute.target_destination_category}</div>
+            <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Safe Evacuation Terminal Facility</div>
+          </div>
+        `);
+        layerGroup.addLayer(destMarker);
+      }
+    }
+  }, [incidents, resources, selectedIncident, onSelectIncident, activePlumePolygon, evacuationRoute]);
+
+  // Center or fit bounds on selected incident or evacuation corridor
   useEffect(() => {
-    if (
+    if (!mapInstanceRef.current) return;
+    if (evacuationRoute && evacuationRoute.safe_evacuation_corridor.waypoints.length > 0) {
+      const allPoints = evacuationRoute.safe_evacuation_corridor.waypoints.map(
+        (w) => [w.latitude, w.longitude] as [number, number]
+      );
+      const bounds = L.latLngBounds(allPoints);
+      mapInstanceRef.current.fitBounds(bounds, { padding: [60, 60], duration: 1.2 });
+    } else if (
       selectedIncident &&
       selectedIncident.latitude !== null &&
-      selectedIncident.longitude !== null &&
-      mapInstanceRef.current
+      selectedIncident.longitude !== null
     ) {
       mapInstanceRef.current.flyTo(
         [selectedIncident.latitude, selectedIncident.longitude],
@@ -184,7 +310,7 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
         { duration: 1.2 }
       );
     }
-  }, [selectedIncident]);
+  }, [selectedIncident, evacuationRoute]);
 
   return (
     <div className="relative w-full h-full">
@@ -219,6 +345,18 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
           <span className="w-2.5 h-2.5 rounded-sm bg-orange-500/70 border border-orange-400 inline-block" />
           <span className="text-slate-300">Downwind Hazard Plume</span>
         </div>
+        {evacuationRoute && (
+          <>
+            <div className="border-t border-slate-700 pt-1.5 mt-1 flex items-center gap-2">
+              <span className="w-3.5 h-0.5 border-t-2 border-dashed border-rose-500 inline-block" />
+              <span className="text-rose-400 font-medium">Naive Path ({Math.round(evacuationRoute.naive_direct_route.hazard_exposure_meters)}m Exposure)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-3.5 h-1 bg-emerald-500 rounded-full inline-block" />
+              <span className="text-emerald-400 font-medium">Safe Corridor (0m Exposure)</span>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

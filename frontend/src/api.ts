@@ -2,6 +2,7 @@ import type {
   Alert,
   CascadeRiskResponse,
   ClassifyResult,
+  EvacuationRouteResponse,
   FleetOptimizationResponse,
   HospitalRecommendationResponse,
   ImageAnalysisResponse,
@@ -137,6 +138,19 @@ export async function analyzeIncidentImage(
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: "Visual analysis request failed" }));
     throw new Error(err.detail || "Visual analysis request failed");
+  }
+  return res.json();
+}
+
+export async function fetchEvacuationRoute(
+  incidentId: string,
+  destinationName?: string
+): Promise<EvacuationRouteResponse> {
+  const query = destinationName ? `?destination_name=${encodeURIComponent(destinationName)}` : "";
+  const res = await fetch(`${API_BASE}/incidents/${incidentId}/evacuation-route${query}`);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Failed to compute evacuation route" }));
+    throw new Error(err.detail || "Failed to compute evacuation route");
   }
   return res.json();
 }
