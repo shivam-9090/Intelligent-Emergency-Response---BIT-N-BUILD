@@ -48,17 +48,40 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
       zoomControl: true,
     });
 
-    // Clean OpenStreetMap tiles (no watermark, free & open)
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      maxZoom: 19,
-    }).addTo(map);
+    // High-performance, unrestricted Esri ArcGIS Dark Gray Base
+    L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+      {
+        attribution: "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
+        maxZoom: 16,
+      }
+    ).addTo(map);
+
+    // Esri ArcGIS Dark Gray City Labels & Road Reference
+    L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+      {
+        attribution: "",
+        maxZoom: 16,
+      }
+    ).addTo(map);
 
     layerGroupRef.current = L.layerGroup().addTo(map);
     mapInstanceRef.current = map;
 
+    // Ensure Leaflet recalculates viewport container dimensions
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 250);
+
+    const handleResize = () => {
+      map.invalidateSize();
+    };
+    window.addEventListener("resize", handleResize);
+
     return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
       map.remove();
       mapInstanceRef.current = null;
     };
