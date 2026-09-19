@@ -1,12 +1,24 @@
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import alerts, assignments, auth, incidents, realtime, resources
 from app.core.config import get_settings
+from app.core.scheduler import start_scheduler, stop_scheduler
 
 settings = get_settings()
 
-app = FastAPI(title="Intelligent Emergency Response Platform", version="0.1.0")
+
+@asynccontextmanager
+async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    start_scheduler()
+    yield
+    stop_scheduler()
+
+
+app = FastAPI(title="Intelligent Emergency Response Platform", version="0.1.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
