@@ -13,6 +13,7 @@ function App() {
   const [resources, setResources] = useState<ResourceUnit[]>([]);
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
+  const [activePlumePolygon, setActivePlumePolygon] = useState<[number, number][] | null>(null);
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"map" | "analytics">("map");
 
@@ -68,6 +69,7 @@ function App() {
                 resources={resources}
                 selectedIncident={selectedIncident}
                 onSelectIncident={(inc) => setSelectedIncident(inc)}
+                activePlumePolygon={activePlumePolygon}
               />
             </div>
           </>
@@ -84,7 +86,12 @@ function App() {
 
       <IncidentDetailModal
         incident={selectedIncident}
-        onClose={() => setSelectedIncident(null)}
+        onClose={() => {
+          setSelectedIncident(null);
+          setActivePlumePolygon(null);
+        }}
+        onTogglePlume={setActivePlumePolygon}
+        isPlumeActive={activePlumePolygon !== null}
       />
     </div>
   );

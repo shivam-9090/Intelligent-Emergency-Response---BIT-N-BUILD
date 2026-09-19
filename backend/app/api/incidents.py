@@ -4,7 +4,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
+from app.ml.cascade_forecaster import forecast_cascade_risk
 from app.ml.classification import classify_raw_text
+from app.schemas.cascade import CascadeRiskResponse
 from app.schemas.incident import (
     ClassifyTextRequest,
     ClassifyTextResponse,
@@ -90,3 +92,36 @@ def incident_summary(incident_id: uuid.UUID, db: Session = Depends(get_db)) -> I
         raise HTTPException(status_code=404, detail="Incident not found")
     summary, ai_generated = summary_service.generate_summary(incident)
     return IncidentSummary(incident_id=incident.id, summary=summary, ai_generated=ai_generated)
+
+
+@router.get("/{incident_id}/cascade-risk", response_model=CascadeRiskResponse)
+def get_incident_cascade_risk(
+    incident_id: uuid.UUID,
+    wind_speed_kmh: float = 16.0,
+    wind_direction_deg: float = 45.0,
+    temperature_c: float = 28.0,
+    humidity_pct: float = 65.0,
+    db: Session = Depends(get_db),
+) -> CascadeRiskResponse:
+    """Forecast predictive cascade escalation risk, atmospheric dispersion plume,
+    secondary hazards, and civic infrastructure threats."""
+    incident = incident_service.get_incident(db, incident_id)
+    if incident is None:
+        raise HTTPException(status_code=404, detail="Incident not found")
+
+    lat = incident.latitude if incident.latitude is not None else 12.9716
+    lon = incident.longitude if incident.longitude is not None else 77.5946
+
+    forecast = forecast_cascade_risk(
+        incident_type=incident.incident_type,
+        severity=incident.severity,
+        priority=incident.priority,
+        inc_lat=lat,
+        inc_lon=lon,
+        wind_speed_kmh=wind_speed_kmh,
+        wind_direction_deg=wind_direction_deg,
+        temperature_c=temperature_c,
+        humidity_pct=humidity_pct,
+    )
+
+    return CascadeRiskResponse(incident_id=incident_id, **forecast)

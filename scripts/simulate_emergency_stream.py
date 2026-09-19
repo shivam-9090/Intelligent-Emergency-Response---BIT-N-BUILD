@@ -180,6 +180,39 @@ def run_demo():
     except Exception as exc:
         print(f"   Hospital routing note: {exc}")
 
+    time.sleep(1.5)
+
+    # -------------------------------------------------------------
+    # Step 7: Predictive Incident Cascade & Secondary Hazard Forecaster
+    # -------------------------------------------------------------
+    print_banner("STEP 7: Predictive Cascade Forecaster & Atmospheric Plume Modeling")
+    print("🔮 Forecasting multi-hazard escalation timelines and atmospheric plume dispersion...\n")
+    try:
+        cascade_res = http_get(f"/incidents/{inc_id}/cascade-risk?wind_speed_kmh=20.0&wind_direction_deg=45.0")
+        print(f"   Escalation Level:   {cascade_res['escalation_level'].upper()}")
+        print(f"   Cascade Risk Score: {cascade_res['cascade_risk_score']}%")
+        weather = cascade_res["weather"]
+        print(f"   Weather Telemetry:  Wind {weather['wind_speed_kmh']} km/h blowing {weather['wind_direction_deg']}° (NE) | Temp {weather['temperature_c']}°C")
+        
+        print("\n   [PREDICTED SECONDARY HAZARDS]:")
+        for haz in cascade_res.get("secondary_hazards", []):
+            print(f"      • {haz['hazard_type']} ({(haz['probability'] * 100):.0f}% prob, onset ~{haz['estimated_onset_minutes']}m)")
+            print(f"        Action: {haz['recommended_action']}")
+
+        infra = cascade_res.get("vulnerable_infrastructure", [])
+        if infra:
+            print("\n   [CIVIC INFRASTRUCTURE IN IMPACT ZONE]:")
+            for inf in infra:
+                print(f"      🏛️ {inf['name']} ({inf['distance_km']} km away, ~{inf['occupancy_estimate']} occupants)")
+
+        corridor = cascade_res.get("evacuation_corridor", {})
+        print(f"\n   [ATMOSPHERIC DISPERSION PLUME POLYGON]:")
+        print(f"      Downwind Vector Length: {corridor.get('downwind_length_meters'):.0f} meters")
+        print(f"      Polygon Vertices Generated: {len(corridor.get('polygon_coordinates', []))} GPS points for Leaflet map")
+        print(f"\n   Tactical Evacuation Advice: \"{cascade_res.get('tactical_evacuation_advice')}\"\n")
+    except Exception as exc:
+        print(f"   Cascade forecaster note: {exc}")
+
     print_banner("DEMO COMPLETED SUCCESSFULLY")
 
 
