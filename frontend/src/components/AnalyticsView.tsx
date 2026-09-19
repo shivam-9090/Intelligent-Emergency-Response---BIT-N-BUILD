@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { fetchAnalyticsBreakdown, fetchAnalyticsDelays, fetchAnalyticsShortages } from "../api";
-import type { Incident } from "../types";
-import { ShieldCheck, AlertTriangle, Clock, Flame, Users } from "lucide-react";
+import { fetchAnalyticsBreakdown, fetchAnalyticsDelays, fetchAnalyticsShortages, fetchPredictiveDemandForecast } from "../api";
+import type { Incident, PredictiveDemandResponse } from "../types";
+import { ShieldCheck, AlertTriangle, Clock, Flame, Users, Radio } from "lucide-react";
 
 interface AnalyticsViewProps {
   incidents: Incident[];
@@ -11,11 +11,13 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
   const [breakdown, setBreakdown] = useState<Record<string, number>>({});
   const [delays, setDelays] = useState<any[]>([]);
   const [shortages, setShortages] = useState<any[]>([]);
+  const [predictiveDemand, setPredictiveDemand] = useState<PredictiveDemandResponse | null>(null);
 
   useEffect(() => {
     fetchAnalyticsBreakdown().then(setBreakdown).catch(console.error);
     fetchAnalyticsDelays().then(setDelays).catch(console.error);
     fetchAnalyticsShortages().then(setShortages).catch(console.error);
+    fetchPredictiveDemandForecast(2).then(setPredictiveDemand).catch(console.error);
   }, []);
 
   const totalIncidents = incidents.length;
@@ -102,6 +104,68 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
           )}
         </div>
       </div>
+
+      {/* AI Spatio-Temporal Demand Forecast & Pre-Deployment Staging Panel */}
+      {predictiveDemand && (
+        <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <div className="flex items-center gap-2">
+                <Radio className="w-5 h-5 text-sky-400 animate-pulse" />
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                  AI Spatio-Temporal Demand Forecast & Patrol Pre-Deployment
+                </h3>
+              </div>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Forward {predictiveDemand.forecast_horizon_hours}h Poisson surge model & Kernel Density Estimation (KDE) positioning standby units.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              <span className="bg-slate-800 px-2.5 py-1 rounded-md text-slate-300 font-mono border border-slate-700">
+                City Risk Index: <b className="text-amber-400">{predictiveDemand.city_wide_risk_index}%</b>
+              </span>
+              <span className="bg-emerald-950/80 text-emerald-300 px-2.5 py-1 rounded-md font-mono border border-emerald-800 font-bold">
+                +{predictiveDemand.total_projected_eta_savings_minutes}m Net ETA Saved
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            {predictiveDemand.staging_recommendations.map((st) => (
+              <div
+                key={st.staging_id}
+                className="bg-slate-800/70 border border-slate-700/80 p-3.5 rounded-lg space-y-2 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-slate-200">{st.zone_name}</span>
+                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800">
+                      {Math.round(st.predicted_demand_intensity * 100)}% Surge
+                    </span>
+                  </div>
+                  <div className="text-[11px] text-sky-400 font-semibold mt-1">
+                    🚨 Pre-Deploy: {st.recommended_unit_type.replace(/_/g, " ").toUpperCase()}
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-1 leading-snug line-clamp-2">
+                    {st.tactical_rationale}
+                  </p>
+                </div>
+                <div className="border-t border-slate-700/60 pt-2 flex items-center justify-between text-[11px]">
+                  <span className="text-slate-400">Response Bonus:</span>
+                  <span className="font-bold text-emerald-400 font-mono">
+                    ~{st.projected_eta_savings_minutes}m faster
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-[10px] text-slate-500 font-mono flex items-center justify-between border-t border-slate-800 pt-2">
+            <span>Grid Points Calculated: {predictiveDemand.heatmap_grid.length} cells</span>
+            <span>Algorithm: {predictiveDemand.algorithm}</span>
+          </div>
+        </div>
+      )}
 
       {/* Resource Allocation & Delays */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

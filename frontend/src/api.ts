@@ -8,6 +8,7 @@ import type {
   ImageAnalysisResponse,
   Incident,
   IncidentSummary,
+  PredictiveDemandResponse,
   ResourceBundleResponse,
   ResourceUnit,
 } from "./types";
@@ -151,6 +152,17 @@ export async function fetchEvacuationRoute(
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: "Failed to compute evacuation route" }));
     throw new Error(err.detail || "Failed to compute evacuation route");
+  }
+  return res.json();
+}
+
+export async function fetchPredictiveDemandForecast(
+  horizonHours: number = 2
+): Promise<PredictiveDemandResponse> {
+  const res = await fetch(`${API_BASE}/analytics/predictive-demand-forecast?horizon_hours=${horizonHours}`);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Failed to fetch predictive demand forecast" }));
+    throw new Error(err.detail || "Failed to fetch predictive demand forecast");
   }
   return res.json();
 }

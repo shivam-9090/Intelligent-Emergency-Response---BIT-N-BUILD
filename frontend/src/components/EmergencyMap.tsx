@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import L from "leaflet";
-import type { EvacuationRouteResponse, Incident, ResourceUnit } from "../types";
+import type { EvacuationRouteResponse, Incident, PredictiveDemandResponse, ResourceUnit } from "../types";
 
 interface EmergencyMapProps {
   incidents: Incident[];
@@ -9,6 +9,9 @@ interface EmergencyMapProps {
   onSelectIncident: (inc: Incident) => void;
   activePlumePolygon?: [number, number][] | null;
   evacuationRoute?: EvacuationRouteResponse | null;
+  predictiveDemand?: PredictiveDemandResponse | null;
+  showDemandHeatmap?: boolean;
+  onToggleDemandHeatmap?: () => void;
 }
 
 const SEVERITY_COLORS = {
@@ -25,6 +28,9 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
   onSelectIncident,
   activePlumePolygon,
   evacuationRoute,
+  predictiveDemand,
+  showDemandHeatmap = false,
+  onToggleDemandHeatmap,
 }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -288,7 +294,107 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
         layerGroup.addLayer(destMarker);
       }
     }
-  }, [incidents, resources, selectedIncident, onSelectIncident, activePlumePolygon, evacuationRoute]);
+
+    // 5. Render Predictive Demand Heatmap & Patrol Pre-Deployment Staging Beacons
+    if (showDemandHeatmap && predictiveDemand) {
+      // 5a. Render Spatio-Temporal KDE Density Nodes
+      predictiveDemand.heatmap_grid.forEach((pt) => {
+        if (pt.intensity < 0.12) return;
+        const color =
+          pt.intensity >= 0.75
+            ? "#f43f5e"
+            : pt.intensity >= 0.5
+            ? "#f97316"
+            : pt.intensity >= 0.25
+            ? "#eab308"
+            : "#06b6d4";
+
+        const circle = L.circle([pt.latitude, pt.longitude], {
+          radius: 800 + pt.intensity * 900,
+          color: color,
+          weight: 1.5,
+          opacity: 0.6,
+          fillColor: color,
+          fillOpacity: 0.12 + pt.intensity * 0.26,
+        });
+
+        circle.bindPopup(`
+          <div style="color: #0f172a; font-family: sans-serif; min-width: 190px;">
+            <div style="font-weight: 700; color: ${color}; font-size: 13px;">
+              🔮 Predicted Surge: ${pt.risk_level.toUpperCase()}
+            </div>
+            <div style="font-size: 11px; color: #475569; margin-top: 3px;">
+              Demand Surge Index: <b>${Math.round(pt.intensity * 100)}%</b>
+            </div>
+            <div style="font-size: 11px; color: #334155; margin-top: 2px;">
+              Dominant Hazard: <b>${pt.predicted_incident_type.replace(/_/g, " ").toUpperCase()}</b>
+            </div>
+            <div style="font-size: 10px; color: #64748b; margin-top: 3px;">
+              Historical Influence: ${pt.historical_event_count} incidents
+            </div>
+          </div>
+        `);
+        layerGroup.addLayer(circle);
+      });
+
+      // 5b. Render Tactical Pre-Deployment Staging Centroids (Beacons)
+      predictiveDemand.staging_recommendations.forEach((st) => {
+        const beaconIcon = L.divIcon({
+          className: "custom-staging-beacon",
+          html: `
+            <div style="position: relative; display: flex; align-items: center; justify-content: center;">
+              <div style="
+                background-color: #0369a1;
+                color: #f0f9ff;
+                padding: 3px 8px;
+                border-radius: 6px;
+                border: 2px solid #38bdf8;
+                font-size: 10px;
+                font-weight: 800;
+                box-shadow: 0 0 14px rgba(56, 189, 248, 0.8);
+                white-space: nowrap;
+              ">
+                🚨 STAGING: ${st.recommended_unit_type.replace(/_/g, " ").toUpperCase()}
+              </div>
+            </div>
+          `,
+          iconSize: [120, 24],
+          iconAnchor: [60, 12],
+        });
+
+        const beaconMarker = L.marker([st.latitude, st.longitude], { icon: beaconIcon });
+        beaconMarker.bindPopup(`
+          <div style="color: #0f172a; font-family: sans-serif; min-width: 220px;">
+            <div style="font-weight: 700; color: #0284c7; font-size: 13px;">
+              🛡️ Tactical Standby Pre-Positioning
+            </div>
+            <div style="font-size: 12px; font-weight: 600; color: #0f172a; margin-top: 2px;">
+              ${st.zone_name}
+            </div>
+            <div style="font-size: 11px; color: #0369a1; font-weight: 600; margin-top: 3px;">
+              Unit: <b>${st.recommended_unit_type.replace(/_/g, " ").toUpperCase()}</b> ➔ ${st.target_incident_type}
+            </div>
+            <div style="font-size: 11px; color: #16a34a; font-weight: 700; margin-top: 3px;">
+              ⏱️ Projected Response Savings: ~${st.projected_eta_savings_minutes} mins faster
+            </div>
+            <div style="font-size: 11px; color: #475569; margin-top: 4px; line-height: 1.3;">
+              ${st.tactical_rationale}
+            </div>
+          </div>
+        `);
+        layerGroup.addLayer(beaconMarker);
+      });
+    }
+  }, [
+    incidents,
+    resources,
+    selectedIncident,
+    onSelectIncident,
+    activePlumePolygon,
+    evacuationRoute,
+    predictiveDemand,
+    showDemandHeatmap,
+  ]);
 
   // Center or fit bounds on selected incident or evacuation corridor
   useEffect(() => {
@@ -315,6 +421,30 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
   return (
     <div className="relative w-full h-full">
       <div ref={mapContainerRef} className="w-full h-full z-0" />
+
+      {/* Floating Toggle: Spatio-Temporal Demand Forecast Layer */}
+      {onToggleDemandHeatmap && (
+        <div className="absolute top-4 right-4 z-[1000] pointer-events-auto">
+          <button
+            type="button"
+            onClick={onToggleDemandHeatmap}
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold border transition shadow-xl cursor-pointer backdrop-blur ${
+              showDemandHeatmap
+                ? "bg-sky-600/90 hover:bg-sky-500 text-white border-sky-400 shadow-sky-500/25"
+                : "bg-slate-900/85 hover:bg-slate-800 text-slate-300 border-slate-700"
+            }`}
+          >
+            <span>🔮</span>
+            <span>{showDemandHeatmap ? "Hide Demand Heatmap" : "Predictive Demand (KDE)"}</span>
+            {predictiveDemand && showDemandHeatmap && (
+              <span className="text-[10px] bg-sky-950 px-1.5 py-0.5 rounded font-mono border border-sky-700">
+                {predictiveDemand.staging_recommendations.length} Staged
+              </span>
+            )}
+          </button>
+        </div>
+      )}
+
       {/* Map Legend Overlay */}
       <div className="absolute bottom-6 left-6 z-[1000] bg-slate-900/90 backdrop-blur border border-slate-700/80 px-3.5 py-2.5 rounded-lg shadow-xl text-xs space-y-1.5 pointer-events-auto">
         <div className="text-slate-400 font-semibold mb-1 text-[11px] uppercase tracking-wider">
@@ -354,6 +484,18 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
             <div className="flex items-center gap-2">
               <span className="w-3.5 h-1 bg-emerald-500 rounded-full inline-block" />
               <span className="text-emerald-400 font-medium">Safe Corridor (0m Exposure)</span>
+            </div>
+          </>
+        )}
+        {showDemandHeatmap && (
+          <>
+            <div className="border-t border-slate-700 pt-1.5 mt-1 flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400/80 inline-block" />
+              <span className="text-cyan-300 font-medium">KDE Demand Surge Zone</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-sm bg-sky-600 border border-sky-300 inline-block" />
+              <span className="text-sky-300 font-medium">Tactical Pre-Deploy Beacon</span>
             </div>
           </>
         )}
