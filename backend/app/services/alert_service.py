@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -44,12 +44,16 @@ def generate_critical_incident_alert(db: Session, incident: Incident) -> Alert |
 
 
 def check_delayed_responses(db: Session, threshold_minutes: int = DELAYED_RESPONSE_MINUTES) -> list[Alert]:
-    cutoff = datetime.now(timezone.utc) - timedelta(minutes=threshold_minutes)
-    stale_incidents = db.execute(
-        select(Incident)
-        .where(Incident.status.in_([IncidentStatus.REPORTED, IncidentStatus.VERIFIED]))
-        .where(Incident.reported_at < cutoff)
-    ).scalars().all()
+    cutoff = datetime.now(UTC) - timedelta(minutes=threshold_minutes)
+    stale_incidents = (
+        db.execute(
+            select(Incident)
+            .where(Incident.status.in_([IncidentStatus.REPORTED, IncidentStatus.VERIFIED]))
+            .where(Incident.reported_at < cutoff)
+        )
+        .scalars()
+        .all()
+    )
 
     created = []
     for incident in stale_incidents:
@@ -66,13 +70,17 @@ def check_delayed_responses(db: Session, threshold_minutes: int = DELAYED_RESPON
 
 
 def check_escalations(db: Session, threshold_minutes: int = ESCALATION_MINUTES) -> list[Alert]:
-    cutoff = datetime.now(timezone.utc) - timedelta(minutes=threshold_minutes)
-    overdue_incidents = db.execute(
-        select(Incident)
-        .where(Incident.status.in_([IncidentStatus.REPORTED, IncidentStatus.VERIFIED]))
-        .where(Incident.priority <= 2)
-        .where(Incident.reported_at < cutoff)
-    ).scalars().all()
+    cutoff = datetime.now(UTC) - timedelta(minutes=threshold_minutes)
+    overdue_incidents = (
+        db.execute(
+            select(Incident)
+            .where(Incident.status.in_([IncidentStatus.REPORTED, IncidentStatus.VERIFIED]))
+            .where(Incident.priority <= 2)
+            .where(Incident.reported_at < cutoff)
+        )
+        .scalars()
+        .all()
+    )
 
     created = []
     for incident in overdue_incidents:

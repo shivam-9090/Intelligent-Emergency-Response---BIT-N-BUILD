@@ -13,9 +13,7 @@ TEST_DATABASE_URL = "sqlite:///:memory:"
 
 @pytest.fixture()
 def db_session():
-    engine = create_engine(
-        TEST_DATABASE_URL, connect_args={"check_same_thread": False}, poolclass=StaticPool
-    )
+    engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False}, poolclass=StaticPool)
     Base.metadata.create_all(bind=engine)
     TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     session = TestingSessionLocal()

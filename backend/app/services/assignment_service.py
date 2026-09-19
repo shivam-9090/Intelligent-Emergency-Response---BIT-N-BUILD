@@ -42,9 +42,7 @@ def create_assignment(db: Session, payload: AssignmentCreate) -> Assignment:
     return assignment
 
 
-def update_assignment_status(
-    db: Session, assignment_id: uuid.UUID, status: AssignmentStatus
-) -> Assignment:
+def update_assignment_status(db: Session, assignment_id: uuid.UUID, status: AssignmentStatus) -> Assignment:
     assignment = db.get(Assignment, assignment_id)
     if assignment is None:
         raise NotFoundError("Assignment not found")
@@ -53,23 +51,25 @@ def update_assignment_status(
     resource = db.get(ResourceUnit, assignment.resource_id)
     incident = db.get(Incident, assignment.incident_id)
 
-    if status in (AssignmentStatus.COMPLETED, AssignmentStatus.CANCELLED):
-        if resource is not None:
-            resource.status = ResourceStatus.AVAILABLE
-    elif status in (AssignmentStatus.EN_ROUTE, AssignmentStatus.ON_SCENE):
-        if resource is not None:
-            resource.status = ResourceStatus.ASSIGNED
+    if resource is not None and status in (AssignmentStatus.COMPLETED, AssignmentStatus.CANCELLED):
+        resource.status = ResourceStatus.AVAILABLE
+    elif resource is not None and status in (AssignmentStatus.EN_ROUTE, AssignmentStatus.ON_SCENE):
+        resource.status = ResourceStatus.ASSIGNED
 
     if incident is not None:
         if status == AssignmentStatus.ON_SCENE and incident.status == IncidentStatus.ASSIGNED:
             incident.status = IncidentStatus.IN_PROGRESS
         elif status == AssignmentStatus.COMPLETED:
-            remaining = db.execute(
-                select(Assignment)
-                .where(Assignment.incident_id == incident.id)
-                .where(Assignment.id != assignment.id)
-                .where(Assignment.status.notin_([AssignmentStatus.COMPLETED, AssignmentStatus.CANCELLED]))
-            ).scalars().all()
+            remaining = (
+                db.execute(
+                    select(Assignment)
+                    .where(Assignment.incident_id == incident.id)
+                    .where(Assignment.id != assignment.id)
+                    .where(Assignment.status.notin_([AssignmentStatus.COMPLETED, AssignmentStatus.CANCELLED]))
+                )
+                .scalars()
+                .all()
+            )
             if not remaining:
                 incident.status = IncidentStatus.RESOLVED
 
