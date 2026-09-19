@@ -1,0 +1,501 @@
+id,incident_type,severity,priority,description,latitude,longitude
+1,fire,critical,1,Massive explosion at chemical factory! Multiple workers trapped inside and flames spreading to adjacent units.,13.013428,77.452103
+2,fire,critical,1,"Four-story residential building fully engulfed in flames. Screaming heard from upper floors, multiple casualties reported.",12.904109,77.511563
+3,fire,critical,1,"Severe fire outbreak in downtown commercial complex, heavy black smoke, structural collapse imminent.",13.042541,77.64761
+4,fire,critical,1,Industrial gas pipeline rupture with huge fireball and multiple injured workers trapped in plant area.,13.089254,77.470682
+5,fire,critical,1,"Major warehouse fire with toxic fumes released, nearby school needing immediate evacuation.",12.948177,77.453539
+6,fire,high,2,"Apartment fire on third floor, flames visible from balcony. Residents evacuating, 2 people suffering from smoke inhalation.",12.887191,77.596207
+7,fire,high,2,Wildfire spreading rapidly towards residential suburb due to high winds. Urgent containment needed.,12.829561,77.504251
+8,fire,high,2,"Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently.",13.016565,77.608082
+9,fire,high,2,"Vehicle pileup caught fire on national highway, two cars burning with people trapped.",12.887732,77.62138
+10,fire,high,2,"Electrical substation transformer caught fire, loud buzzing and thick smoke in residential area.",13.064429,77.44655
+11,fire,medium,3,Small dumpster fire in alleyway behind supermarket. No structures currently threatened.,13.063346,77.654042
+12,fire,medium,3,"Dry grass fire in vacant plot near railway track, smoke blowing towards road.",12.923675,77.491244
+13,fire,medium,3,"Car engine caught fire on roadside shoulder, driver is out safely, no injuries.",13.108764,77.545578
+14,fire,medium,3,Small smoke coming from air conditioning unit on second floor office.,12.849424,77.473615
+15,fire,medium,3,"Rubbish pile burning near vacant construction site, smoke bothering nearby residents.",13.075848,77.625718
+16,fire,low,4,Controlled agricultural burn producing slight smoke in rural boundary.,13.063738,77.66352
+17,fire,low,4,"Unattended small bonfire in public park, no immediate danger.",12.982468,77.736535
+18,fire,low,4,"Extinguished kitchen pan fire, caller requesting precautionary smoke inspection.",12.93516,77.610212
+19,fire,low,4,Smoldering campfire remains found in picnic clearing.,13.070421,77.630156
+20,flood,critical,1,"River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops.",13.080112,77.617806
+21,flood,critical,1,"Reservoir dam overflow causing rapid surge, bridge washed away, several vehicles swept away with passengers.",13.032972,77.458347
+22,flood,critical,1,"Catastrophic urban flash flooding, basement parking submerged with people trapped inside elevator.",12.889969,77.531416
+23,flood,critical,1,"Severe storm surge breaking seawall, water rushing into coastal hospital ground floor.",12.845538,77.514437
+24,flood,high,2,"Heavy rain causing storm canal to overflow, water entering ground floor houses in Sector 4.",12.8519,77.527992
+25,flood,high,2,"Underpass completely flooded with 5 feet of water, two cars stuck with passengers waiting on roof.",13.012305,77.55405
+26,flood,high,2,"River water level rising above danger mark, low-lying slums being evacuated.",12.932654,77.507452
+27,flood,high,2,"Main drainage choked, waist-deep water flooding commercial district streets.",12.901693,77.725596
+28,flood,medium,3,"Waterlogging on main avenue causing 2-hour traffic gridlock, water reaching knee height.",13.016011,77.627339
+29,flood,medium,3,Storm drain overflowing onto pedestrian sidewalk and parking lot.,12.872942,77.663338
+30,flood,medium,3,"Basement of apartment complex experiencing water ingress, pumps required.",12.870621,77.558437
+31,flood,medium,3,"Road flooded after heavy downpour, passenger vehicles having difficulty crossing.",13.118457,77.6366
+32,flood,low,4,"Puddle accumulation on residential street curb, slow drainage.",12.988685,77.649984
+33,flood,low,4,"Minor gutter seepage in lane 5, no property damage.",13.074456,77.6774
+34,flood,low,4,Surface water pooling near park entrance following light drizzle.,12.890314,77.45423
+35,industrial_accident,critical,1,"Ammonia gas leak detected at cold storage facility, 15 workers unconscious and mass casualty alert sounded.",12.916236,77.524922
+36,industrial_accident,critical,1,"Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris.",12.884895,77.727473
+37,industrial_accident,critical,1,"Toxic chemical spill of chlorine gas, corrosive cloud spreading towards residential colony.",13.08451,77.539003
+38,industrial_accident,critical,1,"Radiation warning alarm triggered in testing lab, immediate hazmat response required.",13.018232,77.56329
+39,industrial_accident,high,2,"Crane collapse at major construction site, operator injured and high-voltage power lines snapped.",13.095964,77.582256
+40,industrial_accident,high,2,"Corrosive acid tank valve leak in industrial zone, perimeter cordoned off.",12.901064,77.518588
+41,industrial_accident,high,2,"Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns.",12.99001,77.523422
+42,industrial_accident,high,2,"Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed.",12.996976,77.713947
+43,industrial_accident,medium,3,"Machine malfunction at textile plant, one worker hand injury, first aid dispatched.",12.94142,77.510396
+44,industrial_accident,medium,3,"Small oil spill in warehouse loading dock, slip hazard, containment kits deployed.",13.120861,77.597458
+45,industrial_accident,medium,3,Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B.,12.848873,77.458735
+46,industrial_accident,medium,3,"Forklift collided with storage shelving, non-hazardous goods spilled across aisle.",12.854495,77.632834
+47,industrial_accident,low,4,Precautionary fire alarm triggered in server room due to dust buildup.,13.059224,77.571248
+48,industrial_accident,low,4,"Minor coolant drip from CNC machine, maintenance team handling.",12.840658,77.559086
+49,industrial_accident,low,4,Safety inspection protocol test run at logistics depot.,13.120436,77.603334
+50,road_accident,critical,1,"Mass casualty collision: intercity bus overturned on highway ravine, over 30 passengers severely injured and trapped.",13.112924,77.702834
+51,road_accident,critical,1,"Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard.",12.825044,77.660817
+52,road_accident,critical,1,"Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage.",13.026113,77.605691
+53,road_accident,high,2,"High-speed SUV rollover crash on expressway, 3 passengers unconscious and trapped inside vehicle.",12.901648,77.636889
+54,road_accident,high,2,"School van collision with pickup truck, 4 children injured, immediate medical dispatch requested.",12.855066,77.57503
+55,road_accident,high,2,"Pedestrian struck by speeding vehicle at pedestrian crossing, severe head injuries.",12.957717,77.730745
+56,road_accident,high,2,"Motorcyclist struck by delivery truck, lying unresponsive on arterial ring road.",13.084356,77.523617
+57,road_accident,medium,3,"Two-car collision at intersection, airbags deployed, drivers have minor cuts and shock.",12.971776,77.498196
+58,road_accident,medium,3,"Fender bender between taxi and city bus blocking two lanes of traffic, no serious injuries.",13.095388,77.705756
+59,road_accident,medium,3,"Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion.",12.911133,77.636285
+60,road_accident,medium,3,"Delivery van rear-ended stationary car at red light, minor bumper damage and neck pain reported.",13.004291,77.490452
+61,road_accident,low,4,"Minor scratch collision in shopping mall parking lot, drivers arguing over insurance.",13.050353,77.606414
+62,road_accident,low,4,"Stationary vehicle tire puncture on highway shoulder, hazard lights on.",13.055188,77.603706
+63,road_accident,low,4,"Rear mirror collision in slow-moving traffic jam, no injuries.",12.821772,77.541847
+64,medical,critical,1,"Cardiac arrest in public transit station, 55-year-old male unresponsive, bystander CPR in progress.",12.827443,77.72333
+65,medical,critical,1,"Severe anaphylactic shock at restaurant, patient experiencing respiratory failure and swelling.",13.085217,77.6941
+66,medical,critical,1,"Child drowning incident in municipal swimming pool, unconscious, not breathing, AED required immediately.",12.913854,77.461978
+67,medical,critical,1,Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis.,13.085003,77.728685
+68,medical,high,2,"Elderly woman showing stroke symptoms: facial droop, slurred speech, acute weakness on right side.",12.847296,77.590397
+69,medical,high,2,"Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly.",12.842364,77.672781
+70,medical,high,2,"Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture.",13.05135,77.483117
+71,medical,high,2,"Diabetic emergency, patient unresponsive with extremely low blood sugar reading.",12.964185,77.609541
+72,medical,medium,3,"Adult with high fever, vomiting, and suspected acute dehydration requesting ambulance transport.",12.901117,77.70633
+73,medical,medium,3,"Deep kitchen laceration on hand bleeding steadily, direct pressure applied, stitches required.",12.948541,77.508139
+74,medical,medium,3,"Sprained ankle and contusions after slipping on wet steps, patient unable to bear weight.",12.983389,77.663579
+75,medical,medium,3,"Moderate allergic reaction with hives and facial itching after bee sting, breathing normal.",12.881945,77.538115
+76,medical,low,4,"Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice.",13.120145,77.639563
+77,medical,low,4,Routine non-emergency patient transport requested for scheduled dialysis appointment.,12.95303,77.599873
+78,medical,low,4,"Minor nosebleed that has subsided, caller asking for precautionary check.",12.857901,77.512009
+79,other,high,2,Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter.,12.923026,77.621093
+80,other,high,2,"Active gas smell in dense residential neighborhood, multiple residents reporting nausea.",12.890634,77.510665
+81,other,high,2,"Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle.",12.842898,77.633931
+82,other,medium,3,Water main pipe burst flooding intersection and disrupting local drinking water supply.,12.890283,77.716226
+83,other,medium,3,Traffic signal outage at four-way intersection causing chaotic vehicular gridlock.,13.079491,77.465857
+84,other,medium,3,"Large stray animal trapped in drainage culvert, animal rescue assistance requested.",12.893001,77.645293
+85,other,low,4,Noise complaint regarding loud late-night construction work.,12.885871,77.484294
+86,other,low,4,Streetlight pole flickering in alleyway behind library.,13.102254,77.615913
+87,other,low,4,Lost personal belongings reported near central bus terminal.,12.963401,77.679986
+88,road_accident,high,2,"Caller reports: School van collision with pickup truck, 4 children injured, immediate medical dispatch requested. Please send backup.",12.810372,77.56702
+89,road_accident,high,2,"Motorcyclist struck by delivery truck, lying unresponsive on arterial ring road. Emergency personnel dispatched.",13.117135,77.416268
+90,other,high,2,"Caller reports: Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle. Please send backup.",12.795845,77.685885
+91,fire,low,4,"Citizen emergency report: Unattended small bonfire in public park, no immediate danger. Situation escalating.",12.847684,77.574045
+92,road_accident,high,2,"Field team update: School van collision with pickup truck, 4 children injured, immediate medical dispatch requested. Responders on scene request assistance.",12.956651,77.744394
+93,fire,medium,3,Small smoke coming from air conditioning unit on second floor office.,12.810763,77.655458
+94,medical,high,2,"Caller reports: Elderly woman showing stroke symptoms: facial droop, slurred speech, acute weakness on right side. Please send backup.",13.142147,77.734078
+95,flood,high,2,"Main drainage choked, waist-deep water flooding commercial district streets. Emergency personnel dispatched.",12.964143,77.74046
+96,fire,high,2,Wildfire spreading rapidly towards residential suburb due to high winds. Urgent containment needed. Perimeter needs to be secured.,12.772462,77.550769
+97,road_accident,medium,3,"Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Perimeter needs to be secured.",13.050237,77.686802
+98,medical,high,2,"Sensor alert: Diabetic emergency, patient unresponsive with extremely low blood sugar reading. Automatic threshold exceeded.",12.847559,77.48168
+99,fire,high,2,"Electrical substation transformer caught fire, loud buzzing and thick smoke in residential area.",12.795983,77.520042
+100,fire,high,2,"Electrical substation transformer caught fire, loud buzzing and thick smoke in residential area. Emergency personnel dispatched.",12.97274,77.735688
+101,flood,high,2,"Heavy rain causing storm canal to overflow, water entering ground floor houses in Sector 4.",12.803645,77.46893
+102,medical,low,4,"Citizen emergency report: Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice. Situation escalating.",12.93311,77.771238
+103,medical,medium,3,"Urgent: Deep kitchen laceration on hand bleeding steadily, direct pressure applied, stitches required. Dispatch immediately.",13.019353,77.56229
+104,medical,medium,3,"Field team update: Sprained ankle and contusions after slipping on wet steps, patient unable to bear weight. Responders on scene request assistance.",12.853304,77.681077
+105,flood,low,4,"Minor gutter seepage in lane 5, no property damage. Perimeter needs to be secured.",12.823951,77.6528
+106,road_accident,medium,3,"Caller reports: Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Please send backup.",12.775326,77.643064
+107,medical,medium,3,"Caller reports: Adult with high fever, vomiting, and suspected acute dehydration requesting ambulance transport. Please send backup.",12.986654,77.596954
+108,flood,critical,1,"Caller reports: Catastrophic urban flash flooding, basement parking submerged with people trapped inside elevator. Please send backup.",13.123308,77.542411
+109,flood,high,2,"Main drainage choked, waist-deep water flooding commercial district streets.",13.053016,77.639271
+110,other,high,2,"Urgent: Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle. Dispatch immediately.",13.038745,77.616441
+111,other,medium,3,Sensor alert: Water main pipe burst flooding intersection and disrupting local drinking water supply. Automatic threshold exceeded.,12.877386,77.750485
+112,medical,high,2,"Field team update: Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Responders on scene request assistance.",12.884303,77.478852
+113,industrial_accident,medium,3,"Field team update: Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Responders on scene request assistance.",12.973764,77.495049
+114,fire,high,2,"Apartment fire on third floor, flames visible from balcony. Residents evacuating, 2 people suffering from smoke inhalation. Perimeter needs to be secured.",13.103339,77.412235
+115,industrial_accident,medium,3,"Field team update: Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Responders on scene request assistance.",12.836233,77.571334
+116,other,low,4,Streetlight pole flickering in alleyway behind library.,12.775468,77.424698
+117,other,low,4,Noise complaint regarding loud late-night construction work.,12.786011,77.542286
+118,medical,high,2,"Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Perimeter needs to be secured.",12.822578,77.517903
+119,fire,high,2,"Citizen emergency report: Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Situation escalating.",13.044427,77.661373
+120,industrial_accident,low,4,Safety inspection protocol test run at logistics depot. Perimeter needs to be secured.,13.161135,77.694391
+121,flood,low,4,"Sensor alert: Puddle accumulation on residential street curb, slow drainage. Automatic threshold exceeded.",13.124166,77.404515
+122,industrial_accident,medium,3,"Citizen emergency report: Forklift collided with storage shelving, non-hazardous goods spilled across aisle. Situation escalating.",12.878322,77.70955
+123,fire,low,4,Urgent: Smoldering campfire remains found in picnic clearing. Dispatch immediately.,13.115037,77.483573
+124,road_accident,medium,3,"Field team update: Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Responders on scene request assistance.",13.099815,77.743129
+125,flood,low,4,"Citizen emergency report: Puddle accumulation on residential street curb, slow drainage. Situation escalating.",12.930986,77.506041
+126,fire,medium,3,"911 Call log: Car engine caught fire on roadside shoulder, driver is out safely, no injuries. Caller very distressed.",13.028193,77.554471
+127,medical,high,2,"Urgent: Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Dispatch immediately.",12.817737,77.78276
+128,flood,high,2,"Urgent: River water level rising above danger mark, low-lying slums being evacuated. Dispatch immediately.",12.814961,77.568426
+129,industrial_accident,medium,3,"Forklift collided with storage shelving, non-hazardous goods spilled across aisle.",12.817858,77.754402
+130,flood,medium,3,"Urgent: Basement of apartment complex experiencing water ingress, pumps required. Dispatch immediately.",13.055114,77.395277
+131,medical,high,2,"911 Call log: Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Caller very distressed.",12.944119,77.77415
+132,industrial_accident,medium,3,Caller reports: Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B. Please send backup.,13.059502,77.514729
+133,industrial_accident,high,2,"911 Call log: Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed. Caller very distressed.",12.93256,77.512862
+134,flood,critical,1,"Reservoir dam overflow causing rapid surge, bridge washed away, several vehicles swept away with passengers. Perimeter needs to be secured.",13.037572,77.546258
+135,flood,high,2,"River water level rising above danger mark, low-lying slums being evacuated. Perimeter needs to be secured.",12.990775,77.394762
+136,industrial_accident,high,2,"Corrosive acid tank valve leak in industrial zone, perimeter cordoned off. Perimeter needs to be secured.",13.085904,77.637265
+137,industrial_accident,medium,3,"Forklift collided with storage shelving, non-hazardous goods spilled across aisle. Emergency personnel dispatched.",12.948464,77.480081
+138,road_accident,low,4,"Sensor alert: Rear mirror collision in slow-moving traffic jam, no injuries. Automatic threshold exceeded.",13.03514,77.508115
+139,other,medium,3,"911 Call log: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Caller very distressed.",12.808955,77.7754
+140,flood,low,4,Field team update: Surface water pooling near park entrance following light drizzle. Responders on scene request assistance.,12.861456,77.474252
+141,fire,critical,1,Citizen emergency report: Massive explosion at chemical factory! Multiple workers trapped inside and flames spreading to adjacent units. Situation escalating.,13.165174,77.63911
+142,fire,medium,3,Small smoke coming from air conditioning unit on second floor office. Perimeter needs to be secured.,13.126055,77.624868
+143,other,low,4,Lost personal belongings reported near central bus terminal. Perimeter needs to be secured.,12.969351,77.492194
+144,other,high,2,"Urgent: Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle. Dispatch immediately.",13.128664,77.738776
+145,fire,low,4,Citizen emergency report: Smoldering campfire remains found in picnic clearing. Situation escalating.,12.841955,77.777786
+146,medical,critical,1,Urgent: Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis. Dispatch immediately.,12.994562,77.761588
+147,fire,low,4,Sensor alert: Smoldering campfire remains found in picnic clearing. Automatic threshold exceeded.,13.092167,77.661631
+148,medical,high,2,"Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Emergency personnel dispatched.",13.016661,77.68231
+149,medical,critical,1,Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis.,12.949965,77.458263
+150,road_accident,low,4,"Field team update: Stationary vehicle tire puncture on highway shoulder, hazard lights on. Responders on scene request assistance.",13.072311,77.730545
+151,industrial_accident,critical,1,"Citizen emergency report: Radiation warning alarm triggered in testing lab, immediate hazmat response required. Situation escalating.",12.881439,77.425593
+152,industrial_accident,high,2,"Field team update: Corrosive acid tank valve leak in industrial zone, perimeter cordoned off. Responders on scene request assistance.",12.905939,77.751811
+153,fire,medium,3,"Sensor alert: Dry grass fire in vacant plot near railway track, smoke blowing towards road. Automatic threshold exceeded.",12.864105,77.67218
+154,other,low,4,Caller reports: Noise complaint regarding loud late-night construction work. Please send backup.,12.937547,77.526953
+155,road_accident,medium,3,"Urgent: Delivery van rear-ended stationary car at red light, minor bumper damage and neck pain reported. Dispatch immediately.",12.854334,77.562657
+156,medical,medium,3,"Adult with high fever, vomiting, and suspected acute dehydration requesting ambulance transport. Perimeter needs to be secured.",12.962392,77.771697
+157,industrial_accident,high,2,"Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed. Perimeter needs to be secured.",12.986888,77.688454
+158,medical,low,4,"Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice. Emergency personnel dispatched.",12.859369,77.568934
+159,fire,critical,1,911 Call log: Industrial gas pipeline rupture with huge fireball and multiple injured workers trapped in plant area. Caller very distressed.,13.039149,77.713857
+160,flood,high,2,"Sensor alert: Main drainage choked, waist-deep water flooding commercial district streets. Automatic threshold exceeded.",13.163889,77.608249
+161,road_accident,critical,1,"Urgent: Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage. Dispatch immediately.",12.805179,77.566045
+162,road_accident,medium,3,"Urgent: Fender bender between taxi and city bus blocking two lanes of traffic, no serious injuries. Dispatch immediately.",12.875663,77.525541
+163,road_accident,medium,3,"911 Call log: Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Caller very distressed.",13.076092,77.54625
+164,road_accident,high,2,"Caller reports: Pedestrian struck by speeding vehicle at pedestrian crossing, severe head injuries. Please send backup.",12.959723,77.69421
+165,fire,high,2,"Citizen emergency report: Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Situation escalating.",13.031658,77.707093
+166,other,high,2,Urgent: Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Dispatch immediately.,13.151445,77.474344
+167,fire,critical,1,"Sensor alert: Major warehouse fire with toxic fumes released, nearby school needing immediate evacuation. Automatic threshold exceeded.",12.867018,77.584024
+168,fire,low,4,"Unattended small bonfire in public park, no immediate danger. Emergency personnel dispatched.",13.051386,77.701359
+169,flood,high,2,"Sensor alert: Heavy rain causing storm canal to overflow, water entering ground floor houses in Sector 4. Automatic threshold exceeded.",13.157488,77.437839
+170,fire,critical,1,"Severe fire outbreak in downtown commercial complex, heavy black smoke, structural collapse imminent. Perimeter needs to be secured.",12.930262,77.680606
+171,fire,medium,3,"Citizen emergency report: Rubbish pile burning near vacant construction site, smoke bothering nearby residents. Situation escalating.",12.812361,77.703592
+172,other,medium,3,"Caller reports: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Please send backup.",13.090091,77.620973
+173,fire,high,2,"Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently.",12.942951,77.542828
+174,medical,critical,1,"Urgent: Child drowning incident in municipal swimming pool, unconscious, not breathing, AED required immediately. Dispatch immediately.",13.11143,77.723532
+175,fire,low,4,911 Call log: Smoldering campfire remains found in picnic clearing. Caller very distressed.,13.025834,77.726083
+176,other,low,4,Noise complaint regarding loud late-night construction work. Perimeter needs to be secured.,12.842055,77.603299
+177,other,high,2,"Active gas smell in dense residential neighborhood, multiple residents reporting nausea.",13.081457,77.58055
+178,medical,medium,3,"911 Call log: Sprained ankle and contusions after slipping on wet steps, patient unable to bear weight. Caller very distressed.",13.112285,77.726892
+179,fire,medium,3,"Car engine caught fire on roadside shoulder, driver is out safely, no injuries. Emergency personnel dispatched.",12.869145,77.580483
+180,medical,low,4,"Minor nosebleed that has subsided, caller asking for precautionary check. Perimeter needs to be secured.",12.906159,77.592323
+181,industrial_accident,medium,3,"Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Emergency personnel dispatched.",12.856448,77.713733
+182,industrial_accident,medium,3,Field team update: Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B. Responders on scene request assistance.,12.993916,77.601251
+183,flood,medium,3,"Citizen emergency report: Waterlogging on main avenue causing 2-hour traffic gridlock, water reaching knee height. Situation escalating.",13.05963,77.590031
+184,flood,low,4,Surface water pooling near park entrance following light drizzle. Emergency personnel dispatched.,13.029961,77.590929
+185,fire,critical,1,Field team update: Massive explosion at chemical factory! Multiple workers trapped inside and flames spreading to adjacent units. Responders on scene request assistance.,12.860239,77.671315
+186,industrial_accident,high,2,"Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Emergency personnel dispatched.",12.992989,77.532103
+187,medical,high,2,"911 Call log: Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Caller very distressed.",13.052742,77.502967
+188,industrial_accident,critical,1,"Caller reports: Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris. Please send backup.",13.060114,77.520819
+189,medical,high,2,"Citizen emergency report: Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Situation escalating.",12.858154,77.588279
+190,medical,medium,3,"Caller reports: Sprained ankle and contusions after slipping on wet steps, patient unable to bear weight. Please send backup.",13.104651,77.513099
+191,industrial_accident,low,4,Field team update: Precautionary fire alarm triggered in server room due to dust buildup. Responders on scene request assistance.,12.777259,77.608254
+192,industrial_accident,critical,1,"Urgent: Ammonia gas leak detected at cold storage facility, 15 workers unconscious and mass casualty alert sounded. Dispatch immediately.",12.992944,77.673567
+193,flood,critical,1,"Caller reports: Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Please send backup.",13.120688,77.624226
+194,road_accident,low,4,"Stationary vehicle tire puncture on highway shoulder, hazard lights on. Emergency personnel dispatched.",12.907882,77.780799
+195,industrial_accident,critical,1,"Caller reports: Radiation warning alarm triggered in testing lab, immediate hazmat response required. Please send backup.",13.100446,77.554883
+196,fire,medium,3,"Urgent: Rubbish pile burning near vacant construction site, smoke bothering nearby residents. Dispatch immediately.",12.832291,77.719057
+197,industrial_accident,high,2,"Citizen emergency report: Crane collapse at major construction site, operator injured and high-voltage power lines snapped. Situation escalating.",12.818981,77.700377
+198,medical,low,4,"Citizen emergency report: Minor nosebleed that has subsided, caller asking for precautionary check. Situation escalating.",13.081877,77.546751
+199,road_accident,medium,3,"Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Perimeter needs to be secured.",12.893752,77.643011
+200,medical,low,4,"Caller reports: Minor nosebleed that has subsided, caller asking for precautionary check. Please send backup.",13.150636,77.477715
+201,flood,medium,3,"Caller reports: Basement of apartment complex experiencing water ingress, pumps required. Please send backup.",12.834423,77.464125
+202,fire,medium,3,"Urgent: Dry grass fire in vacant plot near railway track, smoke blowing towards road. Dispatch immediately.",12.935007,77.670348
+203,road_accident,low,4,"Urgent: Stationary vehicle tire puncture on highway shoulder, hazard lights on. Dispatch immediately.",12.86419,77.677382
+204,other,low,4,Caller reports: Streetlight pole flickering in alleyway behind library. Please send backup.,13.046554,77.764164
+205,other,high,2,"Citizen emergency report: Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle. Situation escalating.",12.941656,77.612425
+206,other,high,2,Field team update: Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Responders on scene request assistance.,13.102252,77.423164
+207,flood,high,2,"Field team update: River water level rising above danger mark, low-lying slums being evacuated. Responders on scene request assistance.",12.947261,77.582079
+208,industrial_accident,high,2,"Field team update: Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed. Responders on scene request assistance.",12.971789,77.592118
+209,fire,medium,3,"Urgent: Rubbish pile burning near vacant construction site, smoke bothering nearby residents. Dispatch immediately.",13.127369,77.688414
+210,medical,low,4,Urgent: Routine non-emergency patient transport requested for scheduled dialysis appointment. Dispatch immediately.,12.808131,77.779364
+211,medical,medium,3,"Field team update: Adult with high fever, vomiting, and suspected acute dehydration requesting ambulance transport. Responders on scene request assistance.",13.002099,77.699844
+212,flood,high,2,"Main drainage choked, waist-deep water flooding commercial district streets.",13.032204,77.761029
+213,flood,high,2,"Main drainage choked, waist-deep water flooding commercial district streets. Emergency personnel dispatched.",13.159222,77.582604
+214,road_accident,high,2,"911 Call log: Pedestrian struck by speeding vehicle at pedestrian crossing, severe head injuries. Caller very distressed.",13.039653,77.737693
+215,industrial_accident,medium,3,"Forklift collided with storage shelving, non-hazardous goods spilled across aisle. Emergency personnel dispatched.",12.886887,77.772677
+216,medical,high,2,"Elderly woman showing stroke symptoms: facial droop, slurred speech, acute weakness on right side. Emergency personnel dispatched.",12.806824,77.49556
+217,fire,low,4,Smoldering campfire remains found in picnic clearing.,13.101571,77.39506
+218,medical,high,2,"Diabetic emergency, patient unresponsive with extremely low blood sugar reading. Perimeter needs to be secured.",12.793282,77.601976
+219,medical,low,4,Routine non-emergency patient transport requested for scheduled dialysis appointment. Emergency personnel dispatched.,13.075596,77.476023
+220,medical,high,2,"Field team update: Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Responders on scene request assistance.",12.946846,77.6739
+221,fire,low,4,Citizen emergency report: Controlled agricultural burn producing slight smoke in rural boundary. Situation escalating.,13.055513,77.5189
+222,fire,critical,1,"Major warehouse fire with toxic fumes released, nearby school needing immediate evacuation. Perimeter needs to be secured.",12.808884,77.791503
+223,fire,low,4,Caller reports: Smoldering campfire remains found in picnic clearing. Please send backup.,13.030684,77.456188
+224,other,low,4,Streetlight pole flickering in alleyway behind library.,13.053765,77.560796
+225,road_accident,low,4,"Citizen emergency report: Stationary vehicle tire puncture on highway shoulder, hazard lights on. Situation escalating.",12.954315,77.452457
+226,flood,medium,3,Caller reports: Storm drain overflowing onto pedestrian sidewalk and parking lot. Please send backup.,12.882099,77.710602
+227,road_accident,high,2,"Pedestrian struck by speeding vehicle at pedestrian crossing, severe head injuries.",12.878469,77.395626
+228,industrial_accident,high,2,"Sensor alert: Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed. Automatic threshold exceeded.",12.950219,77.588337
+229,industrial_accident,medium,3,"Forklift collided with storage shelving, non-hazardous goods spilled across aisle. Emergency personnel dispatched.",13.144741,77.742441
+230,other,low,4,Noise complaint regarding loud late-night construction work. Perimeter needs to be secured.,12.865025,77.704818
+231,fire,high,2,"Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Emergency personnel dispatched.",13.053691,77.719164
+232,road_accident,critical,1,"Sensor alert: Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage. Automatic threshold exceeded.",12.969731,77.409408
+233,medical,critical,1,"Caller reports: Child drowning incident in municipal swimming pool, unconscious, not breathing, AED required immediately. Please send backup.",13.121276,77.570722
+234,medical,critical,1,Urgent: Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis. Dispatch immediately.,13.060578,77.558591
+235,other,high,2,Caller reports: Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Please send backup.,12.959396,77.782281
+236,industrial_accident,medium,3,"Caller reports: Forklift collided with storage shelving, non-hazardous goods spilled across aisle. Please send backup.",13.112306,77.735537
+237,medical,high,2,"911 Call log: Diabetic emergency, patient unresponsive with extremely low blood sugar reading. Caller very distressed.",13.02232,77.749575
+238,road_accident,low,4,"Urgent: Rear mirror collision in slow-moving traffic jam, no injuries. Dispatch immediately.",13.018584,77.488508
+239,other,medium,3,Citizen emergency report: Traffic signal outage at four-way intersection causing chaotic vehicular gridlock. Situation escalating.,13.070307,77.568189
+240,fire,low,4,Controlled agricultural burn producing slight smoke in rural boundary. Emergency personnel dispatched.,12.838146,77.514386
+241,fire,critical,1,911 Call log: Massive explosion at chemical factory! Multiple workers trapped inside and flames spreading to adjacent units. Caller very distressed.,13.090057,77.511947
+242,industrial_accident,low,4,"Sensor alert: Minor coolant drip from CNC machine, maintenance team handling. Automatic threshold exceeded.",12.869279,77.559421
+243,other,medium,3,Sensor alert: Water main pipe burst flooding intersection and disrupting local drinking water supply. Automatic threshold exceeded.,12.841628,77.638397
+244,road_accident,critical,1,"Citizen emergency report: Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage. Situation escalating.",12.970667,77.627863
+245,flood,low,4,"Field team update: Minor gutter seepage in lane 5, no property damage. Responders on scene request assistance.",12.955428,77.661336
+246,road_accident,medium,3,"Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion.",12.83479,77.571292
+247,industrial_accident,low,4,Field team update: Safety inspection protocol test run at logistics depot. Responders on scene request assistance.,13.027175,77.564324
+248,industrial_accident,critical,1,"Field team update: Radiation warning alarm triggered in testing lab, immediate hazmat response required. Responders on scene request assistance.",12.851287,77.548477
+249,road_accident,low,4,"Citizen emergency report: Minor scratch collision in shopping mall parking lot, drivers arguing over insurance. Situation escalating.",12.924146,77.538184
+250,industrial_accident,high,2,"Urgent: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Dispatch immediately.",13.162778,77.657892
+251,industrial_accident,critical,1,"Urgent: Ammonia gas leak detected at cold storage facility, 15 workers unconscious and mass casualty alert sounded. Dispatch immediately.",13.135847,77.692669
+252,industrial_accident,high,2,"911 Call log: Corrosive acid tank valve leak in industrial zone, perimeter cordoned off. Caller very distressed.",12.859202,77.470653
+253,industrial_accident,critical,1,"Caller reports: Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris. Please send backup.",13.132961,77.653136
+254,industrial_accident,high,2,"Urgent: Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed. Dispatch immediately.",13.00343,77.687544
+255,fire,medium,3,"911 Call log: Car engine caught fire on roadside shoulder, driver is out safely, no injuries. Caller very distressed.",13.070592,77.464856
+256,flood,critical,1,"Catastrophic urban flash flooding, basement parking submerged with people trapped inside elevator.",12.972318,77.503611
+257,flood,high,2,"River water level rising above danger mark, low-lying slums being evacuated. Emergency personnel dispatched.",13.158554,77.512657
+258,industrial_accident,medium,3,"Machine malfunction at textile plant, one worker hand injury, first aid dispatched. Emergency personnel dispatched.",13.156757,77.450903
+259,flood,low,4,Surface water pooling near park entrance following light drizzle. Perimeter needs to be secured.,13.158508,77.716435
+260,industrial_accident,low,4,Precautionary fire alarm triggered in server room due to dust buildup. Perimeter needs to be secured.,12.777167,77.609229
+261,road_accident,medium,3,"Field team update: Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Responders on scene request assistance.",13.005424,77.723567
+262,industrial_accident,low,4,Citizen emergency report: Precautionary fire alarm triggered in server room due to dust buildup. Situation escalating.,12.960191,77.642419
+263,medical,high,2,"Citizen emergency report: Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Situation escalating.",13.030661,77.648762
+264,road_accident,medium,3,"Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Perimeter needs to be secured.",12.81827,77.412739
+265,fire,high,2,"Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Emergency personnel dispatched.",12.818048,77.48852
+266,medical,high,2,"Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Perimeter needs to be secured.",12.953058,77.662794
+267,other,low,4,Lost personal belongings reported near central bus terminal. Perimeter needs to be secured.,13.006536,77.68524
+268,road_accident,high,2,"High-speed SUV rollover crash on expressway, 3 passengers unconscious and trapped inside vehicle. Emergency personnel dispatched.",13.017861,77.770221
+269,industrial_accident,critical,1,"911 Call log: Ammonia gas leak detected at cold storage facility, 15 workers unconscious and mass casualty alert sounded. Caller very distressed.",12.858508,77.572478
+270,flood,low,4,"Caller reports: Minor gutter seepage in lane 5, no property damage. Please send backup.",13.163971,77.541534
+271,other,high,2,"Urgent: Active gas smell in dense residential neighborhood, multiple residents reporting nausea. Dispatch immediately.",12.930856,77.470523
+272,fire,low,4,Caller reports: Smoldering campfire remains found in picnic clearing. Please send backup.,13.036707,77.651282
+273,medical,low,4,"Urgent: Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice. Dispatch immediately.",13.086318,77.492028
+274,flood,critical,1,"Caller reports: Reservoir dam overflow causing rapid surge, bridge washed away, several vehicles swept away with passengers. Please send backup.",13.103527,77.616283
+275,medical,medium,3,"Citizen emergency report: Deep kitchen laceration on hand bleeding steadily, direct pressure applied, stitches required. Situation escalating.",12.903024,77.453622
+276,medical,low,4,"Field team update: Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice. Responders on scene request assistance.",13.114962,77.452475
+277,flood,critical,1,"Sensor alert: Catastrophic urban flash flooding, basement parking submerged with people trapped inside elevator. Automatic threshold exceeded.",12.815571,77.741179
+278,flood,critical,1,"911 Call log: River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops. Caller very distressed.",13.087594,77.489773
+279,industrial_accident,medium,3,"Sensor alert: Machine malfunction at textile plant, one worker hand injury, first aid dispatched. Automatic threshold exceeded.",12.877747,77.445303
+280,road_accident,high,2,"Caller reports: High-speed SUV rollover crash on expressway, 3 passengers unconscious and trapped inside vehicle. Please send backup.",12.962098,77.705807
+281,medical,critical,1,"Cardiac arrest in public transit station, 55-year-old male unresponsive, bystander CPR in progress. Emergency personnel dispatched.",12.973135,77.772766
+282,fire,high,2,"Field team update: Electrical substation transformer caught fire, loud buzzing and thick smoke in residential area. Responders on scene request assistance.",12.954817,77.78021
+283,fire,high,2,"Vehicle pileup caught fire on national highway, two cars burning with people trapped. Perimeter needs to be secured.",12.942109,77.437785
+284,other,low,4,Caller reports: Streetlight pole flickering in alleyway behind library. Please send backup.,13.131307,77.523445
+285,flood,critical,1,"Sensor alert: River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops. Automatic threshold exceeded.",12.881606,77.647831
+286,medical,high,2,"Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Perimeter needs to be secured.",13.169451,77.606823
+287,road_accident,medium,3,"Caller reports: Delivery van rear-ended stationary car at red light, minor bumper damage and neck pain reported. Please send backup.",13.088838,77.440366
+288,other,high,2,"Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle.",13.059936,77.480609
+289,road_accident,medium,3,"Fender bender between taxi and city bus blocking two lanes of traffic, no serious injuries. Perimeter needs to be secured.",12.907173,77.576
+290,road_accident,high,2,"911 Call log: High-speed SUV rollover crash on expressway, 3 passengers unconscious and trapped inside vehicle. Caller very distressed.",12.942306,77.660643
+291,industrial_accident,low,4,Precautionary fire alarm triggered in server room due to dust buildup. Emergency personnel dispatched.,12.798453,77.727309
+292,fire,medium,3,Caller reports: Small smoke coming from air conditioning unit on second floor office. Please send backup.,13.069436,77.543659
+293,flood,critical,1,"River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops.",12.996273,77.662605
+294,road_accident,high,2,"Pedestrian struck by speeding vehicle at pedestrian crossing, severe head injuries. Perimeter needs to be secured.",13.118837,77.683024
+295,industrial_accident,high,2,"911 Call log: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Caller very distressed.",12.81304,77.597565
+296,flood,critical,1,"Citizen emergency report: Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Situation escalating.",13.11051,77.534646
+297,medical,high,2,"Caller reports: Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Please send backup.",13.076642,77.62424
+298,road_accident,high,2,"Field team update: High-speed SUV rollover crash on expressway, 3 passengers unconscious and trapped inside vehicle. Responders on scene request assistance.",12.783181,77.503908
+299,industrial_accident,high,2,"911 Call log: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Caller very distressed.",12.774042,77.742545
+300,medical,medium,3,"Caller reports: Moderate allergic reaction with hives and facial itching after bee sting, breathing normal. Please send backup.",12.82835,77.647869
+301,fire,critical,1,Massive explosion at chemical factory! Multiple workers trapped inside and flames spreading to adjacent units.,12.857653,77.562533
+302,industrial_accident,medium,3,"911 Call log: Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Caller very distressed.",12.896255,77.524353
+303,medical,medium,3,"Urgent: Adult with high fever, vomiting, and suspected acute dehydration requesting ambulance transport. Dispatch immediately.",12.833832,77.696374
+304,fire,high,2,"Field team update: Apartment fire on third floor, flames visible from balcony. Residents evacuating, 2 people suffering from smoke inhalation. Responders on scene request assistance.",12.948845,77.564206
+305,medical,low,4,Routine non-emergency patient transport requested for scheduled dialysis appointment. Perimeter needs to be secured.,12.880867,77.696577
+306,fire,low,4,"Extinguished kitchen pan fire, caller requesting precautionary smoke inspection. Perimeter needs to be secured.",12.815956,77.665887
+307,medical,medium,3,"Moderate allergic reaction with hives and facial itching after bee sting, breathing normal.",13.038453,77.412767
+308,road_accident,critical,1,"Urgent: Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage. Dispatch immediately.",12.774675,77.515168
+309,flood,medium,3,Field team update: Storm drain overflowing onto pedestrian sidewalk and parking lot. Responders on scene request assistance.,12.887379,77.442594
+310,road_accident,low,4,"Rear mirror collision in slow-moving traffic jam, no injuries. Perimeter needs to be secured.",12.841878,77.546683
+311,other,low,4,Noise complaint regarding loud late-night construction work.,12.995089,77.661819
+312,industrial_accident,low,4,Precautionary fire alarm triggered in server room due to dust buildup. Perimeter needs to be secured.,13.116306,77.411521
+313,fire,critical,1,Caller reports: Industrial gas pipeline rupture with huge fireball and multiple injured workers trapped in plant area. Please send backup.,13.116444,77.624904
+314,medical,medium,3,"Moderate allergic reaction with hives and facial itching after bee sting, breathing normal. Perimeter needs to be secured.",12.887406,77.556613
+315,industrial_accident,medium,3,"Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Emergency personnel dispatched.",13.10441,77.762508
+316,fire,medium,3,Caller reports: Small smoke coming from air conditioning unit on second floor office. Please send backup.,12.868927,77.630149
+317,medical,critical,1,"Cardiac arrest in public transit station, 55-year-old male unresponsive, bystander CPR in progress. Perimeter needs to be secured.",13.11981,77.692922
+318,flood,low,4,"Sensor alert: Minor gutter seepage in lane 5, no property damage. Automatic threshold exceeded.",12.802152,77.64789
+319,medical,critical,1,"911 Call log: Severe anaphylactic shock at restaurant, patient experiencing respiratory failure and swelling. Caller very distressed.",12.91204,77.777889
+320,other,high,2,Citizen emergency report: Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Situation escalating.,12.812722,77.496987
+321,flood,high,2,"Caller reports: Underpass completely flooded with 5 feet of water, two cars stuck with passengers waiting on roof. Please send backup.",12.842458,77.703739
+322,road_accident,low,4,"Stationary vehicle tire puncture on highway shoulder, hazard lights on. Emergency personnel dispatched.",13.044053,77.747419
+323,other,high,2,"911 Call log: Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle. Caller very distressed.",13.117299,77.645487
+324,flood,critical,1,"Caller reports: Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Please send backup.",12.959168,77.647154
+325,industrial_accident,critical,1,"911 Call log: Ammonia gas leak detected at cold storage facility, 15 workers unconscious and mass casualty alert sounded. Caller very distressed.",12.974535,77.518763
+326,road_accident,medium,3,"Urgent: Two-car collision at intersection, airbags deployed, drivers have minor cuts and shock. Dispatch immediately.",12.919095,77.509431
+327,other,high,2,Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter.,12.925393,77.626732
+328,fire,high,2,"Citizen emergency report: Vehicle pileup caught fire on national highway, two cars burning with people trapped. Situation escalating.",12.900211,77.584852
+329,flood,critical,1,"River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops. Emergency personnel dispatched.",12.813001,77.754251
+330,industrial_accident,medium,3,"Machine malfunction at textile plant, one worker hand injury, first aid dispatched.",13.030051,77.410257
+331,other,low,4,Streetlight pole flickering in alleyway behind library. Emergency personnel dispatched.,12.981227,77.638522
+332,industrial_accident,low,4,"Field team update: Minor coolant drip from CNC machine, maintenance team handling. Responders on scene request assistance.",12.926567,77.704386
+333,other,medium,3,"Urgent: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Dispatch immediately.",13.087291,77.653522
+334,fire,medium,3,"Caller reports: Car engine caught fire on roadside shoulder, driver is out safely, no injuries. Please send backup.",12.994785,77.549226
+335,industrial_accident,critical,1,"911 Call log: Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris. Caller very distressed.",12.804201,77.660045
+336,industrial_accident,low,4,"Minor coolant drip from CNC machine, maintenance team handling. Perimeter needs to be secured.",12.823181,77.678134
+337,fire,medium,3,"Car engine caught fire on roadside shoulder, driver is out safely, no injuries.",12.922272,77.711265
+338,flood,critical,1,"River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops. Perimeter needs to be secured.",12.974995,77.401892
+339,industrial_accident,high,2,"Citizen emergency report: Corrosive acid tank valve leak in industrial zone, perimeter cordoned off. Situation escalating.",12.908293,77.701062
+340,flood,medium,3,Sensor alert: Storm drain overflowing onto pedestrian sidewalk and parking lot. Automatic threshold exceeded.,12.833578,77.512917
+341,fire,low,4,911 Call log: Controlled agricultural burn producing slight smoke in rural boundary. Caller very distressed.,13.122157,77.641813
+342,medical,low,4,Sensor alert: Routine non-emergency patient transport requested for scheduled dialysis appointment. Automatic threshold exceeded.,12.836499,77.727138
+343,medical,low,4,"Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice. Emergency personnel dispatched.",12.789077,77.54032
+344,flood,low,4,"Field team update: Minor gutter seepage in lane 5, no property damage. Responders on scene request assistance.",13.072556,77.70812
+345,flood,low,4,Citizen emergency report: Surface water pooling near park entrance following light drizzle. Situation escalating.,12.895387,77.71805
+346,road_accident,low,4,"911 Call log: Minor scratch collision in shopping mall parking lot, drivers arguing over insurance. Caller very distressed.",13.042923,77.622768
+347,road_accident,medium,3,"Field team update: Delivery van rear-ended stationary car at red light, minor bumper damage and neck pain reported. Responders on scene request assistance.",13.08285,77.595763
+348,road_accident,high,2,"Citizen emergency report: School van collision with pickup truck, 4 children injured, immediate medical dispatch requested. Situation escalating.",13.092104,77.449959
+349,industrial_accident,critical,1,"Ammonia gas leak detected at cold storage facility, 15 workers unconscious and mass casualty alert sounded. Emergency personnel dispatched.",13.121247,77.616416
+350,fire,low,4,Field team update: Controlled agricultural burn producing slight smoke in rural boundary. Responders on scene request assistance.,12.80515,77.458725
+351,road_accident,medium,3,"Fender bender between taxi and city bus blocking two lanes of traffic, no serious injuries. Perimeter needs to be secured.",12.808285,77.758802
+352,road_accident,medium,3,"Urgent: Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Dispatch immediately.",12.937559,77.553182
+353,industrial_accident,low,4,Precautionary fire alarm triggered in server room due to dust buildup. Perimeter needs to be secured.,13.16941,77.544565
+354,fire,critical,1,"Caller reports: Severe fire outbreak in downtown commercial complex, heavy black smoke, structural collapse imminent. Please send backup.",13.107271,77.654584
+355,flood,critical,1,"Urgent: Reservoir dam overflow causing rapid surge, bridge washed away, several vehicles swept away with passengers. Dispatch immediately.",12.886352,77.726505
+356,other,low,4,Noise complaint regarding loud late-night construction work. Emergency personnel dispatched.,12.951041,77.3967
+357,fire,medium,3,Field team update: Small dumpster fire in alleyway behind supermarket. No structures currently threatened. Responders on scene request assistance.,12.857862,77.454408
+358,medical,low,4,"Minor nosebleed that has subsided, caller asking for precautionary check. Perimeter needs to be secured.",12.816075,77.509841
+359,industrial_accident,high,2,"Urgent: Crane collapse at major construction site, operator injured and high-voltage power lines snapped. Dispatch immediately.",12.866976,77.650181
+360,medical,low,4,Caller reports: Routine non-emergency patient transport requested for scheduled dialysis appointment. Please send backup.,12.815943,77.756659
+361,medical,low,4,"Urgent: Minor nosebleed that has subsided, caller asking for precautionary check. Dispatch immediately.",13.024382,77.624619
+362,other,low,4,Field team update: Noise complaint regarding loud late-night construction work. Responders on scene request assistance.,12.943296,77.640524
+363,flood,low,4,Surface water pooling near park entrance following light drizzle. Perimeter needs to be secured.,12.846526,77.661886
+364,medical,critical,1,"Caller reports: Child drowning incident in municipal swimming pool, unconscious, not breathing, AED required immediately. Please send backup.",13.152961,77.612233
+365,medical,critical,1,"Cardiac arrest in public transit station, 55-year-old male unresponsive, bystander CPR in progress. Perimeter needs to be secured.",13.120933,77.412014
+366,road_accident,critical,1,"Field team update: Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard. Responders on scene request assistance.",13.070527,77.537438
+367,fire,medium,3,"Citizen emergency report: Car engine caught fire on roadside shoulder, driver is out safely, no injuries. Situation escalating.",13.064776,77.645903
+368,medical,medium,3,"Sensor alert: Sprained ankle and contusions after slipping on wet steps, patient unable to bear weight. Automatic threshold exceeded.",12.789334,77.613005
+369,other,high,2,Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Emergency personnel dispatched.,13.163928,77.586012
+370,flood,high,2,"Caller reports: Underpass completely flooded with 5 feet of water, two cars stuck with passengers waiting on roof. Please send backup.",13.058018,77.772042
+371,fire,high,2,"Citizen emergency report: Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Situation escalating.",12.789123,77.474388
+372,fire,high,2,"Field team update: Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Responders on scene request assistance.",12.977753,77.790249
+373,medical,high,2,"Field team update: Diabetic emergency, patient unresponsive with extremely low blood sugar reading. Responders on scene request assistance.",12.786248,77.65336
+374,industrial_accident,high,2,"Urgent: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Dispatch immediately.",13.117919,77.52737
+375,fire,low,4,"Extinguished kitchen pan fire, caller requesting precautionary smoke inspection. Perimeter needs to be secured.",13.127395,77.691923
+376,road_accident,critical,1,"Sensor alert: Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard. Automatic threshold exceeded.",12.970081,77.593609
+377,medical,critical,1,"Caller reports: Child drowning incident in municipal swimming pool, unconscious, not breathing, AED required immediately. Please send backup.",13.062433,77.426171
+378,medical,low,4,"Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice.",12.889107,77.435639
+379,industrial_accident,medium,3,Field team update: Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B. Responders on scene request assistance.,12.949966,77.681665
+380,flood,high,2,"911 Call log: Main drainage choked, waist-deep water flooding commercial district streets. Caller very distressed.",12.950452,77.685326
+381,industrial_accident,low,4,Safety inspection protocol test run at logistics depot. Perimeter needs to be secured.,12.881422,77.786611
+382,fire,high,2,"Apartment fire on third floor, flames visible from balcony. Residents evacuating, 2 people suffering from smoke inhalation. Perimeter needs to be secured.",12.916924,77.715038
+383,other,medium,3,Urgent: Water main pipe burst flooding intersection and disrupting local drinking water supply. Dispatch immediately.,12.828712,77.637629
+384,road_accident,medium,3,"Sensor alert: Two-car collision at intersection, airbags deployed, drivers have minor cuts and shock. Automatic threshold exceeded.",12.798493,77.706006
+385,industrial_accident,low,4,"Minor coolant drip from CNC machine, maintenance team handling. Perimeter needs to be secured.",13.151387,77.407554
+386,flood,critical,1,"911 Call log: Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Caller very distressed.",12.920405,77.699834
+387,medical,medium,3,"Deep kitchen laceration on hand bleeding steadily, direct pressure applied, stitches required.",12.91838,77.520354
+388,industrial_accident,critical,1,"Caller reports: Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris. Please send backup.",12.781965,77.469019
+389,medical,critical,1,Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis.,12.818704,77.704586
+390,other,low,4,Citizen emergency report: Streetlight pole flickering in alleyway behind library. Situation escalating.,13.170146,77.508831
+391,road_accident,low,4,"Caller reports: Minor scratch collision in shopping mall parking lot, drivers arguing over insurance. Please send backup.",12.825891,77.424221
+392,flood,high,2,"Caller reports: Main drainage choked, waist-deep water flooding commercial district streets. Please send backup.",13.095805,77.781624
+393,industrial_accident,medium,3,Caller reports: Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B. Please send backup.,12.991599,77.510745
+394,industrial_accident,high,2,"Sensor alert: Corrosive acid tank valve leak in industrial zone, perimeter cordoned off. Automatic threshold exceeded.",13.089079,77.598102
+395,fire,low,4,"Sensor alert: Unattended small bonfire in public park, no immediate danger. Automatic threshold exceeded.",12.866294,77.592209
+396,industrial_accident,low,4,911 Call log: Safety inspection protocol test run at logistics depot. Caller very distressed.,12.958562,77.787805
+397,flood,critical,1,"Caller reports: River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops. Please send backup.",12.895316,77.794438
+398,road_accident,low,4,"Rear mirror collision in slow-moving traffic jam, no injuries. Perimeter needs to be secured.",13.079266,77.723936
+399,fire,medium,3,"911 Call log: Dry grass fire in vacant plot near railway track, smoke blowing towards road. Caller very distressed.",13.028535,77.57459
+400,other,medium,3,"911 Call log: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Caller very distressed.",12.822934,77.726221
+401,medical,high,2,"Sensor alert: Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Automatic threshold exceeded.",12.944647,77.758885
+402,fire,high,2,"Apartment fire on third floor, flames visible from balcony. Residents evacuating, 2 people suffering from smoke inhalation.",12.832806,77.460463
+403,industrial_accident,medium,3,"911 Call log: Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Caller very distressed.",13.150593,77.602159
+404,industrial_accident,high,2,"Field team update: Crane collapse at major construction site, operator injured and high-voltage power lines snapped. Responders on scene request assistance.",12.850121,77.777141
+405,industrial_accident,critical,1,"Field team update: Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris. Responders on scene request assistance.",13.017371,77.431971
+406,other,high,2,Sensor alert: Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Automatic threshold exceeded.,12.84008,77.644392
+407,medical,low,4,Urgent: Routine non-emergency patient transport requested for scheduled dialysis appointment. Dispatch immediately.,13.101695,77.405949
+408,fire,high,2,"Field team update: Electrical substation transformer caught fire, loud buzzing and thick smoke in residential area. Responders on scene request assistance.",13.032052,77.701384
+409,road_accident,high,2,"High-speed SUV rollover crash on expressway, 3 passengers unconscious and trapped inside vehicle. Emergency personnel dispatched.",13.127199,77.612831
+410,other,high,2,"Active gas smell in dense residential neighborhood, multiple residents reporting nausea. Emergency personnel dispatched.",12.869551,77.71754
+411,road_accident,critical,1,"Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard. Emergency personnel dispatched.",12.800789,77.418565
+412,road_accident,medium,3,"Delivery van rear-ended stationary car at red light, minor bumper damage and neck pain reported. Emergency personnel dispatched.",12.957377,77.530677
+413,flood,critical,1,"911 Call log: Catastrophic urban flash flooding, basement parking submerged with people trapped inside elevator. Caller very distressed.",13.06528,77.738911
+414,road_accident,critical,1,"911 Call log: Mass casualty collision: intercity bus overturned on highway ravine, over 30 passengers severely injured and trapped. Caller very distressed.",12.977592,77.437074
+415,flood,low,4,"Caller reports: Minor gutter seepage in lane 5, no property damage. Please send backup.",12.878589,77.493768
+416,fire,low,4,Field team update: Controlled agricultural burn producing slight smoke in rural boundary. Responders on scene request assistance.,13.149754,77.740266
+417,road_accident,high,2,"Sensor alert: School van collision with pickup truck, 4 children injured, immediate medical dispatch requested. Automatic threshold exceeded.",13.096991,77.768101
+418,industrial_accident,medium,3,"Sensor alert: Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Automatic threshold exceeded.",12.970906,77.60049
+419,road_accident,low,4,"Stationary vehicle tire puncture on highway shoulder, hazard lights on. Emergency personnel dispatched.",12.780871,77.772693
+420,medical,critical,1,Citizen emergency report: Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis. Situation escalating.,12.857658,77.535758
+421,fire,high,2,"Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Emergency personnel dispatched.",13.010608,77.73174
+422,other,medium,3,Field team update: Traffic signal outage at four-way intersection causing chaotic vehicular gridlock. Responders on scene request assistance.,12.986276,77.733469
+423,road_accident,high,2,"Field team update: School van collision with pickup truck, 4 children injured, immediate medical dispatch requested. Responders on scene request assistance.",13.062603,77.700143
+424,industrial_accident,low,4,Precautionary fire alarm triggered in server room due to dust buildup. Perimeter needs to be secured.,12.792063,77.619327
+425,industrial_accident,low,4,Field team update: Safety inspection protocol test run at logistics depot. Responders on scene request assistance.,12.801013,77.596302
+426,medical,high,2,"Caller reports: Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Please send backup.",12.823065,77.433273
+427,industrial_accident,low,4,"Minor coolant drip from CNC machine, maintenance team handling.",13.147179,77.696586
+428,flood,medium,3,"Road flooded after heavy downpour, passenger vehicles having difficulty crossing.",12.787702,77.410166
+429,other,low,4,Streetlight pole flickering in alleyway behind library. Emergency personnel dispatched.,12.979333,77.454176
+430,medical,critical,1,"911 Call log: Severe anaphylactic shock at restaurant, patient experiencing respiratory failure and swelling. Caller very distressed.",13.144147,77.522012
+431,road_accident,critical,1,"Field team update: Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage. Responders on scene request assistance.",13.00909,77.597526
+432,medical,critical,1,Field team update: Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis. Responders on scene request assistance.,12.961557,77.401255
+433,industrial_accident,medium,3,"Machine malfunction at textile plant, one worker hand injury, first aid dispatched. Perimeter needs to be secured.",13.005081,77.713302
+434,other,low,4,Urgent: Lost personal belongings reported near central bus terminal. Dispatch immediately.,13.010364,77.500812
+435,other,high,2,"Citizen emergency report: Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle. Situation escalating.",13.06016,77.628009
+436,flood,high,2,"Sensor alert: Main drainage choked, waist-deep water flooding commercial district streets. Automatic threshold exceeded.",13.100265,77.491479
+437,medical,medium,3,"Citizen emergency report: Adult with high fever, vomiting, and suspected acute dehydration requesting ambulance transport. Situation escalating.",12.779175,77.520077
+438,flood,critical,1,"Citizen emergency report: Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Situation escalating.",12.935751,77.704589
+439,road_accident,low,4,"Urgent: Rear mirror collision in slow-moving traffic jam, no injuries. Dispatch immediately.",13.05391,77.602073
+440,medical,high,2,"Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Emergency personnel dispatched.",12.981791,77.520101
+441,flood,high,2,"Main drainage choked, waist-deep water flooding commercial district streets.",12.908531,77.536315
+442,other,medium,3,"Field team update: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Responders on scene request assistance.",13.015631,77.471506
+443,flood,low,4,"Minor gutter seepage in lane 5, no property damage.",12.891,77.771194
+444,industrial_accident,high,2,"Citizen emergency report: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Situation escalating.",13.047696,77.590201
+445,road_accident,low,4,"Stationary vehicle tire puncture on highway shoulder, hazard lights on.",13.14508,77.712762
+446,industrial_accident,critical,1,"Caller reports: Toxic chemical spill of chlorine gas, corrosive cloud spreading towards residential colony. Please send backup.",13.000991,77.611876
+447,road_accident,critical,1,"Sensor alert: Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard. Automatic threshold exceeded.",12.887781,77.509652
+448,other,low,4,911 Call log: Noise complaint regarding loud late-night construction work. Caller very distressed.,13.141204,77.656989
+449,road_accident,low,4,"Citizen emergency report: Minor scratch collision in shopping mall parking lot, drivers arguing over insurance. Situation escalating.",13.102781,77.503053
+450,medical,high,2,"Sensor alert: Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Automatic threshold exceeded.",12.815291,77.690956
+451,flood,low,4,"Urgent: Puddle accumulation on residential street curb, slow drainage. Dispatch immediately.",13.039534,77.607017
+452,other,high,2,Urgent: Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Dispatch immediately.,12.811679,77.526717
+453,road_accident,low,4,"Sensor alert: Minor scratch collision in shopping mall parking lot, drivers arguing over insurance. Automatic threshold exceeded.",12.773673,77.614741
+454,flood,high,2,"Main drainage choked, waist-deep water flooding commercial district streets. Emergency personnel dispatched.",12.962579,77.474382
+455,industrial_accident,high,2,"Field team update: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Responders on scene request assistance.",13.029959,77.757775
+456,fire,medium,3,"Citizen emergency report: Rubbish pile burning near vacant construction site, smoke bothering nearby residents. Situation escalating.",12.985661,77.683847
+457,fire,high,2,Wildfire spreading rapidly towards residential suburb due to high winds. Urgent containment needed. Perimeter needs to be secured.,13.124498,77.464915
+458,fire,high,2,"Vehicle pileup caught fire on national highway, two cars burning with people trapped. Emergency personnel dispatched.",12.846125,77.694201
+459,industrial_accident,high,2,"Urgent: Crane collapse at major construction site, operator injured and high-voltage power lines snapped. Dispatch immediately.",12.890957,77.635713
+460,industrial_accident,medium,3,Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B. Emergency personnel dispatched.,13.16724,77.61192
+461,road_accident,low,4,"Minor scratch collision in shopping mall parking lot, drivers arguing over insurance.",12.958808,77.471725
+462,fire,low,4,"Sensor alert: Extinguished kitchen pan fire, caller requesting precautionary smoke inspection. Automatic threshold exceeded.",13.064048,77.653914
+463,other,low,4,Urgent: Noise complaint regarding loud late-night construction work. Dispatch immediately.,13.066247,77.710907
+464,medical,medium,3,"Sensor alert: Deep kitchen laceration on hand bleeding steadily, direct pressure applied, stitches required. Automatic threshold exceeded.",13.015982,77.65009
+465,road_accident,critical,1,"Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard.",12.902771,77.554933
+466,fire,low,4,"Sensor alert: Unattended small bonfire in public park, no immediate danger. Automatic threshold exceeded.",12.962582,77.76893
+467,fire,critical,1,"Severe fire outbreak in downtown commercial complex, heavy black smoke, structural collapse imminent. Perimeter needs to be secured.",12.865809,77.696103
+468,industrial_accident,medium,3,Urgent: Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B. Dispatch immediately.,12.876221,77.538421
+469,flood,low,4,"Caller reports: Puddle accumulation on residential street curb, slow drainage. Please send backup.",12.957758,77.458487
+470,other,medium,3,"Field team update: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Responders on scene request assistance.",13.047716,77.650085
+471,industrial_accident,high,2,"Citizen emergency report: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Situation escalating.",12.859251,77.448028
+472,flood,critical,1,"911 Call log: Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Caller very distressed.",12.937938,77.614294
+473,road_accident,low,4,"Citizen emergency report: Rear mirror collision in slow-moving traffic jam, no injuries. Situation escalating.",13.076344,77.666737
+474,medical,low,4,"Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice.",12.950299,77.676106
+475,fire,medium,3,"Caller reports: Rubbish pile burning near vacant construction site, smoke bothering nearby residents. Please send backup.",12.796303,77.61366
+476,medical,critical,1,"Severe anaphylactic shock at restaurant, patient experiencing respiratory failure and swelling.",12.831541,77.525847
+477,medical,critical,1,Caller reports: Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis. Please send backup.,13.043718,77.681367
+478,road_accident,low,4,"Minor scratch collision in shopping mall parking lot, drivers arguing over insurance.",12.949793,77.416854
+479,flood,critical,1,"Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Emergency personnel dispatched.",12.997164,77.618119
+480,other,medium,3,Urgent: Traffic signal outage at four-way intersection causing chaotic vehicular gridlock. Dispatch immediately.,12.929979,77.721181
+481,flood,medium,3,"Urgent: Waterlogging on main avenue causing 2-hour traffic gridlock, water reaching knee height. Dispatch immediately.",12.941079,77.674754
+482,medical,high,2,"Caller reports: Elderly woman showing stroke symptoms: facial droop, slurred speech, acute weakness on right side. Please send backup.",13.166055,77.583428
+483,industrial_accident,high,2,"Sensor alert: Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed. Automatic threshold exceeded.",13.079189,77.700931
+484,other,high,2,"911 Call log: Active gas smell in dense residential neighborhood, multiple residents reporting nausea. Caller very distressed.",13.168743,77.547592
+485,road_accident,critical,1,"Caller reports: Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard. Please send backup.",13.044692,77.659317
+486,medical,high,2,"911 Call log: Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Caller very distressed.",12.819053,77.791739
+487,road_accident,critical,1,"Sensor alert: Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage. Automatic threshold exceeded.",13.062743,77.483676
+488,fire,critical,1,Field team update: Massive explosion at chemical factory! Multiple workers trapped inside and flames spreading to adjacent units. Responders on scene request assistance.,12.956802,77.682238
+489,road_accident,high,2,"Citizen emergency report: Motorcyclist struck by delivery truck, lying unresponsive on arterial ring road. Situation escalating.",12.870605,77.533064
+490,industrial_accident,critical,1,"Caller reports: Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris. Please send backup.",12.784487,77.658679
+491,medical,low,4,"Citizen emergency report: Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice. Situation escalating.",12.854033,77.434959
+492,fire,high,2,"Urgent: Vehicle pileup caught fire on national highway, two cars burning with people trapped. Dispatch immediately.",12.869494,77.412295
+493,road_accident,medium,3,"Fender bender between taxi and city bus blocking two lanes of traffic, no serious injuries.",12.858508,77.740092
+494,fire,high,2,Wildfire spreading rapidly towards residential suburb due to high winds. Urgent containment needed.,13.168993,77.488265
+495,medical,medium,3,"911 Call log: Sprained ankle and contusions after slipping on wet steps, patient unable to bear weight. Caller very distressed.",12.866362,77.745103
+496,other,medium,3,"Citizen emergency report: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Situation escalating.",12.937024,77.504662
+497,medical,high,2,"Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Perimeter needs to be secured.",12.99394,77.413354
+498,industrial_accident,low,4,Safety inspection protocol test run at logistics depot. Perimeter needs to be secured.,13.085922,77.522094
+499,road_accident,high,2,"Sensor alert: Motorcyclist struck by delivery truck, lying unresponsive on arterial ring road. Automatic threshold exceeded.",12.891555,77.468152
+500,medical,high,2,"Citizen emergency report: Diabetic emergency, patient unresponsive with extremely low blood sugar reading. Situation escalating.",13.111336,77.514895

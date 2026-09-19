@@ -5,7 +5,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import alerts, analytics, assignments, auth, incidents, realtime, resources
+from app.api import alerts, analytics, assignments, auth, incidents, realtime, resources, sensors
 from app.core.config import get_settings
 from app.core.realtime import manager
 from app.core.scheduler import start_scheduler, stop_scheduler
@@ -38,6 +38,7 @@ app.include_router(assignments.router)
 app.include_router(alerts.router)
 app.include_router(analytics.router)
 app.include_router(realtime.router)
+app.include_router(sensors.router)
 
 
 @app.get("/health")

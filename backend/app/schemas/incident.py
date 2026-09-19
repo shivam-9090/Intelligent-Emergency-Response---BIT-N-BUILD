@@ -34,3 +34,15 @@ class IncidentRead(BaseModel):
     reported_at: datetime
     created_at: datetime
     updated_at: datetime
+
+
+class ClassifyTextRequest(BaseModel):
+    description: str
+
+
+class ClassifyTextResponse(BaseModel):
+    incident_type: IncidentType
+    severity: Severity
+    priority: int
+    confidence: float
+    method: str
