@@ -147,7 +147,7 @@ RESPONDR / COMMAND replaces intuition with mathematical optimization and verifie
 - **How it Works**:
   1. Image is ingested as Base64/JPEG through `POST /incidents/analyze-image` or `POST /incidents/{id}/analyze-image`.
   2. Multi-modal model analyzes structural facade displacement, smoke plume optical density, active flame fronts, and water depth.
-  3. Computes a continuous **Damage Severity Score** ($0.0 \dots 100.0\%$) and classifies triage category (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`).
+  3. Computes a continuous **Damage Severity Score** (0.0% to 100.0%) and classifies triage category (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`).
   4. Verifies **Authenticity**: flags `VERIFIED_AUTHENTIC`, `POSSIBLE_MISINFORMATION`, or `FALSE_ALARM`.
   5. Outputs automated **Tactical PPE Requirements** (Level A/B Hazmat, SCBA 60m, FLIR thermal imagers, hydraulic extrication jaws).
 
@@ -156,18 +156,22 @@ RESPONDR / COMMAND replaces intuition with mathematical optimization and verifie
 - **Algorithm**: Kuhn-Munkres (Hungarian) Bipartite Matching via `scipy.optimize.linear_sum_assignment`
 - **The Problem**: Greedy dispatch allocates the nearest ambulance to a minor sprain, leaving a subsequent cardiac arrest with an ambulance 20 minutes away.
 - **Mathematical Formulation**:
-  We construct an $M \times N$ bipartite cost matrix $C_{i, j}$ between all active unassigned incidents $i \in \{1 \dots M\}$ and available emergency units $j \in \{1 \dots N\}$:
-  $$C_{i, j} = \Big(\text{ETA}_{i, j} \times W(i)\Big) + \text{Penalty}_{\text{mismatch}}(i, j)$$
-  - **Severity Weights $W(i)$**: $\text{CRITICAL} = 5.0$, $\text{HIGH} = 3.0$, $\text{MEDIUM} = 1.8$, $\text{LOW} = 1.0$.
-  - **Capability Penalty**: $+0.0$ if unit capability matches incident requirements (e.g. Hazmat squad to chemical spill); $+50.0$ penalty if mismatched.
-  - Solves $\min \sum_{i} \sum_{j} C_{i, j} X_{i, j}$ in $O(N^3)$ polynomial time.
+  We construct an $M \times N$ bipartite cost matrix $C_{i, j}$ between all active unassigned incidents $i$ and available emergency units $j$:
+
+  $$C_{i, j} = \left(\mathrm{ETA}_{i, j} \times W_i\right) + \mathrm{Penalty}(i, j)$$
+
+  - **Severity Weights $W_i$**: `CRITICAL` = 5.0, `HIGH` = 3.0, `MEDIUM` = 1.8, `LOW` = 1.0.
+  - **Capability Penalty**: +0.0 if unit capability matches incident requirements (e.g. Hazmat squad to chemical spill); +50.0 penalty if mismatched.
+  - Solves $\min \sum_{i} \sum_{j} C_{i, j} X_{i, j}$ in polynomial time.
   - **Benchmarked Results**: Demonstrates **up to 100% net efficiency gains** (saving 4.2+ minutes per response) compared to naive greedy assignment.
 
 ### C. Atmospheric Plume Dispersion & Secondary Cascade Forecaster
 - **Module**: [`backend/app/ml/cascade_forecaster.py`](file:///home/shivam/PROJECTS/BIT-N-BUILD/backend/app/ml/cascade_forecaster.py)
-- **Physics Engine**: Pasquill-Gifford Gaussian dispersion modeling integrated with real-time meteorological vectors ($v_{\text{wind}}$, $\theta_{\text{heading}}$, ambient temperature, relative humidity).
+- **Physics Engine**: Pasquill-Gifford Gaussian dispersion modeling integrated with real-time meteorological vectors (wind speed, heading angle, ambient temperature, relative humidity).
 - **Mathematical Modeling**:
-  $$\text{Downwind Length} = R_{\text{base}} + \big(v_{\text{wind}} \times 30.0\big) \text{ meters}$$
+
+  $$\mathrm{DownwindLength} = R_{\mathrm{base}} + \left(v_{\mathrm{wind}} \times 30.0\right) \text{ meters}$$
+
   The dispersion cone expands laterally according to atmospheric stability class, projecting dynamic danger polygons across the city grid.
 - **Cascade Forecaster**: Probabilistically calculates countdown timelines for secondary disasters:
   - Phase 1: Rapid structural weakening & thermal flashover.
@@ -181,11 +185,13 @@ RESPONDR / COMMAND replaces intuition with mathematical optimization and verifie
 - **The Problem**: Standard civilian routing engines compute the shortest Euclidean/road path, which frequently cuts directly through deadly toxic plumes.
 - **Geometric Algorithm**:
   1. Ray-casts the direct transit line against the atmospheric dispersion polygon.
-  2. Calculates exact **meters of toxic plume penetration** (e.g., $226\text{ m}$ of lethal exposure).
+  2. Calculates exact **meters of toxic plume penetration** (e.g., 226m of lethal exposure).
   3. Computes dynamic upwind/crosswind tangent detour vectors:
-     $$\theta_{\text{detour}} = \theta_{\text{wind\_heading}} \pm 90^\circ$$
+
+     $$\theta_{\mathrm{detour}} = \theta_{\mathrm{wind}} \pm 90^\circ$$
+
   4. Synthesizes a multi-node tactical bypass corridor with designated perimeter waypoints.
-  5. **Guaranteed Metric**: Delivers **$0.0\text{ m}$ toxic plume exposure** with only a marginal transit delta ($+1.0$ to $+2.5$ minutes ETA).
+  5. **Guaranteed Metric**: Delivers **0.0m toxic plume exposure** with only a marginal transit delta (+1.0 to +2.5 minutes ETA).
 
 ### E. Predictive Spatio-Temporal Demand Heatmap & Pre-Deployment Staging
 - **Module**: [`backend/app/ml/demand_forecaster.py`](file:///home/shivam/PROJECTS/BIT-N-BUILD/backend/app/ml/demand_forecaster.py)
@@ -193,20 +199,24 @@ RESPONDR / COMMAND replaces intuition with mathematical optimization and verifie
 - **The Problem**: Purely reactive systems wait for distress calls before rolling wheels, losing the golden hour of trauma care in heavy traffic.
 - **Mathematical Formulation**:
   1. **Gaussian Kernel Density Estimation (KDE)**:
-     - Discretizes the Bengaluru metropolitan bounding box ($12.90^\circ\text{N} - 13.05^\circ\text{N}$, $77.50^\circ\text{E} - 77.68^\circ\text{E}$) into a 2.4 km spatial resolution grid.
-     - Historical incidents act as Gaussian kernels with bandwidth $\sigma = 2.5\text{ km}$.
-     - Kernel weight is scaled by severity: $\text{CRITICAL} \times 3.5$, $\text{HIGH} \times 2.2$, $\text{MEDIUM} \times 1.3$, $\text{LOW} \times 0.8$.
+     - Discretizes the Bengaluru metropolitan bounding box (12.90°N to 13.05°N, 77.50°E to 77.68°E) into a 2.4 km spatial resolution grid.
+     - Historical incidents act as Gaussian kernels with spatial bandwidth $\sigma = 2.5\text{ km}$.
+     - Kernel weight is scaled by severity: `CRITICAL` x 3.5, `HIGH` x 2.2, `MEDIUM` x 1.3, `LOW` x 0.8.
   2. **Poisson Diurnal Surge Multiplier**:
-     $$\lambda(h) = \text{base\_rate} \times \text{SurgeFactor}(h)$$
-     Peaks during evening rush hours ($1.7\times$) and troughs at 03:00 AM ($0.4\times$).
+
+     $$\lambda(h) = \lambda_0 \times \mathrm{SurgeFactor}(h)$$
+
+     Peaks during evening rush hours (1.7x) and troughs at 03:00 AM (0.4x).
   3. **Non-Maximum Suppression (NMS)**:
      Extracts optimal staging centroids subject to a spatial diversity constraint:
-     $$D(\text{Centroid}_a, \text{Centroid}_b) \ge 3.0\text{ km}$$
-  4. **Outputs**: Computes city-wide risk indices and pre-positions patrol units into strategic zones (e.g., Koramangala, Whitefield, Electronic City), shaving **$2.5 - 4.0\text{ minutes}$** off future emergency response times.
+
+     $$\mathrm{Distance}(\mathrm{Centroid}_a, \mathrm{Centroid}_b) \ge 3.0\text{ km}$$
+
+  4. **Outputs**: Computes city-wide risk indices and pre-positions patrol units into strategic zones (e.g., Koramangala, Whitefield, Electronic City), shaving **2.5 to 4.0 minutes** off future emergency response times.
 
 ### F. Natural Language Incident Classifier & Safety Floors
 - **Module**: [`backend/app/ml/classifier.py`](file:///home/shivam/PROJECTS/BIT-N-BUILD/backend/app/ml/classifier.py)
-- **Architecture**: Logistic Regression with word & character n-gram TF-IDF vectorization ($1\text{ to }3$-grams) combined with rule-based emergency safety floors.
+- **Architecture**: Logistic Regression with word & character n-gram TF-IDF vectorization (1 to 3-grams) combined with rule-based emergency safety floors.
 - **Safety Floors**: Deterministic guards override ML predictions whenever high-risk trigger keywords are detected (e.g., `"trapped"`, `"collapse"`, `"explosion"`, `"cyanide"`, `"cardiac"`), guaranteeing priority is pinned to `Priority 1 (CRITICAL)` regardless of model confidence.
 - **Holdout Diagnostics**: Evaluated via [`backend/app/ml/backtest_classifier.py`](file:///home/shivam/PROJECTS/BIT-N-BUILD/backend/app/ml/backtest_classifier.py) with macro-F1, precision, recall, confusion matrix, and SHA-256 dataset tracking.
 
@@ -424,7 +434,7 @@ NVIDIA_API_KEY=nvapi-your-key-here
 ```
 *(If omitted, the platform automatically switches to its deterministic perceptual fallback engine without failing.)*
 
-### 2. Launch the Full Stack via Docker
+### 2. Launch Full Stack via Docker Compose
 
 ```bash
 cd infra/docker
