@@ -4,7 +4,7 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@/components/ui/alert";
+} from "./ui/alert";
 
 interface NavbarProps {
   activeTab: "map" | "analytics";
