@@ -49,12 +49,13 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
       zoomControl: true,
     });
 
-    // 1. Detailed Real Street Map (Full color, real streets, landmarks, buildings, parks, waterways - zero watermarks)
-    const realStreetMap = L.tileLayer(
-      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    // 1. Detailed Global Street Map with 100% English Labels (All country and city names strictly in English)
+    const englishStreetMap = L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
       {
         attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          "Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, METI, TomTom",
+        maxNativeZoom: 18,
         maxZoom: 19,
       }
     );
@@ -98,12 +99,12 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
       ),
     ]);
 
-    // Add Real Street Map by default for a vibrant, detailed real-world map
-    realStreetMap.addTo(map);
+    // Add English Street Map by default for a vibrant, detailed real-world map with all names in English
+    englishStreetMap.addTo(map);
 
     // Map layer switcher
     const baseMaps = {
-      "🗺️ Real Street Map": realStreetMap,
+      "🗺️ Real Street Map (English)": englishStreetMap,
       "🛰️ Satellite Map": satelliteLayer,
       "🌙 Tactical Dark": darkMapLayer,
     };

@@ -29,30 +29,32 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [showAlertModal, setShowAlertModal] = useState(false);
 
   return (
-    <header className="bg-white border-b border-[#DCE3E8] px-4 md:px-6 py-2.5 flex items-center justify-between text-[#263238] select-none shadow-xs relative z-30">
-      <div className="flex items-center space-x-3 md:space-x-4">
+    <header className="bg-white border-b border-[#DCE3E8] flex items-center justify-between text-[#263238] select-none shadow-xs relative z-30 h-13">
+      {/* Left Column: Aligned with the sidebar below */}
+      <div
+        className={`flex items-center justify-between px-3.5 h-full border-r border-[#DCE3E8] transition-all duration-200 ${
+          isSidebarOpen ? "w-88 lg:w-96 shrink-0" : "w-auto shrink-0 gap-3"
+        }`}
+      >
         <div className="flex items-center space-x-2 text-[#0B1F33] font-black text-xl tracking-tight">
-          <Activity className="w-6 h-6 text-[#1565C0]" />
+          <Activity className="w-5.5 h-5.5 text-[#1565C0]" />
           <span>RESPONDR<span className="text-[#1565C0] font-semibold text-xs ml-1.5 px-2 py-0.5 bg-[#E3F2FD] border border-[#90CAF9] rounded">AI</span></span>
         </div>
 
-        {/* Sidebar Open/Close Toggle Button right beside RESPONDR logo */}
+        {/* Sidebar Open/Close Toggle Button (Icon-only, no text written) */}
         {onToggleSidebar && (
           <button
             onClick={onToggleSidebar}
-            className="p-1.5 px-2.5 rounded-lg border border-[#DCE3E8] bg-[#F8FAFC] hover:bg-[#EEF2F6] text-[#455A64] hover:text-[#0B1F33] transition cursor-pointer shadow-xs flex items-center gap-1.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#1565C0]/20"
-            title={isSidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
+            className="p-1.5 rounded-lg border border-[#DCE3E8] bg-[#F8FAFC] hover:bg-[#EEF2F6] text-[#1565C0] hover:text-[#0D47A1] transition cursor-pointer shadow-xs flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#1565C0]/20"
+            title={isSidebarOpen ? "Close panel" : "Open panel"}
             aria-label="Toggle Sidebar"
           >
-            <PanelLeft className="w-4 h-4 text-[#1565C0]" />
-            <span className="hidden sm:inline text-[11px] text-[#607D8B]">
-              {isSidebarOpen ? "Hide Panel" : "Show Panel"}
-            </span>
+            <PanelLeft className="w-4 h-4" />
           </button>
         )}
       </div>
 
-      <div className="flex items-center space-x-2 md:space-x-3">
+      <div className="flex items-center space-x-2 md:space-x-3 px-4 md:px-6">
         {/* Navigation Tabs */}
         <div className="flex bg-[#EEF2F6] p-1 rounded-lg border border-[#DCE3E8] text-xs font-semibold">
           <button
