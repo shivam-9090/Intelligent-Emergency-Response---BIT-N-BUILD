@@ -24,11 +24,12 @@ def print_banner(text: str):
     print("=" * 65)
 
 
-def http_post(endpoint: str, data: dict) -> dict:
+def http_post(endpoint: str, data: dict | None = None) -> dict:
     url = f"{BACKEND_URL}{endpoint}"
+    payload = json.dumps(data if data is not None else {}).encode("utf-8")
     req = urllib.request.Request(
         url,
-        data=json.dumps(data).encode("utf-8"),
+        data=payload,
         headers={"Content-Type": "application/json"},
     )
     with urllib.request.urlopen(req, timeout=25) as response:
@@ -212,6 +213,44 @@ def run_demo():
         print(f"\n   Tactical Evacuation Advice: \"{cascade_res.get('tactical_evacuation_advice')}\"\n")
     except Exception as exc:
         print(f"   Cascade forecaster note: {exc}")
+
+    # -------------------------------------------------------------
+    # STEP 8: Global Fleet Optimization Engine (Hungarian Algorithm)
+    # -------------------------------------------------------------
+    print_banner("STEP 8: Global Fleet Optimization Engine (Hungarian Bipartite Matching)")
+    print("Executing Scipy linear_sum_assignment urgency-weighted dispatch optimization...")
+    try:
+        opt_res = http_post("/resources/optimize-fleet?commit=false")
+        metrics = opt_res.get("metrics", {})
+        print(f"   ⚡ Hungarian Global Optimization Completed ({opt_res.get('algorithm')})")
+        print(f"   📊 Dispatched Incidents:       {metrics.get('incidents_assigned')}")
+        print(f"   ⏱️ Optimized Total Travel:     {metrics.get('total_optimized_eta_minutes', 0):.1f} mins")
+        print(f"   ⏱️ Naive Greedy Total Travel:  {metrics.get('total_greedy_eta_minutes', 0):.1f} mins")
+        print(f"   🚀 Efficiency Gain:            +{metrics.get('efficiency_gain_pct', 0):.1f}% faster city-wide response")
+        print(f"   💡 Net Time Saved:             {metrics.get('time_saved_minutes', 0):.1f} minutes")
+
+        assignments = opt_res.get("assignments", [])
+        if assignments:
+            print("\n   [OPTIMAL BIPARTITE DISPATCH MATCHES]:")
+            for a in assignments:
+                cap_str = f"capability: {a.get('capability')}" if a.get("capability") else "standard"
+                print(
+                    f"      • {a.get('unit_name')} ({a.get('resource_type')}) ➔ "
+                    f"\"{a.get('incident_title')}\" [{a.get('severity')}] | "
+                    f"ETA: {a.get('eta_minutes')}m | {cap_str}"
+                )
+
+        bottlenecks = opt_res.get("bottlenecks", [])
+        if bottlenecks:
+            print("\n   [SECTOR BOTTLENECKS & CAPABILITY DEFICITS]:")
+            for b in bottlenecks:
+                print(
+                    f"      🚨 Incident: \"{b.get('incident_title')}\" [{b.get('severity')}]"
+                )
+                print(f"         Missing: {b.get('missing_capability')} | Recommendation: {b.get('recommendation')}")
+        print()
+    except Exception as exc:
+        print(f"   Fleet optimization note: {exc}")
 
     print_banner("DEMO COMPLETED SUCCESSFULLY")
 

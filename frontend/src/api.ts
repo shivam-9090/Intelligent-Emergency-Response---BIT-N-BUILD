@@ -2,6 +2,7 @@ import type {
   Alert,
   CascadeRiskResponse,
   ClassifyResult,
+  FleetOptimizationResponse,
   HospitalRecommendationResponse,
   Incident,
   IncidentSummary,
@@ -106,5 +107,14 @@ export async function fetchAnalyticsDelays(): Promise<any> {
 export async function fetchAnalyticsShortages(): Promise<any> {
   const res = await fetch(`${API_BASE}/analytics/resource-shortages`);
   if (!res.ok) return [];
+  return res.json();
+}
+
+export async function optimizeFleet(): Promise<FleetOptimizationResponse> {
+  const res = await fetch(`${API_BASE}/resources/optimize-fleet`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  });
+  if (!res.ok) throw new Error("Failed to execute global fleet optimization");
   return res.json();
 }

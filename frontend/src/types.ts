@@ -144,3 +144,45 @@ export interface CascadeRiskResponse {
   tactical_evacuation_advice: string;
 }
 
+export interface OptimizedAssignmentItem {
+  incident_id: string;
+  incident_title: string;
+  incident_type: IncidentType;
+  severity: Severity;
+  priority: number;
+  unit_id: string;
+  unit_name: string;
+  resource_type: ResourceType;
+  capability: string | null;
+  eta_minutes: number;
+  urgency_cost_score: number;
+}
+
+export interface SectorBottleneck {
+  incident_id: string;
+  incident_title: string;
+  incident_type: IncidentType;
+  severity: Severity;
+  missing_capability: string;
+  recommendation: string;
+}
+
+export interface OptimizationMetrics {
+  total_optimized_eta_minutes: number;
+  total_greedy_eta_minutes: number;
+  time_saved_minutes: number;
+  efficiency_gain_pct: number;
+  incidents_assigned: number;
+  unassigned_bottlenecks: number;
+}
+
+export interface FleetOptimizationResponse {
+  plan_id: string;
+  timestamp: string;
+  algorithm: string;
+  metrics: OptimizationMetrics;
+  assignments: OptimizedAssignmentItem[];
+  bottlenecks: SectorBottleneck[];
+}
+
+
