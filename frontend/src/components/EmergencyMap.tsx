@@ -7,6 +7,7 @@ interface EmergencyMapProps {
   resources: ResourceUnit[];
   selectedIncident: Incident | null;
   onSelectIncident: (inc: Incident) => void;
+  activePlumePolygon?: [number, number][] | null;
 }
 
 const SEVERITY_COLORS = {
@@ -21,6 +22,7 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
   resources,
   selectedIncident,
   onSelectIncident,
+  activePlumePolygon,
 }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -146,7 +148,27 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
       `);
       layerGroup.addLayer(marker);
     });
-  }, [incidents, resources, selectedIncident, onSelectIncident]);
+
+    // 3. Render Atmospheric Hazard Plume Polygon
+    if (activePlumePolygon && activePlumePolygon.length > 0) {
+      const polygon = L.polygon(activePlumePolygon, {
+        color: "#f97316",
+        weight: 2,
+        dashArray: "4, 6",
+        fillColor: "#ea580c",
+        fillOpacity: 0.28,
+      });
+      polygon.bindPopup(`
+        <div style="color: #0f172a; font-family: sans-serif; min-width: 170px;">
+          <div style="font-weight: 700; color: #ea580c; font-size: 13px;">⚠️ Atmospheric Hazard Plume</div>
+          <div style="font-size: 11px; color: #475569; margin-top: 3px;">
+            Predicted downwind dispersion corridor based on meteorological wind vectors.
+          </div>
+        </div>
+      `);
+      layerGroup.addLayer(polygon);
+    }
+  }, [incidents, resources, selectedIncident, onSelectIncident, activePlumePolygon]);
 
   // Center on selected incident if changed
   useEffect(() => {
@@ -192,6 +214,10 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
         <div className="border-t border-slate-700 pt-1.5 mt-1 flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500 inline-block" />
           <span className="text-slate-300">Available Resource</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-sm bg-orange-500/70 border border-orange-400 inline-block" />
+          <span className="text-slate-300">Downwind Hazard Plume</span>
         </div>
       </div>
     </div>

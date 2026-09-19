@@ -102,3 +102,45 @@ export interface HospitalRecommendationResponse {
   facilities: HospitalFacility[];
 }
 
+export interface WeatherTelemetry {
+  wind_speed_kmh: number;
+  wind_direction_deg: number;
+  temperature_c: number;
+  humidity_pct: number;
+}
+
+export interface SecondaryHazardPrediction {
+  hazard_type: string;
+  probability: number;
+  estimated_onset_minutes: number;
+  severity_impact: string;
+  recommended_action: string;
+}
+
+export interface VulnerableInfrastructure {
+  id: string;
+  name: string;
+  category: string;
+  distance_km: number;
+  inside_plume: boolean;
+  occupancy_estimate: number;
+}
+
+export interface PlumeCorridor {
+  hazard_radius_meters: number;
+  downwind_length_meters: number;
+  wind_direction_deg: number;
+  polygon_coordinates: [number, number][];
+}
+
+export interface CascadeRiskResponse {
+  incident_id: string;
+  cascade_risk_score: number;
+  escalation_level: "low" | "medium" | "high" | "critical";
+  weather: WeatherTelemetry;
+  secondary_hazards: SecondaryHazardPrediction[];
+  evacuation_corridor: PlumeCorridor;
+  vulnerable_infrastructure: VulnerableInfrastructure[];
+  tactical_evacuation_advice: string;
+}
+

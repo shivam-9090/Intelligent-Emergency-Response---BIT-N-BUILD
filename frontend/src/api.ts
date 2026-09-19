@@ -1,5 +1,6 @@
 import type {
   Alert,
+  CascadeRiskResponse,
   ClassifyResult,
   HospitalRecommendationResponse,
   Incident,
@@ -75,6 +76,18 @@ export async function fetchHospitalRecommendations(
 ): Promise<HospitalRecommendationResponse> {
   const res = await fetch(`${API_BASE}/incidents/${incidentId}/hospitals`);
   if (!res.ok) throw new Error("Failed to fetch hospital recommendations");
+  return res.json();
+}
+
+export async function fetchCascadeRisk(
+  incidentId: string,
+  windSpeed = 18.0,
+  windDirection = 45.0
+): Promise<CascadeRiskResponse> {
+  const res = await fetch(
+    `${API_BASE}/incidents/${incidentId}/cascade-risk?wind_speed_kmh=${windSpeed}&wind_direction_deg=${windDirection}`
+  );
+  if (!res.ok) throw new Error("Failed to fetch cascade risk forecast");
   return res.json();
 }
 

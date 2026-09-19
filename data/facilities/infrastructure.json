@@ -1,0 +1,66 @@
+[
+  {
+    "id": "INFRA-01",
+    "name": "Bangalore Central Metro Interchange (Majestic)",
+    "category": "transit_hub",
+    "latitude": 12.9757,
+    "longitude": 77.5728,
+    "occupancy_estimate": 15000,
+    "vulnerability_rating": "critical"
+  },
+  {
+    "id": "INFRA-02",
+    "name": "National Public School Indiranagar",
+    "category": "school",
+    "latitude": 12.9784,
+    "longitude": 77.6408,
+    "occupancy_estimate": 2200,
+    "vulnerability_rating": "high"
+  },
+  {
+    "id": "INFRA-03",
+    "name": "Whitefield Tech Park Substation & Metro Station",
+    "category": "transit_utility",
+    "latitude": 12.9698,
+    "longitude": 77.7499,
+    "occupancy_estimate": 8000,
+    "vulnerability_rating": "high"
+  },
+  {
+    "id": "INFRA-04",
+    "name": "Peenya 220kV Electrical Grid Substation",
+    "category": "power_grid",
+    "latitude": 13.0285,
+    "longitude": 77.5197,
+    "occupancy_estimate": 350,
+    "vulnerability_rating": "critical"
+  },
+  {
+    "id": "INFRA-05",
+    "name": "BWSSB Varthur Water Treatment & Pumping Station",
+    "category": "water_treatment",
+    "latitude": 12.9382,
+    "longitude": 77.7011,
+    "occupancy_estimate": 180,
+    "vulnerability_rating": "critical"
+  },
+  {
+    "id": "INFRA-06",
+    "name": "Bishop Cotton Boys' & Girls' School",
+    "category": "school",
+    "latitude": 12.9678,
+    "longitude": 77.5997,
+    "occupancy_estimate": 3400,
+    "vulnerability_rating": "high"
+  },
+  {
+    "id": "INFRA-07",
+    "name": "KSR Bengaluru City Railway Terminal",
+    "category": "transit_hub",
+    "latitude": 12.9781,
+    "longitude": 77.5694,
+    "occupancy_estimate": 25000,
+    "vulnerability_rating": "critical"
+  }
+]
+
