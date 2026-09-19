@@ -82,4 +82,3 @@ def test_hospital_recommendations_endpoint(client):
     assert "available_icu_beds" in first_hosp
     assert first_hosp["available_icu_beds"] > 0
     assert "eta_minutes" in first_hosp
-

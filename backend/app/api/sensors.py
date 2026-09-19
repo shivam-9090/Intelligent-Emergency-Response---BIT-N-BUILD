@@ -101,4 +101,3 @@ def get_incident_hospitals(
         limit=limit,
     )
     return HospitalRecommendationResponse(incident_id=incident_id, facilities=hospitals)
-

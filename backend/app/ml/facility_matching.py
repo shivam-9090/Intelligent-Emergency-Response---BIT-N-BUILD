@@ -80,20 +80,22 @@ def recommend_hospitals(
         # Scoring: capability matches bonus - distance penalty
         match_score = len(matched_caps) * 20.0 - (direct_km * 1.5)
 
-        scored_facilities.append({
-            "id": hosp["id"],
-            "name": hosp["name"],
-            "address": hosp["address"],
-            "latitude": h_lat,
-            "longitude": h_lon,
-            "available_icu_beds": avail_beds,
-            "burn_unit_available": hosp.get("burn_unit_available", False),
-            "heliport": hosp.get("heliport", False),
-            "matched_capabilities": matched_caps,
-            "distance_km": round(direct_km, 2),
-            "eta_minutes": eta,
-            "score": match_score,
-        })
+        scored_facilities.append(
+            {
+                "id": hosp["id"],
+                "name": hosp["name"],
+                "address": hosp["address"],
+                "latitude": h_lat,
+                "longitude": h_lon,
+                "available_icu_beds": avail_beds,
+                "burn_unit_available": hosp.get("burn_unit_available", False),
+                "heliport": hosp.get("heliport", False),
+                "matched_capabilities": matched_caps,
+                "distance_km": round(direct_km, 2),
+                "eta_minutes": eta,
+                "score": match_score,
+            }
+        )
 
     # Sort by composite score (highest first)
     scored_facilities.sort(key=lambda x: x["score"], reverse=True)
