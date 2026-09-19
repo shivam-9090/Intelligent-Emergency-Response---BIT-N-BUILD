@@ -47,13 +47,38 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
       zoomControl: true,
     });
 
-    // Dark-themed OpenStreetMap tiles (CartoDB Dark Matter)
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: "abcd",
-      maxZoom: 19,
-    }).addTo(map);
+    // Dark-themed command-center basemap (Esri World Dark Gray - zero watermarks, 100% reliable)
+    const cartoKey = (import.meta as any).env?.VITE_CARTO_API_KEY;
+    if (cartoKey) {
+      L.tileLayer(
+        `https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png?key=${cartoKey}`,
+        {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+          subdomains: "abcd",
+          maxZoom: 19,
+        }
+      ).addTo(map);
+    } else {
+      L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+        {
+          attribution:
+            "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
+          maxNativeZoom: 16,
+          maxZoom: 19,
+        }
+      ).addTo(map);
+
+      L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+        {
+          attribution: "",
+          maxNativeZoom: 16,
+          maxZoom: 19,
+        }
+      ).addTo(map);
+    }
 
     layerGroupRef.current = L.layerGroup().addTo(map);
     mapInstanceRef.current = map;
