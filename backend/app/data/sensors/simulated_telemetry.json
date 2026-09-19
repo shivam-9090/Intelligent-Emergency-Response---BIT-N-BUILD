@@ -1,0 +1,66 @@
+[
+  {
+    "sensor_id": "SENSOR-WATER-BLR-01",
+    "sensor_type": "water_level",
+    "district": "Ulsoor Lake Drainage",
+    "latitude": 12.9818,
+    "longitude": 77.6186,
+    "readings": {
+      "water_level_cm": 245.0,
+      "flow_velocity_mps": 4.8,
+      "rate_of_rise_cm_per_hr": 35.0
+    },
+    "thresholds": {
+      "warning_water_level_cm": 120.0,
+      "critical_water_level_cm": 200.0
+    }
+  },
+  {
+    "sensor_id": "SENSOR-GAS-IND-04",
+    "sensor_type": "toxic_gas",
+    "district": "Peenya Industrial Area",
+    "latitude": 13.0285,
+    "longitude": 77.5195,
+    "readings": {
+      "gas_type": "ammonia",
+      "concentration_ppm": 85.0,
+      "temperature_c": 38.5,
+      "wind_speed_kmh": 14.0
+    },
+    "thresholds": {
+      "warning_ppm": 25.0,
+      "critical_ppm": 50.0
+    }
+  },
+  {
+    "sensor_id": "SENSOR-SMOKE-WH-09",
+    "sensor_type": "smoke_optical",
+    "district": "Whitefield Logistics Depot",
+    "latitude": 12.9716,
+    "longitude": 77.5946,
+    "readings": {
+      "obscuration_pct_per_meter": 18.5,
+      "ambient_temp_c": 92.0,
+      "co_ppm": 120.0
+    },
+    "thresholds": {
+      "warning_temp_c": 55.0,
+      "critical_temp_c": 80.0
+    }
+  },
+  {
+    "sensor_id": "SENSOR-SEISMIC-BR-02",
+    "sensor_type": "vibration_structural",
+    "district": "KR Puram Suspension Bridge",
+    "latitude": 13.0033,
+    "longitude": 77.6844,
+    "readings": {
+      "peak_ground_acceleration_g": 0.42,
+      "structural_deflection_mm": 58.0
+    },
+    "thresholds": {
+      "warning_pga_g": 0.15,
+      "critical_pga_g": 0.35
+    }
+  }
+]
