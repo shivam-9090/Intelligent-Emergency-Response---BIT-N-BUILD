@@ -7,6 +7,7 @@ from app.ml.classification import classify_incident
 from app.ml.duplicate_detection import find_duplicate
 from app.models.incident import Incident
 from app.schemas.incident import IncidentCreate
+from app.services.alert_service import generate_critical_incident_alert
 
 
 def create_incident(db: Session, payload: IncidentCreate) -> Incident:
@@ -43,6 +44,9 @@ def create_incident(db: Session, payload: IncidentCreate) -> Incident:
 
     db.commit()
     db.refresh(incident)
+
+    generate_critical_incident_alert(db, incident)
+
     return incident
 
 
