@@ -45,9 +45,7 @@ class PreDeploymentStagingPoint(BaseModel):
 
 
 class PredictiveDemandResponse(BaseModel):
-    forecast_horizon_hours: int = Field(
-        description="Forward-looking time window for prediction in hours"
-    )
+    forecast_horizon_hours: int = Field(description="Forward-looking time window for prediction in hours")
     generated_at: datetime = Field(description="Timestamp of forecast generation")
     city_wide_risk_index: float = Field(
         ge=0.0,
@@ -72,4 +70,3 @@ class PredictiveDemandResponse(BaseModel):
         default="Spatio-Temporal Kernel Density Estimation (KDE) + Diurnal Poisson Surge Modeling",
         description="Predictive model architecture",
     )
-
