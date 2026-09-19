@@ -1,29 +1,68 @@
-version: "3.9"
+name: emergency-response
 
 services:
   db:
     image: postgres:16-alpine
+    container_name: emergency-postgres
     restart: unless-stopped
     environment:
       POSTGRES_USER: emergency
       POSTGRES_PASSWORD: emergency
       POSTGRES_DB: emergency_db
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U emergency -d emergency_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: emergency-redis
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  adminer:
+    image: adminer:latest
+    container_name: emergency-adminer
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
 
   backend:
     build:
       context: ../../backend
       dockerfile: ../infra/docker/Dockerfile.backend
+    container_name: emergency-backend
     restart: unless-stopped
     env_file:
       - ../../backend/.env
+    environment:
+      DATABASE_URL: postgresql+psycopg://emergency:emergency@db:5432/emergency_db
+      REDIS_URL: redis://redis:6379/0
     ports:
-      - "8000:8000"
+      - "8001:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ../../backend:/app
 
 volumes:
   pgdata:
+  redisdata:
