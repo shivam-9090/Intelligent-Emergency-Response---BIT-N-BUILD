@@ -50,4 +50,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build frontend image
-        run: docker build -f infra/docker/Dockerfile.frontend -t emergency-frontend:ci frontend
+        run: docker build -f ../infra/docker/Dockerfile.frontend -t emergency-frontend:ci .
