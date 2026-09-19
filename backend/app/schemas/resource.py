@@ -28,3 +28,13 @@ class ResourceUnitRead(BaseModel):
     assigned_user_id: uuid.UUID | None
     created_at: datetime
     updated_at: datetime
+
+
+class ResourceBundleItem(BaseModel):
+    unit: ResourceUnitRead
+    eta_minutes: float | None = None
+
+
+class ResourceBundleResponse(BaseModel):
+    incident_id: uuid.UUID
+    bundle: dict[str, list[ResourceBundleItem]]

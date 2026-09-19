@@ -1,0 +1,4502 @@
+[
+  {
+    "id": 1,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Massive explosion at chemical factory! Multiple workers trapped inside and flames spreading to adjacent units.",
+    "latitude": 13.013428,
+    "longitude": 77.452103
+  },
+  {
+    "id": 2,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Four-story residential building fully engulfed in flames. Screaming heard from upper floors, multiple casualties reported.",
+    "latitude": 12.904109,
+    "longitude": 77.511563
+  },
+  {
+    "id": 3,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Severe fire outbreak in downtown commercial complex, heavy black smoke, structural collapse imminent.",
+    "latitude": 13.042541,
+    "longitude": 77.64761
+  },
+  {
+    "id": 4,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Industrial gas pipeline rupture with huge fireball and multiple injured workers trapped in plant area.",
+    "latitude": 13.089254,
+    "longitude": 77.470682
+  },
+  {
+    "id": 5,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Major warehouse fire with toxic fumes released, nearby school needing immediate evacuation.",
+    "latitude": 12.948177,
+    "longitude": 77.453539
+  },
+  {
+    "id": 6,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Apartment fire on third floor, flames visible from balcony. Residents evacuating, 2 people suffering from smoke inhalation.",
+    "latitude": 12.887191,
+    "longitude": 77.596207
+  },
+  {
+    "id": 7,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Wildfire spreading rapidly towards residential suburb due to high winds. Urgent containment needed.",
+    "latitude": 12.829561,
+    "longitude": 77.504251
+  },
+  {
+    "id": 8,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently.",
+    "latitude": 13.016565,
+    "longitude": 77.608082
+  },
+  {
+    "id": 9,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Vehicle pileup caught fire on national highway, two cars burning with people trapped.",
+    "latitude": 12.887732,
+    "longitude": 77.62138
+  },
+  {
+    "id": 10,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Electrical substation transformer caught fire, loud buzzing and thick smoke in residential area.",
+    "latitude": 13.064429,
+    "longitude": 77.44655
+  },
+  {
+    "id": 11,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Small dumpster fire in alleyway behind supermarket. No structures currently threatened.",
+    "latitude": 13.063346,
+    "longitude": 77.654042
+  },
+  {
+    "id": 12,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Dry grass fire in vacant plot near railway track, smoke blowing towards road.",
+    "latitude": 12.923675,
+    "longitude": 77.491244
+  },
+  {
+    "id": 13,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Car engine caught fire on roadside shoulder, driver is out safely, no injuries.",
+    "latitude": 13.108764,
+    "longitude": 77.545578
+  },
+  {
+    "id": 14,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Small smoke coming from air conditioning unit on second floor office.",
+    "latitude": 12.849424,
+    "longitude": 77.473615
+  },
+  {
+    "id": 15,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Rubbish pile burning near vacant construction site, smoke bothering nearby residents.",
+    "latitude": 13.075848,
+    "longitude": 77.625718
+  },
+  {
+    "id": 16,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Controlled agricultural burn producing slight smoke in rural boundary.",
+    "latitude": 13.063738,
+    "longitude": 77.66352
+  },
+  {
+    "id": 17,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Unattended small bonfire in public park, no immediate danger.",
+    "latitude": 12.982468,
+    "longitude": 77.736535
+  },
+  {
+    "id": 18,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Extinguished kitchen pan fire, caller requesting precautionary smoke inspection.",
+    "latitude": 12.93516,
+    "longitude": 77.610212
+  },
+  {
+    "id": 19,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Smoldering campfire remains found in picnic clearing.",
+    "latitude": 13.070421,
+    "longitude": 77.630156
+  },
+  {
+    "id": 20,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops.",
+    "latitude": 13.080112,
+    "longitude": 77.617806
+  },
+  {
+    "id": 21,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Reservoir dam overflow causing rapid surge, bridge washed away, several vehicles swept away with passengers.",
+    "latitude": 13.032972,
+    "longitude": 77.458347
+  },
+  {
+    "id": 22,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Catastrophic urban flash flooding, basement parking submerged with people trapped inside elevator.",
+    "latitude": 12.889969,
+    "longitude": 77.531416
+  },
+  {
+    "id": 23,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Severe storm surge breaking seawall, water rushing into coastal hospital ground floor.",
+    "latitude": 12.845538,
+    "longitude": 77.514437
+  },
+  {
+    "id": 24,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Heavy rain causing storm canal to overflow, water entering ground floor houses in Sector 4.",
+    "latitude": 12.8519,
+    "longitude": 77.527992
+  },
+  {
+    "id": 25,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Underpass completely flooded with 5 feet of water, two cars stuck with passengers waiting on roof.",
+    "latitude": 13.012305,
+    "longitude": 77.55405
+  },
+  {
+    "id": 26,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "River water level rising above danger mark, low-lying slums being evacuated.",
+    "latitude": 12.932654,
+    "longitude": 77.507452
+  },
+  {
+    "id": 27,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Main drainage choked, waist-deep water flooding commercial district streets.",
+    "latitude": 12.901693,
+    "longitude": 77.725596
+  },
+  {
+    "id": 28,
+    "incident_type": "flood",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Waterlogging on main avenue causing 2-hour traffic gridlock, water reaching knee height.",
+    "latitude": 13.016011,
+    "longitude": 77.627339
+  },
+  {
+    "id": 29,
+    "incident_type": "flood",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Storm drain overflowing onto pedestrian sidewalk and parking lot.",
+    "latitude": 12.872942,
+    "longitude": 77.663338
+  },
+  {
+    "id": 30,
+    "incident_type": "flood",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Basement of apartment complex experiencing water ingress, pumps required.",
+    "latitude": 12.870621,
+    "longitude": 77.558437
+  },
+  {
+    "id": 31,
+    "incident_type": "flood",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Road flooded after heavy downpour, passenger vehicles having difficulty crossing.",
+    "latitude": 13.118457,
+    "longitude": 77.6366
+  },
+  {
+    "id": 32,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Puddle accumulation on residential street curb, slow drainage.",
+    "latitude": 12.988685,
+    "longitude": 77.649984
+  },
+  {
+    "id": 33,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Minor gutter seepage in lane 5, no property damage.",
+    "latitude": 13.074456,
+    "longitude": 77.6774
+  },
+  {
+    "id": 34,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Surface water pooling near park entrance following light drizzle.",
+    "latitude": 12.890314,
+    "longitude": 77.45423
+  },
+  {
+    "id": 35,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Ammonia gas leak detected at cold storage facility, 15 workers unconscious and mass casualty alert sounded.",
+    "latitude": 12.916236,
+    "longitude": 77.524922
+  },
+  {
+    "id": 36,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris.",
+    "latitude": 12.884895,
+    "longitude": 77.727473
+  },
+  {
+    "id": 37,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Toxic chemical spill of chlorine gas, corrosive cloud spreading towards residential colony.",
+    "latitude": 13.08451,
+    "longitude": 77.539003
+  },
+  {
+    "id": 38,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Radiation warning alarm triggered in testing lab, immediate hazmat response required.",
+    "latitude": 13.018232,
+    "longitude": 77.56329
+  },
+  {
+    "id": 39,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Crane collapse at major construction site, operator injured and high-voltage power lines snapped.",
+    "latitude": 13.095964,
+    "longitude": 77.582256
+  },
+  {
+    "id": 40,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Corrosive acid tank valve leak in industrial zone, perimeter cordoned off.",
+    "latitude": 12.901064,
+    "longitude": 77.518588
+  },
+  {
+    "id": 41,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns.",
+    "latitude": 12.99001,
+    "longitude": 77.523422
+  },
+  {
+    "id": 42,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed.",
+    "latitude": 12.996976,
+    "longitude": 77.713947
+  },
+  {
+    "id": 43,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Machine malfunction at textile plant, one worker hand injury, first aid dispatched.",
+    "latitude": 12.94142,
+    "longitude": 77.510396
+  },
+  {
+    "id": 44,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Small oil spill in warehouse loading dock, slip hazard, containment kits deployed.",
+    "latitude": 13.120861,
+    "longitude": 77.597458
+  },
+  {
+    "id": 45,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B.",
+    "latitude": 12.848873,
+    "longitude": 77.458735
+  },
+  {
+    "id": 46,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Forklift collided with storage shelving, non-hazardous goods spilled across aisle.",
+    "latitude": 12.854495,
+    "longitude": 77.632834
+  },
+  {
+    "id": 47,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Precautionary fire alarm triggered in server room due to dust buildup.",
+    "latitude": 13.059224,
+    "longitude": 77.571248
+  },
+  {
+    "id": 48,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Minor coolant drip from CNC machine, maintenance team handling.",
+    "latitude": 12.840658,
+    "longitude": 77.559086
+  },
+  {
+    "id": 49,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Safety inspection protocol test run at logistics depot.",
+    "latitude": 13.120436,
+    "longitude": 77.603334
+  },
+  {
+    "id": 50,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Mass casualty collision: intercity bus overturned on highway ravine, over 30 passengers severely injured and trapped.",
+    "latitude": 13.112924,
+    "longitude": 77.702834
+  },
+  {
+    "id": 51,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard.",
+    "latitude": 12.825044,
+    "longitude": 77.660817
+  },
+  {
+    "id": 52,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage.",
+    "latitude": 13.026113,
+    "longitude": 77.605691
+  },
+  {
+    "id": 53,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "High-speed SUV rollover crash on expressway, 3 passengers unconscious and trapped inside vehicle.",
+    "latitude": 12.901648,
+    "longitude": 77.636889
+  },
+  {
+    "id": 54,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "School van collision with pickup truck, 4 children injured, immediate medical dispatch requested.",
+    "latitude": 12.855066,
+    "longitude": 77.57503
+  },
+  {
+    "id": 55,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Pedestrian struck by speeding vehicle at pedestrian crossing, severe head injuries.",
+    "latitude": 12.957717,
+    "longitude": 77.730745
+  },
+  {
+    "id": 56,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Motorcyclist struck by delivery truck, lying unresponsive on arterial ring road.",
+    "latitude": 13.084356,
+    "longitude": 77.523617
+  },
+  {
+    "id": 57,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Two-car collision at intersection, airbags deployed, drivers have minor cuts and shock.",
+    "latitude": 12.971776,
+    "longitude": 77.498196
+  },
+  {
+    "id": 58,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Fender bender between taxi and city bus blocking two lanes of traffic, no serious injuries.",
+    "latitude": 13.095388,
+    "longitude": 77.705756
+  },
+  {
+    "id": 59,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion.",
+    "latitude": 12.911133,
+    "longitude": 77.636285
+  },
+  {
+    "id": 60,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Delivery van rear-ended stationary car at red light, minor bumper damage and neck pain reported.",
+    "latitude": 13.004291,
+    "longitude": 77.490452
+  },
+  {
+    "id": 61,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Minor scratch collision in shopping mall parking lot, drivers arguing over insurance.",
+    "latitude": 13.050353,
+    "longitude": 77.606414
+  },
+  {
+    "id": 62,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Stationary vehicle tire puncture on highway shoulder, hazard lights on.",
+    "latitude": 13.055188,
+    "longitude": 77.603706
+  },
+  {
+    "id": 63,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Rear mirror collision in slow-moving traffic jam, no injuries.",
+    "latitude": 12.821772,
+    "longitude": 77.541847
+  },
+  {
+    "id": 64,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Cardiac arrest in public transit station, 55-year-old male unresponsive, bystander CPR in progress.",
+    "latitude": 12.827443,
+    "longitude": 77.72333
+  },
+  {
+    "id": 65,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Severe anaphylactic shock at restaurant, patient experiencing respiratory failure and swelling.",
+    "latitude": 13.085217,
+    "longitude": 77.6941
+  },
+  {
+    "id": 66,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Child drowning incident in municipal swimming pool, unconscious, not breathing, AED required immediately.",
+    "latitude": 12.913854,
+    "longitude": 77.461978
+  },
+  {
+    "id": 67,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis.",
+    "latitude": 13.085003,
+    "longitude": 77.728685
+  },
+  {
+    "id": 68,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Elderly woman showing stroke symptoms: facial droop, slurred speech, acute weakness on right side.",
+    "latitude": 12.847296,
+    "longitude": 77.590397
+  },
+  {
+    "id": 69,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly.",
+    "latitude": 12.842364,
+    "longitude": 77.672781
+  },
+  {
+    "id": 70,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture.",
+    "latitude": 13.05135,
+    "longitude": 77.483117
+  },
+  {
+    "id": 71,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Diabetic emergency, patient unresponsive with extremely low blood sugar reading.",
+    "latitude": 12.964185,
+    "longitude": 77.609541
+  },
+  {
+    "id": 72,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Adult with high fever, vomiting, and suspected acute dehydration requesting ambulance transport.",
+    "latitude": 12.901117,
+    "longitude": 77.70633
+  },
+  {
+    "id": 73,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Deep kitchen laceration on hand bleeding steadily, direct pressure applied, stitches required.",
+    "latitude": 12.948541,
+    "longitude": 77.508139
+  },
+  {
+    "id": 74,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Sprained ankle and contusions after slipping on wet steps, patient unable to bear weight.",
+    "latitude": 12.983389,
+    "longitude": 77.663579
+  },
+  {
+    "id": 75,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Moderate allergic reaction with hives and facial itching after bee sting, breathing normal.",
+    "latitude": 12.881945,
+    "longitude": 77.538115
+  },
+  {
+    "id": 76,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice.",
+    "latitude": 13.120145,
+    "longitude": 77.639563
+  },
+  {
+    "id": 77,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Routine non-emergency patient transport requested for scheduled dialysis appointment.",
+    "latitude": 12.95303,
+    "longitude": 77.599873
+  },
+  {
+    "id": 78,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Minor nosebleed that has subsided, caller asking for precautionary check.",
+    "latitude": 12.857901,
+    "longitude": 77.512009
+  },
+  {
+    "id": 79,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter.",
+    "latitude": 12.923026,
+    "longitude": 77.621093
+  },
+  {
+    "id": 80,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Active gas smell in dense residential neighborhood, multiple residents reporting nausea.",
+    "latitude": 12.890634,
+    "longitude": 77.510665
+  },
+  {
+    "id": 81,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle.",
+    "latitude": 12.842898,
+    "longitude": 77.633931
+  },
+  {
+    "id": 82,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Water main pipe burst flooding intersection and disrupting local drinking water supply.",
+    "latitude": 12.890283,
+    "longitude": 77.716226
+  },
+  {
+    "id": 83,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Traffic signal outage at four-way intersection causing chaotic vehicular gridlock.",
+    "latitude": 13.079491,
+    "longitude": 77.465857
+  },
+  {
+    "id": 84,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Large stray animal trapped in drainage culvert, animal rescue assistance requested.",
+    "latitude": 12.893001,
+    "longitude": 77.645293
+  },
+  {
+    "id": 85,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Noise complaint regarding loud late-night construction work.",
+    "latitude": 12.885871,
+    "longitude": 77.484294
+  },
+  {
+    "id": 86,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Streetlight pole flickering in alleyway behind library.",
+    "latitude": 13.102254,
+    "longitude": 77.615913
+  },
+  {
+    "id": 87,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Lost personal belongings reported near central bus terminal.",
+    "latitude": 12.963401,
+    "longitude": 77.679986
+  },
+  {
+    "id": 88,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Caller reports: School van collision with pickup truck, 4 children injured, immediate medical dispatch requested. Please send backup.",
+    "latitude": 12.810372,
+    "longitude": 77.56702
+  },
+  {
+    "id": 89,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Motorcyclist struck by delivery truck, lying unresponsive on arterial ring road. Emergency personnel dispatched.",
+    "latitude": 13.117135,
+    "longitude": 77.416268
+  },
+  {
+    "id": 90,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Caller reports: Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle. Please send backup.",
+    "latitude": 12.795845,
+    "longitude": 77.685885
+  },
+  {
+    "id": 91,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Unattended small bonfire in public park, no immediate danger. Situation escalating.",
+    "latitude": 12.847684,
+    "longitude": 77.574045
+  },
+  {
+    "id": 92,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: School van collision with pickup truck, 4 children injured, immediate medical dispatch requested. Responders on scene request assistance.",
+    "latitude": 12.956651,
+    "longitude": 77.744394
+  },
+  {
+    "id": 93,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Small smoke coming from air conditioning unit on second floor office.",
+    "latitude": 12.810763,
+    "longitude": 77.655458
+  },
+  {
+    "id": 94,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Caller reports: Elderly woman showing stroke symptoms: facial droop, slurred speech, acute weakness on right side. Please send backup.",
+    "latitude": 13.142147,
+    "longitude": 77.734078
+  },
+  {
+    "id": 95,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Main drainage choked, waist-deep water flooding commercial district streets. Emergency personnel dispatched.",
+    "latitude": 12.964143,
+    "longitude": 77.74046
+  },
+  {
+    "id": 96,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Wildfire spreading rapidly towards residential suburb due to high winds. Urgent containment needed. Perimeter needs to be secured.",
+    "latitude": 12.772462,
+    "longitude": 77.550769
+  },
+  {
+    "id": 97,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Perimeter needs to be secured.",
+    "latitude": 13.050237,
+    "longitude": 77.686802
+  },
+  {
+    "id": 98,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Sensor alert: Diabetic emergency, patient unresponsive with extremely low blood sugar reading. Automatic threshold exceeded.",
+    "latitude": 12.847559,
+    "longitude": 77.48168
+  },
+  {
+    "id": 99,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Electrical substation transformer caught fire, loud buzzing and thick smoke in residential area.",
+    "latitude": 12.795983,
+    "longitude": 77.520042
+  },
+  {
+    "id": 100,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Electrical substation transformer caught fire, loud buzzing and thick smoke in residential area. Emergency personnel dispatched.",
+    "latitude": 12.97274,
+    "longitude": 77.735688
+  },
+  {
+    "id": 101,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Heavy rain causing storm canal to overflow, water entering ground floor houses in Sector 4.",
+    "latitude": 12.803645,
+    "longitude": 77.46893
+  },
+  {
+    "id": 102,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice. Situation escalating.",
+    "latitude": 12.93311,
+    "longitude": 77.771238
+  },
+  {
+    "id": 103,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Deep kitchen laceration on hand bleeding steadily, direct pressure applied, stitches required. Dispatch immediately.",
+    "latitude": 13.019353,
+    "longitude": 77.56229
+  },
+  {
+    "id": 104,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Sprained ankle and contusions after slipping on wet steps, patient unable to bear weight. Responders on scene request assistance.",
+    "latitude": 12.853304,
+    "longitude": 77.681077
+  },
+  {
+    "id": 105,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Minor gutter seepage in lane 5, no property damage. Perimeter needs to be secured.",
+    "latitude": 12.823951,
+    "longitude": 77.6528
+  },
+  {
+    "id": 106,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Please send backup.",
+    "latitude": 12.775326,
+    "longitude": 77.643064
+  },
+  {
+    "id": 107,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Adult with high fever, vomiting, and suspected acute dehydration requesting ambulance transport. Please send backup.",
+    "latitude": 12.986654,
+    "longitude": 77.596954
+  },
+  {
+    "id": 108,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Catastrophic urban flash flooding, basement parking submerged with people trapped inside elevator. Please send backup.",
+    "latitude": 13.123308,
+    "longitude": 77.542411
+  },
+  {
+    "id": 109,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Main drainage choked, waist-deep water flooding commercial district streets.",
+    "latitude": 13.053016,
+    "longitude": 77.639271
+  },
+  {
+    "id": 110,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Urgent: Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle. Dispatch immediately.",
+    "latitude": 13.038745,
+    "longitude": 77.616441
+  },
+  {
+    "id": 111,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Sensor alert: Water main pipe burst flooding intersection and disrupting local drinking water supply. Automatic threshold exceeded.",
+    "latitude": 12.877386,
+    "longitude": 77.750485
+  },
+  {
+    "id": 112,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Responders on scene request assistance.",
+    "latitude": 12.884303,
+    "longitude": 77.478852
+  },
+  {
+    "id": 113,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Responders on scene request assistance.",
+    "latitude": 12.973764,
+    "longitude": 77.495049
+  },
+  {
+    "id": 114,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Apartment fire on third floor, flames visible from balcony. Residents evacuating, 2 people suffering from smoke inhalation. Perimeter needs to be secured.",
+    "latitude": 13.103339,
+    "longitude": 77.412235
+  },
+  {
+    "id": 115,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Responders on scene request assistance.",
+    "latitude": 12.836233,
+    "longitude": 77.571334
+  },
+  {
+    "id": 116,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Streetlight pole flickering in alleyway behind library.",
+    "latitude": 12.775468,
+    "longitude": 77.424698
+  },
+  {
+    "id": 117,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Noise complaint regarding loud late-night construction work.",
+    "latitude": 12.786011,
+    "longitude": 77.542286
+  },
+  {
+    "id": 118,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Perimeter needs to be secured.",
+    "latitude": 12.822578,
+    "longitude": 77.517903
+  },
+  {
+    "id": 119,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Situation escalating.",
+    "latitude": 13.044427,
+    "longitude": 77.661373
+  },
+  {
+    "id": 120,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Safety inspection protocol test run at logistics depot. Perimeter needs to be secured.",
+    "latitude": 13.161135,
+    "longitude": 77.694391
+  },
+  {
+    "id": 121,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Sensor alert: Puddle accumulation on residential street curb, slow drainage. Automatic threshold exceeded.",
+    "latitude": 13.124166,
+    "longitude": 77.404515
+  },
+  {
+    "id": 122,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Citizen emergency report: Forklift collided with storage shelving, non-hazardous goods spilled across aisle. Situation escalating.",
+    "latitude": 12.878322,
+    "longitude": 77.70955
+  },
+  {
+    "id": 123,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Urgent: Smoldering campfire remains found in picnic clearing. Dispatch immediately.",
+    "latitude": 13.115037,
+    "longitude": 77.483573
+  },
+  {
+    "id": 124,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Responders on scene request assistance.",
+    "latitude": 13.099815,
+    "longitude": 77.743129
+  },
+  {
+    "id": 125,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Puddle accumulation on residential street curb, slow drainage. Situation escalating.",
+    "latitude": 12.930986,
+    "longitude": 77.506041
+  },
+  {
+    "id": 126,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "911 Call log: Car engine caught fire on roadside shoulder, driver is out safely, no injuries. Caller very distressed.",
+    "latitude": 13.028193,
+    "longitude": 77.554471
+  },
+  {
+    "id": 127,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Urgent: Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Dispatch immediately.",
+    "latitude": 12.817737,
+    "longitude": 77.78276
+  },
+  {
+    "id": 128,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Urgent: River water level rising above danger mark, low-lying slums being evacuated. Dispatch immediately.",
+    "latitude": 12.814961,
+    "longitude": 77.568426
+  },
+  {
+    "id": 129,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Forklift collided with storage shelving, non-hazardous goods spilled across aisle.",
+    "latitude": 12.817858,
+    "longitude": 77.754402
+  },
+  {
+    "id": 130,
+    "incident_type": "flood",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Basement of apartment complex experiencing water ingress, pumps required. Dispatch immediately.",
+    "latitude": 13.055114,
+    "longitude": 77.395277
+  },
+  {
+    "id": 131,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "911 Call log: Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Caller very distressed.",
+    "latitude": 12.944119,
+    "longitude": 77.77415
+  },
+  {
+    "id": 132,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B. Please send backup.",
+    "latitude": 13.059502,
+    "longitude": 77.514729
+  },
+  {
+    "id": 133,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "911 Call log: Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed. Caller very distressed.",
+    "latitude": 12.93256,
+    "longitude": 77.512862
+  },
+  {
+    "id": 134,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Reservoir dam overflow causing rapid surge, bridge washed away, several vehicles swept away with passengers. Perimeter needs to be secured.",
+    "latitude": 13.037572,
+    "longitude": 77.546258
+  },
+  {
+    "id": 135,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "River water level rising above danger mark, low-lying slums being evacuated. Perimeter needs to be secured.",
+    "latitude": 12.990775,
+    "longitude": 77.394762
+  },
+  {
+    "id": 136,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Corrosive acid tank valve leak in industrial zone, perimeter cordoned off. Perimeter needs to be secured.",
+    "latitude": 13.085904,
+    "longitude": 77.637265
+  },
+  {
+    "id": 137,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Forklift collided with storage shelving, non-hazardous goods spilled across aisle. Emergency personnel dispatched.",
+    "latitude": 12.948464,
+    "longitude": 77.480081
+  },
+  {
+    "id": 138,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Sensor alert: Rear mirror collision in slow-moving traffic jam, no injuries. Automatic threshold exceeded.",
+    "latitude": 13.03514,
+    "longitude": 77.508115
+  },
+  {
+    "id": 139,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "911 Call log: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Caller very distressed.",
+    "latitude": 12.808955,
+    "longitude": 77.7754
+  },
+  {
+    "id": 140,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Field team update: Surface water pooling near park entrance following light drizzle. Responders on scene request assistance.",
+    "latitude": 12.861456,
+    "longitude": 77.474252
+  },
+  {
+    "id": 141,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Citizen emergency report: Massive explosion at chemical factory! Multiple workers trapped inside and flames spreading to adjacent units. Situation escalating.",
+    "latitude": 13.165174,
+    "longitude": 77.63911
+  },
+  {
+    "id": 142,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Small smoke coming from air conditioning unit on second floor office. Perimeter needs to be secured.",
+    "latitude": 13.126055,
+    "longitude": 77.624868
+  },
+  {
+    "id": 143,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Lost personal belongings reported near central bus terminal. Perimeter needs to be secured.",
+    "latitude": 12.969351,
+    "longitude": 77.492194
+  },
+  {
+    "id": 144,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Urgent: Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle. Dispatch immediately.",
+    "latitude": 13.128664,
+    "longitude": 77.738776
+  },
+  {
+    "id": 145,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Smoldering campfire remains found in picnic clearing. Situation escalating.",
+    "latitude": 12.841955,
+    "longitude": 77.777786
+  },
+  {
+    "id": 146,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Urgent: Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis. Dispatch immediately.",
+    "latitude": 12.994562,
+    "longitude": 77.761588
+  },
+  {
+    "id": 147,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Sensor alert: Smoldering campfire remains found in picnic clearing. Automatic threshold exceeded.",
+    "latitude": 13.092167,
+    "longitude": 77.661631
+  },
+  {
+    "id": 148,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Emergency personnel dispatched.",
+    "latitude": 13.016661,
+    "longitude": 77.68231
+  },
+  {
+    "id": 149,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis.",
+    "latitude": 12.949965,
+    "longitude": 77.458263
+  },
+  {
+    "id": 150,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Field team update: Stationary vehicle tire puncture on highway shoulder, hazard lights on. Responders on scene request assistance.",
+    "latitude": 13.072311,
+    "longitude": 77.730545
+  },
+  {
+    "id": 151,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Citizen emergency report: Radiation warning alarm triggered in testing lab, immediate hazmat response required. Situation escalating.",
+    "latitude": 12.881439,
+    "longitude": 77.425593
+  },
+  {
+    "id": 152,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: Corrosive acid tank valve leak in industrial zone, perimeter cordoned off. Responders on scene request assistance.",
+    "latitude": 12.905939,
+    "longitude": 77.751811
+  },
+  {
+    "id": 153,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Sensor alert: Dry grass fire in vacant plot near railway track, smoke blowing towards road. Automatic threshold exceeded.",
+    "latitude": 12.864105,
+    "longitude": 77.67218
+  },
+  {
+    "id": 154,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller reports: Noise complaint regarding loud late-night construction work. Please send backup.",
+    "latitude": 12.937547,
+    "longitude": 77.526953
+  },
+  {
+    "id": 155,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Delivery van rear-ended stationary car at red light, minor bumper damage and neck pain reported. Dispatch immediately.",
+    "latitude": 12.854334,
+    "longitude": 77.562657
+  },
+  {
+    "id": 156,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Adult with high fever, vomiting, and suspected acute dehydration requesting ambulance transport. Perimeter needs to be secured.",
+    "latitude": 12.962392,
+    "longitude": 77.771697
+  },
+  {
+    "id": 157,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed. Perimeter needs to be secured.",
+    "latitude": 12.986888,
+    "longitude": 77.688454
+  },
+  {
+    "id": 158,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice. Emergency personnel dispatched.",
+    "latitude": 12.859369,
+    "longitude": 77.568934
+  },
+  {
+    "id": 159,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "911 Call log: Industrial gas pipeline rupture with huge fireball and multiple injured workers trapped in plant area. Caller very distressed.",
+    "latitude": 13.039149,
+    "longitude": 77.713857
+  },
+  {
+    "id": 160,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Sensor alert: Main drainage choked, waist-deep water flooding commercial district streets. Automatic threshold exceeded.",
+    "latitude": 13.163889,
+    "longitude": 77.608249
+  },
+  {
+    "id": 161,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Urgent: Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage. Dispatch immediately.",
+    "latitude": 12.805179,
+    "longitude": 77.566045
+  },
+  {
+    "id": 162,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Fender bender between taxi and city bus blocking two lanes of traffic, no serious injuries. Dispatch immediately.",
+    "latitude": 12.875663,
+    "longitude": 77.525541
+  },
+  {
+    "id": 163,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "911 Call log: Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Caller very distressed.",
+    "latitude": 13.076092,
+    "longitude": 77.54625
+  },
+  {
+    "id": 164,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Caller reports: Pedestrian struck by speeding vehicle at pedestrian crossing, severe head injuries. Please send backup.",
+    "latitude": 12.959723,
+    "longitude": 77.69421
+  },
+  {
+    "id": 165,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Situation escalating.",
+    "latitude": 13.031658,
+    "longitude": 77.707093
+  },
+  {
+    "id": 166,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Urgent: Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Dispatch immediately.",
+    "latitude": 13.151445,
+    "longitude": 77.474344
+  },
+  {
+    "id": 167,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Sensor alert: Major warehouse fire with toxic fumes released, nearby school needing immediate evacuation. Automatic threshold exceeded.",
+    "latitude": 12.867018,
+    "longitude": 77.584024
+  },
+  {
+    "id": 168,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Unattended small bonfire in public park, no immediate danger. Emergency personnel dispatched.",
+    "latitude": 13.051386,
+    "longitude": 77.701359
+  },
+  {
+    "id": 169,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Sensor alert: Heavy rain causing storm canal to overflow, water entering ground floor houses in Sector 4. Automatic threshold exceeded.",
+    "latitude": 13.157488,
+    "longitude": 77.437839
+  },
+  {
+    "id": 170,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Severe fire outbreak in downtown commercial complex, heavy black smoke, structural collapse imminent. Perimeter needs to be secured.",
+    "latitude": 12.930262,
+    "longitude": 77.680606
+  },
+  {
+    "id": 171,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Citizen emergency report: Rubbish pile burning near vacant construction site, smoke bothering nearby residents. Situation escalating.",
+    "latitude": 12.812361,
+    "longitude": 77.703592
+  },
+  {
+    "id": 172,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Please send backup.",
+    "latitude": 13.090091,
+    "longitude": 77.620973
+  },
+  {
+    "id": 173,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently.",
+    "latitude": 12.942951,
+    "longitude": 77.542828
+  },
+  {
+    "id": 174,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Urgent: Child drowning incident in municipal swimming pool, unconscious, not breathing, AED required immediately. Dispatch immediately.",
+    "latitude": 13.11143,
+    "longitude": 77.723532
+  },
+  {
+    "id": 175,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "911 Call log: Smoldering campfire remains found in picnic clearing. Caller very distressed.",
+    "latitude": 13.025834,
+    "longitude": 77.726083
+  },
+  {
+    "id": 176,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Noise complaint regarding loud late-night construction work. Perimeter needs to be secured.",
+    "latitude": 12.842055,
+    "longitude": 77.603299
+  },
+  {
+    "id": 177,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Active gas smell in dense residential neighborhood, multiple residents reporting nausea.",
+    "latitude": 13.081457,
+    "longitude": 77.58055
+  },
+  {
+    "id": 178,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "911 Call log: Sprained ankle and contusions after slipping on wet steps, patient unable to bear weight. Caller very distressed.",
+    "latitude": 13.112285,
+    "longitude": 77.726892
+  },
+  {
+    "id": 179,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Car engine caught fire on roadside shoulder, driver is out safely, no injuries. Emergency personnel dispatched.",
+    "latitude": 12.869145,
+    "longitude": 77.580483
+  },
+  {
+    "id": 180,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Minor nosebleed that has subsided, caller asking for precautionary check. Perimeter needs to be secured.",
+    "latitude": 12.906159,
+    "longitude": 77.592323
+  },
+  {
+    "id": 181,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Emergency personnel dispatched.",
+    "latitude": 12.856448,
+    "longitude": 77.713733
+  },
+  {
+    "id": 182,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B. Responders on scene request assistance.",
+    "latitude": 12.993916,
+    "longitude": 77.601251
+  },
+  {
+    "id": 183,
+    "incident_type": "flood",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Citizen emergency report: Waterlogging on main avenue causing 2-hour traffic gridlock, water reaching knee height. Situation escalating.",
+    "latitude": 13.05963,
+    "longitude": 77.590031
+  },
+  {
+    "id": 184,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Surface water pooling near park entrance following light drizzle. Emergency personnel dispatched.",
+    "latitude": 13.029961,
+    "longitude": 77.590929
+  },
+  {
+    "id": 185,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Field team update: Massive explosion at chemical factory! Multiple workers trapped inside and flames spreading to adjacent units. Responders on scene request assistance.",
+    "latitude": 12.860239,
+    "longitude": 77.671315
+  },
+  {
+    "id": 186,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Emergency personnel dispatched.",
+    "latitude": 12.992989,
+    "longitude": 77.532103
+  },
+  {
+    "id": 187,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "911 Call log: Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Caller very distressed.",
+    "latitude": 13.052742,
+    "longitude": 77.502967
+  },
+  {
+    "id": 188,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris. Please send backup.",
+    "latitude": 13.060114,
+    "longitude": 77.520819
+  },
+  {
+    "id": 189,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Situation escalating.",
+    "latitude": 12.858154,
+    "longitude": 77.588279
+  },
+  {
+    "id": 190,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Sprained ankle and contusions after slipping on wet steps, patient unable to bear weight. Please send backup.",
+    "latitude": 13.104651,
+    "longitude": 77.513099
+  },
+  {
+    "id": 191,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Field team update: Precautionary fire alarm triggered in server room due to dust buildup. Responders on scene request assistance.",
+    "latitude": 12.777259,
+    "longitude": 77.608254
+  },
+  {
+    "id": 192,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Urgent: Ammonia gas leak detected at cold storage facility, 15 workers unconscious and mass casualty alert sounded. Dispatch immediately.",
+    "latitude": 12.992944,
+    "longitude": 77.673567
+  },
+  {
+    "id": 193,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Please send backup.",
+    "latitude": 13.120688,
+    "longitude": 77.624226
+  },
+  {
+    "id": 194,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Stationary vehicle tire puncture on highway shoulder, hazard lights on. Emergency personnel dispatched.",
+    "latitude": 12.907882,
+    "longitude": 77.780799
+  },
+  {
+    "id": 195,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Radiation warning alarm triggered in testing lab, immediate hazmat response required. Please send backup.",
+    "latitude": 13.100446,
+    "longitude": 77.554883
+  },
+  {
+    "id": 196,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Rubbish pile burning near vacant construction site, smoke bothering nearby residents. Dispatch immediately.",
+    "latitude": 12.832291,
+    "longitude": 77.719057
+  },
+  {
+    "id": 197,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Crane collapse at major construction site, operator injured and high-voltage power lines snapped. Situation escalating.",
+    "latitude": 12.818981,
+    "longitude": 77.700377
+  },
+  {
+    "id": 198,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Minor nosebleed that has subsided, caller asking for precautionary check. Situation escalating.",
+    "latitude": 13.081877,
+    "longitude": 77.546751
+  },
+  {
+    "id": 199,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Perimeter needs to be secured.",
+    "latitude": 12.893752,
+    "longitude": 77.643011
+  },
+  {
+    "id": 200,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller reports: Minor nosebleed that has subsided, caller asking for precautionary check. Please send backup.",
+    "latitude": 13.150636,
+    "longitude": 77.477715
+  },
+  {
+    "id": 201,
+    "incident_type": "flood",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Basement of apartment complex experiencing water ingress, pumps required. Please send backup.",
+    "latitude": 12.834423,
+    "longitude": 77.464125
+  },
+  {
+    "id": 202,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Dry grass fire in vacant plot near railway track, smoke blowing towards road. Dispatch immediately.",
+    "latitude": 12.935007,
+    "longitude": 77.670348
+  },
+  {
+    "id": 203,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Urgent: Stationary vehicle tire puncture on highway shoulder, hazard lights on. Dispatch immediately.",
+    "latitude": 12.86419,
+    "longitude": 77.677382
+  },
+  {
+    "id": 204,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller reports: Streetlight pole flickering in alleyway behind library. Please send backup.",
+    "latitude": 13.046554,
+    "longitude": 77.764164
+  },
+  {
+    "id": 205,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle. Situation escalating.",
+    "latitude": 12.941656,
+    "longitude": 77.612425
+  },
+  {
+    "id": 206,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Responders on scene request assistance.",
+    "latitude": 13.102252,
+    "longitude": 77.423164
+  },
+  {
+    "id": 207,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: River water level rising above danger mark, low-lying slums being evacuated. Responders on scene request assistance.",
+    "latitude": 12.947261,
+    "longitude": 77.582079
+  },
+  {
+    "id": 208,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed. Responders on scene request assistance.",
+    "latitude": 12.971789,
+    "longitude": 77.592118
+  },
+  {
+    "id": 209,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Rubbish pile burning near vacant construction site, smoke bothering nearby residents. Dispatch immediately.",
+    "latitude": 13.127369,
+    "longitude": 77.688414
+  },
+  {
+    "id": 210,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Urgent: Routine non-emergency patient transport requested for scheduled dialysis appointment. Dispatch immediately.",
+    "latitude": 12.808131,
+    "longitude": 77.779364
+  },
+  {
+    "id": 211,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Adult with high fever, vomiting, and suspected acute dehydration requesting ambulance transport. Responders on scene request assistance.",
+    "latitude": 13.002099,
+    "longitude": 77.699844
+  },
+  {
+    "id": 212,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Main drainage choked, waist-deep water flooding commercial district streets.",
+    "latitude": 13.032204,
+    "longitude": 77.761029
+  },
+  {
+    "id": 213,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Main drainage choked, waist-deep water flooding commercial district streets. Emergency personnel dispatched.",
+    "latitude": 13.159222,
+    "longitude": 77.582604
+  },
+  {
+    "id": 214,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "911 Call log: Pedestrian struck by speeding vehicle at pedestrian crossing, severe head injuries. Caller very distressed.",
+    "latitude": 13.039653,
+    "longitude": 77.737693
+  },
+  {
+    "id": 215,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Forklift collided with storage shelving, non-hazardous goods spilled across aisle. Emergency personnel dispatched.",
+    "latitude": 12.886887,
+    "longitude": 77.772677
+  },
+  {
+    "id": 216,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Elderly woman showing stroke symptoms: facial droop, slurred speech, acute weakness on right side. Emergency personnel dispatched.",
+    "latitude": 12.806824,
+    "longitude": 77.49556
+  },
+  {
+    "id": 217,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Smoldering campfire remains found in picnic clearing.",
+    "latitude": 13.101571,
+    "longitude": 77.39506
+  },
+  {
+    "id": 218,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Diabetic emergency, patient unresponsive with extremely low blood sugar reading. Perimeter needs to be secured.",
+    "latitude": 12.793282,
+    "longitude": 77.601976
+  },
+  {
+    "id": 219,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Routine non-emergency patient transport requested for scheduled dialysis appointment. Emergency personnel dispatched.",
+    "latitude": 13.075596,
+    "longitude": 77.476023
+  },
+  {
+    "id": 220,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Responders on scene request assistance.",
+    "latitude": 12.946846,
+    "longitude": 77.6739
+  },
+  {
+    "id": 221,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Controlled agricultural burn producing slight smoke in rural boundary. Situation escalating.",
+    "latitude": 13.055513,
+    "longitude": 77.5189
+  },
+  {
+    "id": 222,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Major warehouse fire with toxic fumes released, nearby school needing immediate evacuation. Perimeter needs to be secured.",
+    "latitude": 12.808884,
+    "longitude": 77.791503
+  },
+  {
+    "id": 223,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller reports: Smoldering campfire remains found in picnic clearing. Please send backup.",
+    "latitude": 13.030684,
+    "longitude": 77.456188
+  },
+  {
+    "id": 224,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Streetlight pole flickering in alleyway behind library.",
+    "latitude": 13.053765,
+    "longitude": 77.560796
+  },
+  {
+    "id": 225,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Stationary vehicle tire puncture on highway shoulder, hazard lights on. Situation escalating.",
+    "latitude": 12.954315,
+    "longitude": 77.452457
+  },
+  {
+    "id": 226,
+    "incident_type": "flood",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Storm drain overflowing onto pedestrian sidewalk and parking lot. Please send backup.",
+    "latitude": 12.882099,
+    "longitude": 77.710602
+  },
+  {
+    "id": 227,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Pedestrian struck by speeding vehicle at pedestrian crossing, severe head injuries.",
+    "latitude": 12.878469,
+    "longitude": 77.395626
+  },
+  {
+    "id": 228,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Sensor alert: Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed. Automatic threshold exceeded.",
+    "latitude": 12.950219,
+    "longitude": 77.588337
+  },
+  {
+    "id": 229,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Forklift collided with storage shelving, non-hazardous goods spilled across aisle. Emergency personnel dispatched.",
+    "latitude": 13.144741,
+    "longitude": 77.742441
+  },
+  {
+    "id": 230,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Noise complaint regarding loud late-night construction work. Perimeter needs to be secured.",
+    "latitude": 12.865025,
+    "longitude": 77.704818
+  },
+  {
+    "id": 231,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Emergency personnel dispatched.",
+    "latitude": 13.053691,
+    "longitude": 77.719164
+  },
+  {
+    "id": 232,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Sensor alert: Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage. Automatic threshold exceeded.",
+    "latitude": 12.969731,
+    "longitude": 77.409408
+  },
+  {
+    "id": 233,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Child drowning incident in municipal swimming pool, unconscious, not breathing, AED required immediately. Please send backup.",
+    "latitude": 13.121276,
+    "longitude": 77.570722
+  },
+  {
+    "id": 234,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Urgent: Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis. Dispatch immediately.",
+    "latitude": 13.060578,
+    "longitude": 77.558591
+  },
+  {
+    "id": 235,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Caller reports: Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Please send backup.",
+    "latitude": 12.959396,
+    "longitude": 77.782281
+  },
+  {
+    "id": 236,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Forklift collided with storage shelving, non-hazardous goods spilled across aisle. Please send backup.",
+    "latitude": 13.112306,
+    "longitude": 77.735537
+  },
+  {
+    "id": 237,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "911 Call log: Diabetic emergency, patient unresponsive with extremely low blood sugar reading. Caller very distressed.",
+    "latitude": 13.02232,
+    "longitude": 77.749575
+  },
+  {
+    "id": 238,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Urgent: Rear mirror collision in slow-moving traffic jam, no injuries. Dispatch immediately.",
+    "latitude": 13.018584,
+    "longitude": 77.488508
+  },
+  {
+    "id": 239,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Citizen emergency report: Traffic signal outage at four-way intersection causing chaotic vehicular gridlock. Situation escalating.",
+    "latitude": 13.070307,
+    "longitude": 77.568189
+  },
+  {
+    "id": 240,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Controlled agricultural burn producing slight smoke in rural boundary. Emergency personnel dispatched.",
+    "latitude": 12.838146,
+    "longitude": 77.514386
+  },
+  {
+    "id": 241,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "911 Call log: Massive explosion at chemical factory! Multiple workers trapped inside and flames spreading to adjacent units. Caller very distressed.",
+    "latitude": 13.090057,
+    "longitude": 77.511947
+  },
+  {
+    "id": 242,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Sensor alert: Minor coolant drip from CNC machine, maintenance team handling. Automatic threshold exceeded.",
+    "latitude": 12.869279,
+    "longitude": 77.559421
+  },
+  {
+    "id": 243,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Sensor alert: Water main pipe burst flooding intersection and disrupting local drinking water supply. Automatic threshold exceeded.",
+    "latitude": 12.841628,
+    "longitude": 77.638397
+  },
+  {
+    "id": 244,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Citizen emergency report: Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage. Situation escalating.",
+    "latitude": 12.970667,
+    "longitude": 77.627863
+  },
+  {
+    "id": 245,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Field team update: Minor gutter seepage in lane 5, no property damage. Responders on scene request assistance.",
+    "latitude": 12.955428,
+    "longitude": 77.661336
+  },
+  {
+    "id": 246,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion.",
+    "latitude": 12.83479,
+    "longitude": 77.571292
+  },
+  {
+    "id": 247,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Field team update: Safety inspection protocol test run at logistics depot. Responders on scene request assistance.",
+    "latitude": 13.027175,
+    "longitude": 77.564324
+  },
+  {
+    "id": 248,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Field team update: Radiation warning alarm triggered in testing lab, immediate hazmat response required. Responders on scene request assistance.",
+    "latitude": 12.851287,
+    "longitude": 77.548477
+  },
+  {
+    "id": 249,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Minor scratch collision in shopping mall parking lot, drivers arguing over insurance. Situation escalating.",
+    "latitude": 12.924146,
+    "longitude": 77.538184
+  },
+  {
+    "id": 250,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Urgent: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Dispatch immediately.",
+    "latitude": 13.162778,
+    "longitude": 77.657892
+  },
+  {
+    "id": 251,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Urgent: Ammonia gas leak detected at cold storage facility, 15 workers unconscious and mass casualty alert sounded. Dispatch immediately.",
+    "latitude": 13.135847,
+    "longitude": 77.692669
+  },
+  {
+    "id": 252,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "911 Call log: Corrosive acid tank valve leak in industrial zone, perimeter cordoned off. Caller very distressed.",
+    "latitude": 12.859202,
+    "longitude": 77.470653
+  },
+  {
+    "id": 253,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris. Please send backup.",
+    "latitude": 13.132961,
+    "longitude": 77.653136
+  },
+  {
+    "id": 254,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Urgent: Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed. Dispatch immediately.",
+    "latitude": 13.00343,
+    "longitude": 77.687544
+  },
+  {
+    "id": 255,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "911 Call log: Car engine caught fire on roadside shoulder, driver is out safely, no injuries. Caller very distressed.",
+    "latitude": 13.070592,
+    "longitude": 77.464856
+  },
+  {
+    "id": 256,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Catastrophic urban flash flooding, basement parking submerged with people trapped inside elevator.",
+    "latitude": 12.972318,
+    "longitude": 77.503611
+  },
+  {
+    "id": 257,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "River water level rising above danger mark, low-lying slums being evacuated. Emergency personnel dispatched.",
+    "latitude": 13.158554,
+    "longitude": 77.512657
+  },
+  {
+    "id": 258,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Machine malfunction at textile plant, one worker hand injury, first aid dispatched. Emergency personnel dispatched.",
+    "latitude": 13.156757,
+    "longitude": 77.450903
+  },
+  {
+    "id": 259,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Surface water pooling near park entrance following light drizzle. Perimeter needs to be secured.",
+    "latitude": 13.158508,
+    "longitude": 77.716435
+  },
+  {
+    "id": 260,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Precautionary fire alarm triggered in server room due to dust buildup. Perimeter needs to be secured.",
+    "latitude": 12.777167,
+    "longitude": 77.609229
+  },
+  {
+    "id": 261,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Responders on scene request assistance.",
+    "latitude": 13.005424,
+    "longitude": 77.723567
+  },
+  {
+    "id": 262,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Precautionary fire alarm triggered in server room due to dust buildup. Situation escalating.",
+    "latitude": 12.960191,
+    "longitude": 77.642419
+  },
+  {
+    "id": 263,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Situation escalating.",
+    "latitude": 13.030661,
+    "longitude": 77.648762
+  },
+  {
+    "id": 264,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Perimeter needs to be secured.",
+    "latitude": 12.81827,
+    "longitude": 77.412739
+  },
+  {
+    "id": 265,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Emergency personnel dispatched.",
+    "latitude": 12.818048,
+    "longitude": 77.48852
+  },
+  {
+    "id": 266,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Perimeter needs to be secured.",
+    "latitude": 12.953058,
+    "longitude": 77.662794
+  },
+  {
+    "id": 267,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Lost personal belongings reported near central bus terminal. Perimeter needs to be secured.",
+    "latitude": 13.006536,
+    "longitude": 77.68524
+  },
+  {
+    "id": 268,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "High-speed SUV rollover crash on expressway, 3 passengers unconscious and trapped inside vehicle. Emergency personnel dispatched.",
+    "latitude": 13.017861,
+    "longitude": 77.770221
+  },
+  {
+    "id": 269,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "911 Call log: Ammonia gas leak detected at cold storage facility, 15 workers unconscious and mass casualty alert sounded. Caller very distressed.",
+    "latitude": 12.858508,
+    "longitude": 77.572478
+  },
+  {
+    "id": 270,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller reports: Minor gutter seepage in lane 5, no property damage. Please send backup.",
+    "latitude": 13.163971,
+    "longitude": 77.541534
+  },
+  {
+    "id": 271,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Urgent: Active gas smell in dense residential neighborhood, multiple residents reporting nausea. Dispatch immediately.",
+    "latitude": 12.930856,
+    "longitude": 77.470523
+  },
+  {
+    "id": 272,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller reports: Smoldering campfire remains found in picnic clearing. Please send backup.",
+    "latitude": 13.036707,
+    "longitude": 77.651282
+  },
+  {
+    "id": 273,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Urgent: Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice. Dispatch immediately.",
+    "latitude": 13.086318,
+    "longitude": 77.492028
+  },
+  {
+    "id": 274,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Reservoir dam overflow causing rapid surge, bridge washed away, several vehicles swept away with passengers. Please send backup.",
+    "latitude": 13.103527,
+    "longitude": 77.616283
+  },
+  {
+    "id": 275,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Citizen emergency report: Deep kitchen laceration on hand bleeding steadily, direct pressure applied, stitches required. Situation escalating.",
+    "latitude": 12.903024,
+    "longitude": 77.453622
+  },
+  {
+    "id": 276,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Field team update: Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice. Responders on scene request assistance.",
+    "latitude": 13.114962,
+    "longitude": 77.452475
+  },
+  {
+    "id": 277,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Sensor alert: Catastrophic urban flash flooding, basement parking submerged with people trapped inside elevator. Automatic threshold exceeded.",
+    "latitude": 12.815571,
+    "longitude": 77.741179
+  },
+  {
+    "id": 278,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "911 Call log: River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops. Caller very distressed.",
+    "latitude": 13.087594,
+    "longitude": 77.489773
+  },
+  {
+    "id": 279,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Sensor alert: Machine malfunction at textile plant, one worker hand injury, first aid dispatched. Automatic threshold exceeded.",
+    "latitude": 12.877747,
+    "longitude": 77.445303
+  },
+  {
+    "id": 280,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Caller reports: High-speed SUV rollover crash on expressway, 3 passengers unconscious and trapped inside vehicle. Please send backup.",
+    "latitude": 12.962098,
+    "longitude": 77.705807
+  },
+  {
+    "id": 281,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Cardiac arrest in public transit station, 55-year-old male unresponsive, bystander CPR in progress. Emergency personnel dispatched.",
+    "latitude": 12.973135,
+    "longitude": 77.772766
+  },
+  {
+    "id": 282,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: Electrical substation transformer caught fire, loud buzzing and thick smoke in residential area. Responders on scene request assistance.",
+    "latitude": 12.954817,
+    "longitude": 77.78021
+  },
+  {
+    "id": 283,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Vehicle pileup caught fire on national highway, two cars burning with people trapped. Perimeter needs to be secured.",
+    "latitude": 12.942109,
+    "longitude": 77.437785
+  },
+  {
+    "id": 284,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller reports: Streetlight pole flickering in alleyway behind library. Please send backup.",
+    "latitude": 13.131307,
+    "longitude": 77.523445
+  },
+  {
+    "id": 285,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Sensor alert: River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops. Automatic threshold exceeded.",
+    "latitude": 12.881606,
+    "longitude": 77.647831
+  },
+  {
+    "id": 286,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Perimeter needs to be secured.",
+    "latitude": 13.169451,
+    "longitude": 77.606823
+  },
+  {
+    "id": 287,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Delivery van rear-ended stationary car at red light, minor bumper damage and neck pain reported. Please send backup.",
+    "latitude": 13.088838,
+    "longitude": 77.440366
+  },
+  {
+    "id": 288,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle.",
+    "latitude": 13.059936,
+    "longitude": 77.480609
+  },
+  {
+    "id": 289,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Fender bender between taxi and city bus blocking two lanes of traffic, no serious injuries. Perimeter needs to be secured.",
+    "latitude": 12.907173,
+    "longitude": 77.576
+  },
+  {
+    "id": 290,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "911 Call log: High-speed SUV rollover crash on expressway, 3 passengers unconscious and trapped inside vehicle. Caller very distressed.",
+    "latitude": 12.942306,
+    "longitude": 77.660643
+  },
+  {
+    "id": 291,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Precautionary fire alarm triggered in server room due to dust buildup. Emergency personnel dispatched.",
+    "latitude": 12.798453,
+    "longitude": 77.727309
+  },
+  {
+    "id": 292,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Small smoke coming from air conditioning unit on second floor office. Please send backup.",
+    "latitude": 13.069436,
+    "longitude": 77.543659
+  },
+  {
+    "id": 293,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops.",
+    "latitude": 12.996273,
+    "longitude": 77.662605
+  },
+  {
+    "id": 294,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Pedestrian struck by speeding vehicle at pedestrian crossing, severe head injuries. Perimeter needs to be secured.",
+    "latitude": 13.118837,
+    "longitude": 77.683024
+  },
+  {
+    "id": 295,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "911 Call log: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Caller very distressed.",
+    "latitude": 12.81304,
+    "longitude": 77.597565
+  },
+  {
+    "id": 296,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Citizen emergency report: Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Situation escalating.",
+    "latitude": 13.11051,
+    "longitude": 77.534646
+  },
+  {
+    "id": 297,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Caller reports: Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Please send backup.",
+    "latitude": 13.076642,
+    "longitude": 77.62424
+  },
+  {
+    "id": 298,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: High-speed SUV rollover crash on expressway, 3 passengers unconscious and trapped inside vehicle. Responders on scene request assistance.",
+    "latitude": 12.783181,
+    "longitude": 77.503908
+  },
+  {
+    "id": 299,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "911 Call log: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Caller very distressed.",
+    "latitude": 12.774042,
+    "longitude": 77.742545
+  },
+  {
+    "id": 300,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Moderate allergic reaction with hives and facial itching after bee sting, breathing normal. Please send backup.",
+    "latitude": 12.82835,
+    "longitude": 77.647869
+  },
+  {
+    "id": 301,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Massive explosion at chemical factory! Multiple workers trapped inside and flames spreading to adjacent units.",
+    "latitude": 12.857653,
+    "longitude": 77.562533
+  },
+  {
+    "id": 302,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "911 Call log: Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Caller very distressed.",
+    "latitude": 12.896255,
+    "longitude": 77.524353
+  },
+  {
+    "id": 303,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Adult with high fever, vomiting, and suspected acute dehydration requesting ambulance transport. Dispatch immediately.",
+    "latitude": 12.833832,
+    "longitude": 77.696374
+  },
+  {
+    "id": 304,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: Apartment fire on third floor, flames visible from balcony. Residents evacuating, 2 people suffering from smoke inhalation. Responders on scene request assistance.",
+    "latitude": 12.948845,
+    "longitude": 77.564206
+  },
+  {
+    "id": 305,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Routine non-emergency patient transport requested for scheduled dialysis appointment. Perimeter needs to be secured.",
+    "latitude": 12.880867,
+    "longitude": 77.696577
+  },
+  {
+    "id": 306,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Extinguished kitchen pan fire, caller requesting precautionary smoke inspection. Perimeter needs to be secured.",
+    "latitude": 12.815956,
+    "longitude": 77.665887
+  },
+  {
+    "id": 307,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Moderate allergic reaction with hives and facial itching after bee sting, breathing normal.",
+    "latitude": 13.038453,
+    "longitude": 77.412767
+  },
+  {
+    "id": 308,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Urgent: Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage. Dispatch immediately.",
+    "latitude": 12.774675,
+    "longitude": 77.515168
+  },
+  {
+    "id": 309,
+    "incident_type": "flood",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Storm drain overflowing onto pedestrian sidewalk and parking lot. Responders on scene request assistance.",
+    "latitude": 12.887379,
+    "longitude": 77.442594
+  },
+  {
+    "id": 310,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Rear mirror collision in slow-moving traffic jam, no injuries. Perimeter needs to be secured.",
+    "latitude": 12.841878,
+    "longitude": 77.546683
+  },
+  {
+    "id": 311,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Noise complaint regarding loud late-night construction work.",
+    "latitude": 12.995089,
+    "longitude": 77.661819
+  },
+  {
+    "id": 312,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Precautionary fire alarm triggered in server room due to dust buildup. Perimeter needs to be secured.",
+    "latitude": 13.116306,
+    "longitude": 77.411521
+  },
+  {
+    "id": 313,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Industrial gas pipeline rupture with huge fireball and multiple injured workers trapped in plant area. Please send backup.",
+    "latitude": 13.116444,
+    "longitude": 77.624904
+  },
+  {
+    "id": 314,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Moderate allergic reaction with hives and facial itching after bee sting, breathing normal. Perimeter needs to be secured.",
+    "latitude": 12.887406,
+    "longitude": 77.556613
+  },
+  {
+    "id": 315,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Emergency personnel dispatched.",
+    "latitude": 13.10441,
+    "longitude": 77.762508
+  },
+  {
+    "id": 316,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Small smoke coming from air conditioning unit on second floor office. Please send backup.",
+    "latitude": 12.868927,
+    "longitude": 77.630149
+  },
+  {
+    "id": 317,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Cardiac arrest in public transit station, 55-year-old male unresponsive, bystander CPR in progress. Perimeter needs to be secured.",
+    "latitude": 13.11981,
+    "longitude": 77.692922
+  },
+  {
+    "id": 318,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Sensor alert: Minor gutter seepage in lane 5, no property damage. Automatic threshold exceeded.",
+    "latitude": 12.802152,
+    "longitude": 77.64789
+  },
+  {
+    "id": 319,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "911 Call log: Severe anaphylactic shock at restaurant, patient experiencing respiratory failure and swelling. Caller very distressed.",
+    "latitude": 12.91204,
+    "longitude": 77.777889
+  },
+  {
+    "id": 320,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Situation escalating.",
+    "latitude": 12.812722,
+    "longitude": 77.496987
+  },
+  {
+    "id": 321,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Caller reports: Underpass completely flooded with 5 feet of water, two cars stuck with passengers waiting on roof. Please send backup.",
+    "latitude": 12.842458,
+    "longitude": 77.703739
+  },
+  {
+    "id": 322,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Stationary vehicle tire puncture on highway shoulder, hazard lights on. Emergency personnel dispatched.",
+    "latitude": 13.044053,
+    "longitude": 77.747419
+  },
+  {
+    "id": 323,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "911 Call log: Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle. Caller very distressed.",
+    "latitude": 13.117299,
+    "longitude": 77.645487
+  },
+  {
+    "id": 324,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Please send backup.",
+    "latitude": 12.959168,
+    "longitude": 77.647154
+  },
+  {
+    "id": 325,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "911 Call log: Ammonia gas leak detected at cold storage facility, 15 workers unconscious and mass casualty alert sounded. Caller very distressed.",
+    "latitude": 12.974535,
+    "longitude": 77.518763
+  },
+  {
+    "id": 326,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Two-car collision at intersection, airbags deployed, drivers have minor cuts and shock. Dispatch immediately.",
+    "latitude": 12.919095,
+    "longitude": 77.509431
+  },
+  {
+    "id": 327,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter.",
+    "latitude": 12.925393,
+    "longitude": 77.626732
+  },
+  {
+    "id": 328,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Vehicle pileup caught fire on national highway, two cars burning with people trapped. Situation escalating.",
+    "latitude": 12.900211,
+    "longitude": 77.584852
+  },
+  {
+    "id": 329,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops. Emergency personnel dispatched.",
+    "latitude": 12.813001,
+    "longitude": 77.754251
+  },
+  {
+    "id": 330,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Machine malfunction at textile plant, one worker hand injury, first aid dispatched.",
+    "latitude": 13.030051,
+    "longitude": 77.410257
+  },
+  {
+    "id": 331,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Streetlight pole flickering in alleyway behind library. Emergency personnel dispatched.",
+    "latitude": 12.981227,
+    "longitude": 77.638522
+  },
+  {
+    "id": 332,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Field team update: Minor coolant drip from CNC machine, maintenance team handling. Responders on scene request assistance.",
+    "latitude": 12.926567,
+    "longitude": 77.704386
+  },
+  {
+    "id": 333,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Dispatch immediately.",
+    "latitude": 13.087291,
+    "longitude": 77.653522
+  },
+  {
+    "id": 334,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Car engine caught fire on roadside shoulder, driver is out safely, no injuries. Please send backup.",
+    "latitude": 12.994785,
+    "longitude": 77.549226
+  },
+  {
+    "id": 335,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "911 Call log: Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris. Caller very distressed.",
+    "latitude": 12.804201,
+    "longitude": 77.660045
+  },
+  {
+    "id": 336,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Minor coolant drip from CNC machine, maintenance team handling. Perimeter needs to be secured.",
+    "latitude": 12.823181,
+    "longitude": 77.678134
+  },
+  {
+    "id": 337,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Car engine caught fire on roadside shoulder, driver is out safely, no injuries.",
+    "latitude": 12.922272,
+    "longitude": 77.711265
+  },
+  {
+    "id": 338,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops. Perimeter needs to be secured.",
+    "latitude": 12.974995,
+    "longitude": 77.401892
+  },
+  {
+    "id": 339,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Corrosive acid tank valve leak in industrial zone, perimeter cordoned off. Situation escalating.",
+    "latitude": 12.908293,
+    "longitude": 77.701062
+  },
+  {
+    "id": 340,
+    "incident_type": "flood",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Sensor alert: Storm drain overflowing onto pedestrian sidewalk and parking lot. Automatic threshold exceeded.",
+    "latitude": 12.833578,
+    "longitude": 77.512917
+  },
+  {
+    "id": 341,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "911 Call log: Controlled agricultural burn producing slight smoke in rural boundary. Caller very distressed.",
+    "latitude": 13.122157,
+    "longitude": 77.641813
+  },
+  {
+    "id": 342,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Sensor alert: Routine non-emergency patient transport requested for scheduled dialysis appointment. Automatic threshold exceeded.",
+    "latitude": 12.836499,
+    "longitude": 77.727138
+  },
+  {
+    "id": 343,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice. Emergency personnel dispatched.",
+    "latitude": 12.789077,
+    "longitude": 77.54032
+  },
+  {
+    "id": 344,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Field team update: Minor gutter seepage in lane 5, no property damage. Responders on scene request assistance.",
+    "latitude": 13.072556,
+    "longitude": 77.70812
+  },
+  {
+    "id": 345,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Surface water pooling near park entrance following light drizzle. Situation escalating.",
+    "latitude": 12.895387,
+    "longitude": 77.71805
+  },
+  {
+    "id": 346,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "911 Call log: Minor scratch collision in shopping mall parking lot, drivers arguing over insurance. Caller very distressed.",
+    "latitude": 13.042923,
+    "longitude": 77.622768
+  },
+  {
+    "id": 347,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Delivery van rear-ended stationary car at red light, minor bumper damage and neck pain reported. Responders on scene request assistance.",
+    "latitude": 13.08285,
+    "longitude": 77.595763
+  },
+  {
+    "id": 348,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: School van collision with pickup truck, 4 children injured, immediate medical dispatch requested. Situation escalating.",
+    "latitude": 13.092104,
+    "longitude": 77.449959
+  },
+  {
+    "id": 349,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Ammonia gas leak detected at cold storage facility, 15 workers unconscious and mass casualty alert sounded. Emergency personnel dispatched.",
+    "latitude": 13.121247,
+    "longitude": 77.616416
+  },
+  {
+    "id": 350,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Field team update: Controlled agricultural burn producing slight smoke in rural boundary. Responders on scene request assistance.",
+    "latitude": 12.80515,
+    "longitude": 77.458725
+  },
+  {
+    "id": 351,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Fender bender between taxi and city bus blocking two lanes of traffic, no serious injuries. Perimeter needs to be secured.",
+    "latitude": 12.808285,
+    "longitude": 77.758802
+  },
+  {
+    "id": 352,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Auto-rickshaw tipped on sharp turn, passenger has minor arm abrasion. Dispatch immediately.",
+    "latitude": 12.937559,
+    "longitude": 77.553182
+  },
+  {
+    "id": 353,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Precautionary fire alarm triggered in server room due to dust buildup. Perimeter needs to be secured.",
+    "latitude": 13.16941,
+    "longitude": 77.544565
+  },
+  {
+    "id": 354,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Severe fire outbreak in downtown commercial complex, heavy black smoke, structural collapse imminent. Please send backup.",
+    "latitude": 13.107271,
+    "longitude": 77.654584
+  },
+  {
+    "id": 355,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Urgent: Reservoir dam overflow causing rapid surge, bridge washed away, several vehicles swept away with passengers. Dispatch immediately.",
+    "latitude": 12.886352,
+    "longitude": 77.726505
+  },
+  {
+    "id": 356,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Noise complaint regarding loud late-night construction work. Emergency personnel dispatched.",
+    "latitude": 12.951041,
+    "longitude": 77.3967
+  },
+  {
+    "id": 357,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Small dumpster fire in alleyway behind supermarket. No structures currently threatened. Responders on scene request assistance.",
+    "latitude": 12.857862,
+    "longitude": 77.454408
+  },
+  {
+    "id": 358,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Minor nosebleed that has subsided, caller asking for precautionary check. Perimeter needs to be secured.",
+    "latitude": 12.816075,
+    "longitude": 77.509841
+  },
+  {
+    "id": 359,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Urgent: Crane collapse at major construction site, operator injured and high-voltage power lines snapped. Dispatch immediately.",
+    "latitude": 12.866976,
+    "longitude": 77.650181
+  },
+  {
+    "id": 360,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller reports: Routine non-emergency patient transport requested for scheduled dialysis appointment. Please send backup.",
+    "latitude": 12.815943,
+    "longitude": 77.756659
+  },
+  {
+    "id": 361,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Urgent: Minor nosebleed that has subsided, caller asking for precautionary check. Dispatch immediately.",
+    "latitude": 13.024382,
+    "longitude": 77.624619
+  },
+  {
+    "id": 362,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Field team update: Noise complaint regarding loud late-night construction work. Responders on scene request assistance.",
+    "latitude": 12.943296,
+    "longitude": 77.640524
+  },
+  {
+    "id": 363,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Surface water pooling near park entrance following light drizzle. Perimeter needs to be secured.",
+    "latitude": 12.846526,
+    "longitude": 77.661886
+  },
+  {
+    "id": 364,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Child drowning incident in municipal swimming pool, unconscious, not breathing, AED required immediately. Please send backup.",
+    "latitude": 13.152961,
+    "longitude": 77.612233
+  },
+  {
+    "id": 365,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Cardiac arrest in public transit station, 55-year-old male unresponsive, bystander CPR in progress. Perimeter needs to be secured.",
+    "latitude": 13.120933,
+    "longitude": 77.412014
+  },
+  {
+    "id": 366,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Field team update: Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard. Responders on scene request assistance.",
+    "latitude": 13.070527,
+    "longitude": 77.537438
+  },
+  {
+    "id": 367,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Citizen emergency report: Car engine caught fire on roadside shoulder, driver is out safely, no injuries. Situation escalating.",
+    "latitude": 13.064776,
+    "longitude": 77.645903
+  },
+  {
+    "id": 368,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Sensor alert: Sprained ankle and contusions after slipping on wet steps, patient unable to bear weight. Automatic threshold exceeded.",
+    "latitude": 12.789334,
+    "longitude": 77.613005
+  },
+  {
+    "id": 369,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Emergency personnel dispatched.",
+    "latitude": 13.163928,
+    "longitude": 77.586012
+  },
+  {
+    "id": 370,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Caller reports: Underpass completely flooded with 5 feet of water, two cars stuck with passengers waiting on roof. Please send backup.",
+    "latitude": 13.058018,
+    "longitude": 77.772042
+  },
+  {
+    "id": 371,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Situation escalating.",
+    "latitude": 12.789123,
+    "longitude": 77.474388
+  },
+  {
+    "id": 372,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Responders on scene request assistance.",
+    "latitude": 12.977753,
+    "longitude": 77.790249
+  },
+  {
+    "id": 373,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: Diabetic emergency, patient unresponsive with extremely low blood sugar reading. Responders on scene request assistance.",
+    "latitude": 12.786248,
+    "longitude": 77.65336
+  },
+  {
+    "id": 374,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Urgent: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Dispatch immediately.",
+    "latitude": 13.117919,
+    "longitude": 77.52737
+  },
+  {
+    "id": 375,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Extinguished kitchen pan fire, caller requesting precautionary smoke inspection. Perimeter needs to be secured.",
+    "latitude": 13.127395,
+    "longitude": 77.691923
+  },
+  {
+    "id": 376,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Sensor alert: Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard. Automatic threshold exceeded.",
+    "latitude": 12.970081,
+    "longitude": 77.593609
+  },
+  {
+    "id": 377,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Child drowning incident in municipal swimming pool, unconscious, not breathing, AED required immediately. Please send backup.",
+    "latitude": 13.062433,
+    "longitude": 77.426171
+  },
+  {
+    "id": 378,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice.",
+    "latitude": 12.889107,
+    "longitude": 77.435639
+  },
+  {
+    "id": 379,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B. Responders on scene request assistance.",
+    "latitude": 12.949966,
+    "longitude": 77.681665
+  },
+  {
+    "id": 380,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "911 Call log: Main drainage choked, waist-deep water flooding commercial district streets. Caller very distressed.",
+    "latitude": 12.950452,
+    "longitude": 77.685326
+  },
+  {
+    "id": 381,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Safety inspection protocol test run at logistics depot. Perimeter needs to be secured.",
+    "latitude": 12.881422,
+    "longitude": 77.786611
+  },
+  {
+    "id": 382,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Apartment fire on third floor, flames visible from balcony. Residents evacuating, 2 people suffering from smoke inhalation. Perimeter needs to be secured.",
+    "latitude": 12.916924,
+    "longitude": 77.715038
+  },
+  {
+    "id": 383,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Water main pipe burst flooding intersection and disrupting local drinking water supply. Dispatch immediately.",
+    "latitude": 12.828712,
+    "longitude": 77.637629
+  },
+  {
+    "id": 384,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Sensor alert: Two-car collision at intersection, airbags deployed, drivers have minor cuts and shock. Automatic threshold exceeded.",
+    "latitude": 12.798493,
+    "longitude": 77.706006
+  },
+  {
+    "id": 385,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Minor coolant drip from CNC machine, maintenance team handling. Perimeter needs to be secured.",
+    "latitude": 13.151387,
+    "longitude": 77.407554
+  },
+  {
+    "id": 386,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "911 Call log: Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Caller very distressed.",
+    "latitude": 12.920405,
+    "longitude": 77.699834
+  },
+  {
+    "id": 387,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Deep kitchen laceration on hand bleeding steadily, direct pressure applied, stitches required.",
+    "latitude": 12.91838,
+    "longitude": 77.520354
+  },
+  {
+    "id": 388,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris. Please send backup.",
+    "latitude": 12.781965,
+    "longitude": 77.469019
+  },
+  {
+    "id": 389,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis.",
+    "latitude": 12.818704,
+    "longitude": 77.704586
+  },
+  {
+    "id": 390,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Streetlight pole flickering in alleyway behind library. Situation escalating.",
+    "latitude": 13.170146,
+    "longitude": 77.508831
+  },
+  {
+    "id": 391,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller reports: Minor scratch collision in shopping mall parking lot, drivers arguing over insurance. Please send backup.",
+    "latitude": 12.825891,
+    "longitude": 77.424221
+  },
+  {
+    "id": 392,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Caller reports: Main drainage choked, waist-deep water flooding commercial district streets. Please send backup.",
+    "latitude": 13.095805,
+    "longitude": 77.781624
+  },
+  {
+    "id": 393,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B. Please send backup.",
+    "latitude": 12.991599,
+    "longitude": 77.510745
+  },
+  {
+    "id": 394,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Sensor alert: Corrosive acid tank valve leak in industrial zone, perimeter cordoned off. Automatic threshold exceeded.",
+    "latitude": 13.089079,
+    "longitude": 77.598102
+  },
+  {
+    "id": 395,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Sensor alert: Unattended small bonfire in public park, no immediate danger. Automatic threshold exceeded.",
+    "latitude": 12.866294,
+    "longitude": 77.592209
+  },
+  {
+    "id": 396,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "911 Call log: Safety inspection protocol test run at logistics depot. Caller very distressed.",
+    "latitude": 12.958562,
+    "longitude": 77.787805
+  },
+  {
+    "id": 397,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: River embankment breach! Flash flood submerging entire low-lying village, over 50 families stranded on rooftops. Please send backup.",
+    "latitude": 12.895316,
+    "longitude": 77.794438
+  },
+  {
+    "id": 398,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Rear mirror collision in slow-moving traffic jam, no injuries. Perimeter needs to be secured.",
+    "latitude": 13.079266,
+    "longitude": 77.723936
+  },
+  {
+    "id": 399,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "911 Call log: Dry grass fire in vacant plot near railway track, smoke blowing towards road. Caller very distressed.",
+    "latitude": 13.028535,
+    "longitude": 77.57459
+  },
+  {
+    "id": 400,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "911 Call log: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Caller very distressed.",
+    "latitude": 12.822934,
+    "longitude": 77.726221
+  },
+  {
+    "id": 401,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Sensor alert: Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Automatic threshold exceeded.",
+    "latitude": 12.944647,
+    "longitude": 77.758885
+  },
+  {
+    "id": 402,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Apartment fire on third floor, flames visible from balcony. Residents evacuating, 2 people suffering from smoke inhalation.",
+    "latitude": 12.832806,
+    "longitude": 77.460463
+  },
+  {
+    "id": 403,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "911 Call log: Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Caller very distressed.",
+    "latitude": 13.150593,
+    "longitude": 77.602159
+  },
+  {
+    "id": 404,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: Crane collapse at major construction site, operator injured and high-voltage power lines snapped. Responders on scene request assistance.",
+    "latitude": 12.850121,
+    "longitude": 77.777141
+  },
+  {
+    "id": 405,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Field team update: Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris. Responders on scene request assistance.",
+    "latitude": 13.017371,
+    "longitude": 77.431971
+  },
+  {
+    "id": 406,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Sensor alert: Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Automatic threshold exceeded.",
+    "latitude": 12.84008,
+    "longitude": 77.644392
+  },
+  {
+    "id": 407,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Urgent: Routine non-emergency patient transport requested for scheduled dialysis appointment. Dispatch immediately.",
+    "latitude": 13.101695,
+    "longitude": 77.405949
+  },
+  {
+    "id": 408,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: Electrical substation transformer caught fire, loud buzzing and thick smoke in residential area. Responders on scene request assistance.",
+    "latitude": 13.032052,
+    "longitude": 77.701384
+  },
+  {
+    "id": 409,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "High-speed SUV rollover crash on expressway, 3 passengers unconscious and trapped inside vehicle. Emergency personnel dispatched.",
+    "latitude": 13.127199,
+    "longitude": 77.612831
+  },
+  {
+    "id": 410,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Active gas smell in dense residential neighborhood, multiple residents reporting nausea. Emergency personnel dispatched.",
+    "latitude": 12.869551,
+    "longitude": 77.71754
+  },
+  {
+    "id": 411,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard. Emergency personnel dispatched.",
+    "latitude": 12.800789,
+    "longitude": 77.418565
+  },
+  {
+    "id": 412,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Delivery van rear-ended stationary car at red light, minor bumper damage and neck pain reported. Emergency personnel dispatched.",
+    "latitude": 12.957377,
+    "longitude": 77.530677
+  },
+  {
+    "id": 413,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "911 Call log: Catastrophic urban flash flooding, basement parking submerged with people trapped inside elevator. Caller very distressed.",
+    "latitude": 13.06528,
+    "longitude": 77.738911
+  },
+  {
+    "id": 414,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "911 Call log: Mass casualty collision: intercity bus overturned on highway ravine, over 30 passengers severely injured and trapped. Caller very distressed.",
+    "latitude": 12.977592,
+    "longitude": 77.437074
+  },
+  {
+    "id": 415,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller reports: Minor gutter seepage in lane 5, no property damage. Please send backup.",
+    "latitude": 12.878589,
+    "longitude": 77.493768
+  },
+  {
+    "id": 416,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Field team update: Controlled agricultural burn producing slight smoke in rural boundary. Responders on scene request assistance.",
+    "latitude": 13.149754,
+    "longitude": 77.740266
+  },
+  {
+    "id": 417,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Sensor alert: School van collision with pickup truck, 4 children injured, immediate medical dispatch requested. Automatic threshold exceeded.",
+    "latitude": 13.096991,
+    "longitude": 77.768101
+  },
+  {
+    "id": 418,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Sensor alert: Small oil spill in warehouse loading dock, slip hazard, containment kits deployed. Automatic threshold exceeded.",
+    "latitude": 12.970906,
+    "longitude": 77.60049
+  },
+  {
+    "id": 419,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Stationary vehicle tire puncture on highway shoulder, hazard lights on. Emergency personnel dispatched.",
+    "latitude": 12.780871,
+    "longitude": 77.772693
+  },
+  {
+    "id": 420,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Citizen emergency report: Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis. Situation escalating.",
+    "latitude": 12.857658,
+    "longitude": 77.535758
+  },
+  {
+    "id": 421,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Restaurant kitchen fire spreading to roof ventilation. Staff evacuated, fire brigade requested urgently. Emergency personnel dispatched.",
+    "latitude": 13.010608,
+    "longitude": 77.73174
+  },
+  {
+    "id": 422,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Traffic signal outage at four-way intersection causing chaotic vehicular gridlock. Responders on scene request assistance.",
+    "latitude": 12.986276,
+    "longitude": 77.733469
+  },
+  {
+    "id": 423,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: School van collision with pickup truck, 4 children injured, immediate medical dispatch requested. Responders on scene request assistance.",
+    "latitude": 13.062603,
+    "longitude": 77.700143
+  },
+  {
+    "id": 424,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Precautionary fire alarm triggered in server room due to dust buildup. Perimeter needs to be secured.",
+    "latitude": 12.792063,
+    "longitude": 77.619327
+  },
+  {
+    "id": 425,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Field team update: Safety inspection protocol test run at logistics depot. Responders on scene request assistance.",
+    "latitude": 12.801013,
+    "longitude": 77.596302
+  },
+  {
+    "id": 426,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Caller reports: Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Please send backup.",
+    "latitude": 12.823065,
+    "longitude": 77.433273
+  },
+  {
+    "id": 427,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Minor coolant drip from CNC machine, maintenance team handling.",
+    "latitude": 13.147179,
+    "longitude": 77.696586
+  },
+  {
+    "id": 428,
+    "incident_type": "flood",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Road flooded after heavy downpour, passenger vehicles having difficulty crossing.",
+    "latitude": 12.787702,
+    "longitude": 77.410166
+  },
+  {
+    "id": 429,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Streetlight pole flickering in alleyway behind library. Emergency personnel dispatched.",
+    "latitude": 12.979333,
+    "longitude": 77.454176
+  },
+  {
+    "id": 430,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "911 Call log: Severe anaphylactic shock at restaurant, patient experiencing respiratory failure and swelling. Caller very distressed.",
+    "latitude": 13.144147,
+    "longitude": 77.522012
+  },
+  {
+    "id": 431,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Field team update: Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage. Responders on scene request assistance.",
+    "latitude": 13.00909,
+    "longitude": 77.597526
+  },
+  {
+    "id": 432,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Field team update: Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis. Responders on scene request assistance.",
+    "latitude": 12.961557,
+    "longitude": 77.401255
+  },
+  {
+    "id": 433,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Machine malfunction at textile plant, one worker hand injury, first aid dispatched. Perimeter needs to be secured.",
+    "latitude": 13.005081,
+    "longitude": 77.713302
+  },
+  {
+    "id": 434,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Urgent: Lost personal belongings reported near central bus terminal. Dispatch immediately.",
+    "latitude": 13.010364,
+    "longitude": 77.500812
+  },
+  {
+    "id": 435,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Large ancient oak tree fallen across busy roadway, crushing power lines and parked vehicle. Situation escalating.",
+    "latitude": 13.06016,
+    "longitude": 77.628009
+  },
+  {
+    "id": 436,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Sensor alert: Main drainage choked, waist-deep water flooding commercial district streets. Automatic threshold exceeded.",
+    "latitude": 13.100265,
+    "longitude": 77.491479
+  },
+  {
+    "id": 437,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Citizen emergency report: Adult with high fever, vomiting, and suspected acute dehydration requesting ambulance transport. Situation escalating.",
+    "latitude": 12.779175,
+    "longitude": 77.520077
+  },
+  {
+    "id": 438,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Citizen emergency report: Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Situation escalating.",
+    "latitude": 12.935751,
+    "longitude": 77.704589
+  },
+  {
+    "id": 439,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Urgent: Rear mirror collision in slow-moving traffic jam, no injuries. Dispatch immediately.",
+    "latitude": 13.05391,
+    "longitude": 77.602073
+  },
+  {
+    "id": 440,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Emergency personnel dispatched.",
+    "latitude": 12.981791,
+    "longitude": 77.520101
+  },
+  {
+    "id": 441,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Main drainage choked, waist-deep water flooding commercial district streets.",
+    "latitude": 12.908531,
+    "longitude": 77.536315
+  },
+  {
+    "id": 442,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Responders on scene request assistance.",
+    "latitude": 13.015631,
+    "longitude": 77.471506
+  },
+  {
+    "id": 443,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Minor gutter seepage in lane 5, no property damage.",
+    "latitude": 12.891,
+    "longitude": 77.771194
+  },
+  {
+    "id": 444,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Situation escalating.",
+    "latitude": 13.047696,
+    "longitude": 77.590201
+  },
+  {
+    "id": 445,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Stationary vehicle tire puncture on highway shoulder, hazard lights on.",
+    "latitude": 13.14508,
+    "longitude": 77.712762
+  },
+  {
+    "id": 446,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Toxic chemical spill of chlorine gas, corrosive cloud spreading towards residential colony. Please send backup.",
+    "latitude": 13.000991,
+    "longitude": 77.611876
+  },
+  {
+    "id": 447,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Sensor alert: Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard. Automatic threshold exceeded.",
+    "latitude": 12.887781,
+    "longitude": 77.509652
+  },
+  {
+    "id": 448,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "911 Call log: Noise complaint regarding loud late-night construction work. Caller very distressed.",
+    "latitude": 13.141204,
+    "longitude": 77.656989
+  },
+  {
+    "id": 449,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Minor scratch collision in shopping mall parking lot, drivers arguing over insurance. Situation escalating.",
+    "latitude": 13.102781,
+    "longitude": 77.503053
+  },
+  {
+    "id": 450,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Sensor alert: Fall from height in residence, 40-year-old with suspected spinal trauma and compound fracture. Automatic threshold exceeded.",
+    "latitude": 12.815291,
+    "longitude": 77.690956
+  },
+  {
+    "id": 451,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Urgent: Puddle accumulation on residential street curb, slow drainage. Dispatch immediately.",
+    "latitude": 13.039534,
+    "longitude": 77.607017
+  },
+  {
+    "id": 452,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "Urgent: Suspicious unattended duffel bag with exposed wiring near subway entrance ticket counter. Dispatch immediately.",
+    "latitude": 12.811679,
+    "longitude": 77.526717
+  },
+  {
+    "id": 453,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Sensor alert: Minor scratch collision in shopping mall parking lot, drivers arguing over insurance. Automatic threshold exceeded.",
+    "latitude": 12.773673,
+    "longitude": 77.614741
+  },
+  {
+    "id": 454,
+    "incident_type": "flood",
+    "severity": "high",
+    "priority": 2,
+    "description": "Main drainage choked, waist-deep water flooding commercial district streets. Emergency personnel dispatched.",
+    "latitude": 12.962579,
+    "longitude": 77.474382
+  },
+  {
+    "id": 455,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Field team update: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Responders on scene request assistance.",
+    "latitude": 13.029959,
+    "longitude": 77.757775
+  },
+  {
+    "id": 456,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Citizen emergency report: Rubbish pile burning near vacant construction site, smoke bothering nearby residents. Situation escalating.",
+    "latitude": 12.985661,
+    "longitude": 77.683847
+  },
+  {
+    "id": 457,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Wildfire spreading rapidly towards residential suburb due to high winds. Urgent containment needed. Perimeter needs to be secured.",
+    "latitude": 13.124498,
+    "longitude": 77.464915
+  },
+  {
+    "id": 458,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Vehicle pileup caught fire on national highway, two cars burning with people trapped. Emergency personnel dispatched.",
+    "latitude": 12.846125,
+    "longitude": 77.694201
+  },
+  {
+    "id": 459,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Urgent: Crane collapse at major construction site, operator injured and high-voltage power lines snapped. Dispatch immediately.",
+    "latitude": 12.890957,
+    "longitude": 77.635713
+  },
+  {
+    "id": 460,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B. Emergency personnel dispatched.",
+    "latitude": 13.16724,
+    "longitude": 77.61192
+  },
+  {
+    "id": 461,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Minor scratch collision in shopping mall parking lot, drivers arguing over insurance.",
+    "latitude": 12.958808,
+    "longitude": 77.471725
+  },
+  {
+    "id": 462,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Sensor alert: Extinguished kitchen pan fire, caller requesting precautionary smoke inspection. Automatic threshold exceeded.",
+    "latitude": 13.064048,
+    "longitude": 77.653914
+  },
+  {
+    "id": 463,
+    "incident_type": "other",
+    "severity": "low",
+    "priority": 4,
+    "description": "Urgent: Noise complaint regarding loud late-night construction work. Dispatch immediately.",
+    "latitude": 13.066247,
+    "longitude": 77.710907
+  },
+  {
+    "id": 464,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Sensor alert: Deep kitchen laceration on hand bleeding steadily, direct pressure applied, stitches required. Automatic threshold exceeded.",
+    "latitude": 13.015982,
+    "longitude": 77.65009
+  },
+  {
+    "id": 465,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard.",
+    "latitude": 12.902771,
+    "longitude": 77.554933
+  },
+  {
+    "id": 466,
+    "incident_type": "fire",
+    "severity": "low",
+    "priority": 4,
+    "description": "Sensor alert: Unattended small bonfire in public park, no immediate danger. Automatic threshold exceeded.",
+    "latitude": 12.962582,
+    "longitude": 77.76893
+  },
+  {
+    "id": 467,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Severe fire outbreak in downtown commercial complex, heavy black smoke, structural collapse imminent. Perimeter needs to be secured.",
+    "latitude": 12.865809,
+    "longitude": 77.696103
+  },
+  {
+    "id": 468,
+    "incident_type": "industrial_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Electrical spark panel tripping repeatedly with burning plastic odor in factory unit B. Dispatch immediately.",
+    "latitude": 12.876221,
+    "longitude": 77.538421
+  },
+  {
+    "id": 469,
+    "incident_type": "flood",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller reports: Puddle accumulation on residential street curb, slow drainage. Please send backup.",
+    "latitude": 12.957758,
+    "longitude": 77.458487
+  },
+  {
+    "id": 470,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Field team update: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Responders on scene request assistance.",
+    "latitude": 13.047716,
+    "longitude": 77.650085
+  },
+  {
+    "id": 471,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Conveyor belt failure in steel mill causing molten metal spill, three workers suffered burns. Situation escalating.",
+    "latitude": 12.859251,
+    "longitude": 77.448028
+  },
+  {
+    "id": 472,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "911 Call log: Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Caller very distressed.",
+    "latitude": 12.937938,
+    "longitude": 77.614294
+  },
+  {
+    "id": 473,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Rear mirror collision in slow-moving traffic jam, no injuries. Situation escalating.",
+    "latitude": 13.076344,
+    "longitude": 77.666737
+  },
+  {
+    "id": 474,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice.",
+    "latitude": 12.950299,
+    "longitude": 77.676106
+  },
+  {
+    "id": 475,
+    "incident_type": "fire",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Caller reports: Rubbish pile burning near vacant construction site, smoke bothering nearby residents. Please send backup.",
+    "latitude": 12.796303,
+    "longitude": 77.61366
+  },
+  {
+    "id": 476,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Severe anaphylactic shock at restaurant, patient experiencing respiratory failure and swelling.",
+    "latitude": 12.831541,
+    "longitude": 77.525847
+  },
+  {
+    "id": 477,
+    "incident_type": "medical",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Multiple people collapsed at outdoor concert due to suspected heat stroke and dehydration crisis. Please send backup.",
+    "latitude": 13.043718,
+    "longitude": 77.681367
+  },
+  {
+    "id": 478,
+    "incident_type": "road_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Minor scratch collision in shopping mall parking lot, drivers arguing over insurance.",
+    "latitude": 12.949793,
+    "longitude": 77.416854
+  },
+  {
+    "id": 479,
+    "incident_type": "flood",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Severe storm surge breaking seawall, water rushing into coastal hospital ground floor. Emergency personnel dispatched.",
+    "latitude": 12.997164,
+    "longitude": 77.618119
+  },
+  {
+    "id": 480,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Traffic signal outage at four-way intersection causing chaotic vehicular gridlock. Dispatch immediately.",
+    "latitude": 12.929979,
+    "longitude": 77.721181
+  },
+  {
+    "id": 481,
+    "incident_type": "flood",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Urgent: Waterlogging on main avenue causing 2-hour traffic gridlock, water reaching knee height. Dispatch immediately.",
+    "latitude": 12.941079,
+    "longitude": 77.674754
+  },
+  {
+    "id": 482,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Caller reports: Elderly woman showing stroke symptoms: facial droop, slurred speech, acute weakness on right side. Please send backup.",
+    "latitude": 13.166055,
+    "longitude": 77.583428
+  },
+  {
+    "id": 483,
+    "incident_type": "industrial_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Sensor alert: Worker fell from 30ft scaffolding onto metal beams, severe trauma, rescue team needed. Automatic threshold exceeded.",
+    "latitude": 13.079189,
+    "longitude": 77.700931
+  },
+  {
+    "id": 484,
+    "incident_type": "other",
+    "severity": "high",
+    "priority": 2,
+    "description": "911 Call log: Active gas smell in dense residential neighborhood, multiple residents reporting nausea. Caller very distressed.",
+    "latitude": 13.168743,
+    "longitude": 77.547592
+  },
+  {
+    "id": 485,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Multi-vehicle pileup involving oil tanker and 8 passenger cars, tanker leaking flammable fuel with fire hazard. Please send backup.",
+    "latitude": 13.044692,
+    "longitude": 77.659317
+  },
+  {
+    "id": 486,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "911 Call log: Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Caller very distressed.",
+    "latitude": 12.819053,
+    "longitude": 77.791739
+  },
+  {
+    "id": 487,
+    "incident_type": "road_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Sensor alert: Head-on collision between passenger bus and truck, multiple fatalities and people pinned inside wreckage. Automatic threshold exceeded.",
+    "latitude": 13.062743,
+    "longitude": 77.483676
+  },
+  {
+    "id": 488,
+    "incident_type": "fire",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Field team update: Massive explosion at chemical factory! Multiple workers trapped inside and flames spreading to adjacent units. Responders on scene request assistance.",
+    "latitude": 12.956802,
+    "longitude": 77.682238
+  },
+  {
+    "id": 489,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Motorcyclist struck by delivery truck, lying unresponsive on arterial ring road. Situation escalating.",
+    "latitude": 12.870605,
+    "longitude": 77.533064
+  },
+  {
+    "id": 490,
+    "incident_type": "industrial_accident",
+    "severity": "critical",
+    "priority": 1,
+    "description": "Caller reports: Boiler blast at manufacturing unit, roof collapsed with multiple workers buried under debris. Please send backup.",
+    "latitude": 12.784487,
+    "longitude": 77.658679
+  },
+  {
+    "id": 491,
+    "incident_type": "medical",
+    "severity": "low",
+    "priority": 4,
+    "description": "Citizen emergency report: Caller feeling mild dizziness after missing lunch, asking for non-emergency medical advice. Situation escalating.",
+    "latitude": 12.854033,
+    "longitude": 77.434959
+  },
+  {
+    "id": 492,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Urgent: Vehicle pileup caught fire on national highway, two cars burning with people trapped. Dispatch immediately.",
+    "latitude": 12.869494,
+    "longitude": 77.412295
+  },
+  {
+    "id": 493,
+    "incident_type": "road_accident",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Fender bender between taxi and city bus blocking two lanes of traffic, no serious injuries.",
+    "latitude": 12.858508,
+    "longitude": 77.740092
+  },
+  {
+    "id": 494,
+    "incident_type": "fire",
+    "severity": "high",
+    "priority": 2,
+    "description": "Wildfire spreading rapidly towards residential suburb due to high winds. Urgent containment needed.",
+    "latitude": 13.168993,
+    "longitude": 77.488265
+  },
+  {
+    "id": 495,
+    "incident_type": "medical",
+    "severity": "medium",
+    "priority": 3,
+    "description": "911 Call log: Sprained ankle and contusions after slipping on wet steps, patient unable to bear weight. Caller very distressed.",
+    "latitude": 12.866362,
+    "longitude": 77.745103
+  },
+  {
+    "id": 496,
+    "incident_type": "other",
+    "severity": "medium",
+    "priority": 3,
+    "description": "Citizen emergency report: Large stray animal trapped in drainage culvert, animal rescue assistance requested. Situation escalating.",
+    "latitude": 12.937024,
+    "longitude": 77.504662
+  },
+  {
+    "id": 497,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Severe asthma attack in residential home, inhaler ineffective, oxygen saturation dropping rapidly. Perimeter needs to be secured.",
+    "latitude": 12.99394,
+    "longitude": 77.413354
+  },
+  {
+    "id": 498,
+    "incident_type": "industrial_accident",
+    "severity": "low",
+    "priority": 4,
+    "description": "Safety inspection protocol test run at logistics depot. Perimeter needs to be secured.",
+    "latitude": 13.085922,
+    "longitude": 77.522094
+  },
+  {
+    "id": 499,
+    "incident_type": "road_accident",
+    "severity": "high",
+    "priority": 2,
+    "description": "Sensor alert: Motorcyclist struck by delivery truck, lying unresponsive on arterial ring road. Automatic threshold exceeded.",
+    "latitude": 12.891555,
+    "longitude": 77.468152
+  },
+  {
+    "id": 500,
+    "incident_type": "medical",
+    "severity": "high",
+    "priority": 2,
+    "description": "Citizen emergency report: Diabetic emergency, patient unresponsive with extremely low blood sugar reading. Situation escalating.",
+    "latitude": 13.111336,
+    "longitude": 77.514895
+  }
+]
