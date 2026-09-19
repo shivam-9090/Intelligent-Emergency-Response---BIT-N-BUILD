@@ -2,6 +2,26 @@ import React, { useState, useRef } from "react";
 import { classifyText, createIncident, analyzeIncidentImage } from "../api";
 import { Sparkles, X, AlertCircle, Camera, CheckCircle2, Trash2, Zap } from "lucide-react";
 import type { Incident, ImageAnalysisResponse } from "../types";
+import { Button } from "./ui/button";
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+} from "./ui/field";
+import { Input } from "./ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { Textarea } from "./ui/textarea";
 
 interface QuickIntakeModalProps {
   isOpen: boolean;
@@ -100,287 +120,315 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
       setError("Title and description are required.");
       return;
     }
-    setError(null);
+
     setIsSubmitting(true);
+    setError(null);
+
     try {
-      const inc = await createIncident({
+      const newInc = await createIncident({
         title,
         description,
         source: "citizen_report",
         incident_type: incidentType,
-        latitude: parseFloat(latitude) || 12.9716,
-        longitude: parseFloat(longitude) || 77.5946,
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
         address,
       });
-      onIncidentCreated(inc);
+
+      onIncidentCreated(newInc);
       onClose();
     } catch (err: any) {
-      setError(err.message || "Failed to create incident");
+      setError(err.message || "Failed to submit emergency incident.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <div className="bg-slate-900 border border-slate-700 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="p-5 border-b border-slate-800 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-rose-500 font-bold text-base">
-            <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping" />
-            Report New Incident
+    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
+      <div className="bg-white border border-[#DCE3E8] w-full max-w-xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] text-[#263238] animate-in fade-in zoom-in-95 duration-200">
+        {/* Header */}
+        <div className="p-4 md:p-5 border-b border-[#DCE3E8] flex items-center justify-between bg-[#F8FAFC] shrink-0">
+          <div>
+            <h2 className="text-sm font-bold text-[#0B1F33]">
+              Report New Incident
+            </h2>
+            <p className="text-[11px] text-[#607D8B] mt-0.5">
+              Live intake for dispatch routing, atmospheric risk analysis & resource allocation.
+            </p>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition"
+            className="text-[#607D8B] hover:text-[#263238] p-1.5 rounded-lg hover:bg-[#EEF2F6] transition cursor-pointer"
+            aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        {/* Scrollable Form Body */}
+        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-5 space-y-4">
           {error && (
-            <div className="flex items-center gap-2 p-3 rounded-lg bg-rose-950/60 border border-rose-800 text-rose-300 text-xs">
-              <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+            <div className="flex items-center gap-2 p-3 rounded-lg bg-[#FDECEC] border border-[#EF9A9A] text-[#B71C1C] text-xs">
+              <AlertCircle className="w-4 h-4 text-[#D32F2F] shrink-0" />
               <span>{error}</span>
             </div>
           )}
 
-          <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-semibold text-slate-300">
-                Caller Transcript / Emergency Description
-              </label>
-              <button
-                type="button"
-                onClick={handleAiAutoDetect}
-                disabled={isClassifying}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-400 hover:text-rose-300 bg-rose-950/50 border border-rose-800/80 px-2.5 py-1 rounded-md transition hover:bg-rose-900/50 cursor-pointer disabled:opacity-50"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-rose-400 animate-spin" style={{ animationDuration: isClassifying ? '1s' : '0s' }} />
-                {isClassifying ? "Analyzing..." : "AI Auto-Detect"}
-              </button>
-            </div>
-            <textarea
-              rows={3}
-              placeholder="e.g. Explosion at chemical factory! Workers trapped inside and flames spreading..."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full bg-slate-800/90 border border-slate-700 rounded-lg p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-rose-500 transition"
-            />
-          </div>
+          <FieldGroup>
+            {/* SECTION 1: Caller Transcript & Evidence */}
+            <FieldSet>
+              <div className="flex items-center justify-between">
+                <FieldLegend>Caller Transcript / Emergency Description</FieldLegend>
+                <button
+                  type="button"
+                  onClick={handleAiAutoDetect}
+                  disabled={isClassifying}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#1565C0] hover:text-[#0D47A1] bg-[#EAF3FB] border border-[#90CAF9] px-2.5 py-1 rounded-md transition hover:bg-[#D6E7F7] cursor-pointer disabled:opacity-50"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#1565C0]" />
+                  {isClassifying ? "Analyzing incident..." : "AI Auto-Detect"}
+                </button>
+              </div>
+              <FieldDescription>
+                Transcribe caller audio or describe scene observation. AI will auto-classify type and priority.
+              </FieldDescription>
 
-          {/* Multi-Modal Scene Photo Upload & Visual Audit */}
-          <div>
-            <input
-              type="file"
-              accept="image/*"
-              ref={fileInputRef}
-              onChange={handleImageChange}
-              className="hidden"
-            />
+              <Field>
+                <Textarea
+                  rows={3}
+                  placeholder="e.g. Explosion at chemical factory! Workers trapped inside and dense black smoke spreading..."
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </Field>
 
-            {!imagePreview ? (
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 border border-dashed border-slate-700 hover:border-rose-500/80 rounded-xl bg-slate-800/40 hover:bg-slate-800/80 text-xs text-slate-400 hover:text-slate-200 transition cursor-pointer"
-              >
-                <Camera className="w-4 h-4 text-rose-400" />
-                <span>Attach Scene Photo / Camera Evidence (Multi-Modal Vision AI)</span>
-              </button>
-            ) : (
-              <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3 space-y-2.5">
-                <div className="flex items-start gap-3">
-                  <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-slate-700 shrink-0 bg-slate-900">
-                    <img
-                      src={imagePreview}
-                      alt="Incident Evidence"
-                      className="w-full h-full object-cover"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleRemoveImage}
-                      className="absolute top-0.5 right-0.5 bg-black/70 hover:bg-rose-900 text-slate-300 hover:text-white p-0.5 rounded transition"
-                      title="Remove photo"
-                    >
-                      <Trash2 className="w-3 h-3" />
-                    </button>
+              {/* AI Auto-Detect Result Banner */}
+              {aiClassification && (
+                <div className="p-3 bg-[#EAF3FB] border border-[#90CAF9] rounded-lg space-y-1.5 text-xs">
+                  <div className="flex items-center justify-between font-semibold text-[#1565C0]">
+                    <span className="flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-[#1565C0]" />
+                      AI Auto-Detected Classification
+                    </span>
+                    <span className="text-[11px] text-[#607D8B] font-mono">
+                      {(aiClassification.confidence * 100).toFixed(1)}% Confidence
+                    </span>
                   </div>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-slate-200 flex items-center gap-1.5">
-                        <Camera className="w-3.5 h-3.5 text-rose-400" />
-                        Visual Evidence Audit
-                      </span>
-                      {visualAudit && (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-700 text-emerald-300">
-                          <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                          {visualAudit.authenticity_status.replace("_", " ").toUpperCase()}
-                        </span>
-                      )}
-                    </div>
-
-                    {isAnalyzingImage ? (
-                      <div className="flex items-center gap-2 mt-2 text-[11px] text-amber-400 animate-pulse">
-                        <Zap className="w-3.5 h-3.5 animate-bounce" />
-                        Analyzing photo with Vision AI...
-                      </div>
-                    ) : visualAudit ? (
-                      <div className="mt-1 space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded ${
-                            visualAudit.damage_severity === "critical"
-                              ? "bg-rose-900/80 text-rose-200 border border-rose-700"
-                              : "bg-amber-900/80 text-amber-200 border border-amber-700"
-                          }`}>
-                            {visualAudit.damage_severity.toUpperCase()} DAMAGE ({visualAudit.damage_score}%)
-                          </span>
-                          <span className="text-[10px] text-slate-400 font-mono">
-                            {visualAudit.analysis_provider.split(" ")[0]}
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-slate-300 line-clamp-2 leading-tight">
-                          {visualAudit.tactical_assessment}
-                        </p>
-                      </div>
-                    ) : null}
+                  <div className="flex flex-wrap gap-2 pt-0.5">
+                    <span className="bg-[#E3F2FD] border border-[#90CAF9] px-2 py-0.5 rounded text-[11px] font-bold text-[#1565C0]">
+                      {aiClassification.incident_type.toUpperCase()}
+                    </span>
+                    <span className={`px-2 py-0.5 rounded text-[11px] font-bold border ${
+                      aiClassification.severity === "critical"
+                        ? "bg-[#FDECEC] text-[#B71C1C] border-[#EF9A9A]"
+                        : "bg-[#FFF3E0] text-[#E65100] border-[#FFCC80]"
+                    }`}>
+                      {aiClassification.severity.toUpperCase()}
+                    </span>
+                    <span className="bg-[#EEF2F6] border border-[#DCE3E8] px-2 py-0.5 rounded text-[11px] font-mono font-bold text-[#0B1F33]">
+                      Priority {aiClassification.priority}
+                    </span>
                   </div>
                 </div>
+              )}
 
-                {visualAudit && visualAudit.detected_hazards.length > 0 && (
-                  <div className="pt-2 border-t border-slate-800/80">
-                    <span className="text-[10px] font-semibold text-slate-400 block mb-1">
-                      Detected Visual Hazards:
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {visualAudit.detected_hazards.map((h, i) => (
-                        <span
-                          key={i}
-                          className="bg-slate-800 border border-slate-700 text-slate-300 text-[10px] px-2 py-0.5 rounded-md font-mono"
+              {/* Photo / Camera Evidence Upload */}
+              <Field>
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileInputRef}
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+
+                {!imagePreview ? (
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-full flex items-center justify-center gap-2 py-2 px-3 border border-dashed border-[#DCE3E8] hover:border-[#1565C0] rounded-lg bg-[#F8FAFC] hover:bg-[#EAF3FB] text-xs text-[#607D8B] hover:text-[#0B1F33] transition cursor-pointer"
+                  >
+                    <Camera className="w-4 h-4 text-[#1565C0]" />
+                    <span>Attach Scene Photo / Camera Evidence</span>
+                  </button>
+                ) : (
+                  <div className="bg-[#F8FAFC] border border-[#DCE3E8] rounded-lg p-3 space-y-2">
+                    <div className="flex items-start gap-3">
+                      <div className="relative w-16 h-16 rounded-md overflow-hidden border border-[#DCE3E8] shrink-0 bg-white">
+                        <img
+                          src={imagePreview}
+                          alt="Incident Evidence"
+                          className="w-full h-full object-cover"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleRemoveImage}
+                          className="absolute top-0.5 right-0.5 bg-black/70 hover:bg-[#D32F2F] text-white p-0.5 rounded transition"
+                          title="Remove photo"
                         >
-                          ⚠️ {h.hazard_type.replace(/_/g, " ")}
-                        </span>
-                      ))}
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-[#0B1F33] flex items-center gap-1.5">
+                            <Camera className="w-3.5 h-3.5 text-[#1565C0]" />
+                            Visual Evidence Audit
+                          </span>
+                          {visualAudit && (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded bg-[#E8F5E9] border border-[#A5D6A7] text-[#2E7D32]">
+                              <CheckCircle2 className="w-3 h-3 text-[#2E7D32]" />
+                              {visualAudit.authenticity_status.replace("_", " ").toUpperCase()}
+                            </span>
+                          )}
+                        </div>
+
+                        {isAnalyzingImage ? (
+                          <div className="flex items-center gap-2 mt-2 text-[11px] text-[#E65100]">
+                            <Zap className="w-3.5 h-3.5 animate-spin" />
+                            Analyzing photo with Vision AI...
+                          </div>
+                        ) : visualAudit ? (
+                          <div className="mt-1 space-y-1">
+                            <div className="flex items-center gap-2">
+                              <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded ${
+                                visualAudit.damage_severity === "critical"
+                                  ? "bg-[#FDECEC] text-[#B71C1C] border border-[#EF9A9A]"
+                                  : "bg-[#FFF3E0] text-[#E65100] border border-[#FFCC80]"
+                              }`}>
+                                {visualAudit.damage_severity.toUpperCase()} DAMAGE ({visualAudit.damage_score}%)
+                              </span>
+                              <span className="text-[10px] text-[#607D8B] font-mono">
+                                {visualAudit.analysis_provider.split(" ")[0]}
+                              </span>
+                            </div>
+                            <p className="text-[11px] text-[#263238] line-clamp-2 leading-tight">
+                              {visualAudit.tactical_assessment}
+                            </p>
+                          </div>
+                        ) : null}
+                      </div>
                     </div>
+
+                    {visualAudit && visualAudit.detected_hazards.length > 0 && (
+                      <div className="pt-2 border-t border-[#DCE3E8]">
+                        <span className="text-[10px] font-semibold text-[#607D8B] block mb-1">
+                          Detected Visual Hazards:
+                        </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {visualAudit.detected_hazards.map((h, i) => (
+                            <span
+                              key={i}
+                              className="bg-white border border-[#DCE3E8] text-[#263238] text-[10px] px-2 py-0.5 rounded font-mono"
+                            >
+                              ⚠️ {h.hazard_type.replace(/_/g, " ")}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
+              </Field>
+            </FieldSet>
+
+            <FieldSeparator />
+
+            {/* SECTION 2: Incident Information (Two-column layout) */}
+            <FieldSet>
+              <FieldLegend>Incident Information</FieldLegend>
+              <FieldDescription>
+                Specify exact operational parameters and geographical coordinates.
+              </FieldDescription>
+
+              <Field>
+                <FieldLabel htmlFor="incident-title">Incident Title</FieldLabel>
+                <Input
+                  id="incident-title"
+                  placeholder="e.g. Industrial Fire at Chemical Plant"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
+                />
+              </Field>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <Field>
+                  <FieldLabel htmlFor="incident-category">Incident Category</FieldLabel>
+                  <Select value={incidentType} onValueChange={setIncidentType}>
+                    <SelectTrigger id="incident-category">
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="fire">Fire</SelectItem>
+                        <SelectItem value="flood">Flood</SelectItem>
+                        <SelectItem value="industrial_accident">Industrial Accident</SelectItem>
+                        <SelectItem value="road_accident">Road Accident</SelectItem>
+                        <SelectItem value="medical">Medical</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </Field>
+
+                <Field>
+                  <FieldLabel htmlFor="incident-address">Address / Landmark</FieldLabel>
+                  <Input
+                    id="incident-address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                  />
+                </Field>
               </div>
-            )}
-          </div>
 
-          {/* AI Detection Result Pill */}
-          {aiClassification && (
-            <div className="p-3 bg-gradient-to-r from-rose-950/40 via-purple-950/30 to-slate-800/50 border border-rose-800/70 rounded-xl space-y-1 text-xs">
-              <div className="flex items-center justify-between font-semibold text-rose-300">
-                <span className="flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-rose-400" />
-                  ML Classification
-                </span>
-                <span className="text-[11px] text-slate-400">
-                  {(aiClassification.confidence * 100).toFixed(1)}% Confidence
-                </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <Field>
+                  <FieldLabel htmlFor="incident-latitude">Latitude</FieldLabel>
+                  <Input
+                    id="incident-latitude"
+                    value={latitude}
+                    onChange={(e) => setLatitude(e.target.value)}
+                    className="font-mono"
+                    required
+                  />
+                </Field>
+
+                <Field>
+                  <FieldLabel htmlFor="incident-longitude">Longitude</FieldLabel>
+                  <Input
+                    id="incident-longitude"
+                    value={longitude}
+                    onChange={(e) => setLongitude(e.target.value)}
+                    className="font-mono"
+                    required
+                  />
+                </Field>
               </div>
-              <div className="flex gap-2 pt-1">
-                <span className="bg-rose-900/60 border border-rose-700 px-2 py-0.5 rounded text-[11px] font-bold text-rose-200">
-                  {aiClassification.incident_type.toUpperCase()}
-                </span>
-                <span className="bg-amber-900/60 border border-amber-700 px-2 py-0.5 rounded text-[11px] font-bold text-amber-200">
-                  {aiClassification.severity.toUpperCase()}
-                </span>
-                <span className="bg-slate-800 border border-slate-600 px-2 py-0.5 rounded text-[11px] font-mono text-slate-300">
-                  Priority {aiClassification.priority}
-                </span>
-              </div>
-            </div>
-          )}
-
-          <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              Incident Title
-            </label>
-            <input
-              type="text"
-              placeholder="e.g. Industrial Fire at Chemical Plant"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-rose-500 transition"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                Incident Category
-              </label>
-              <select
-                value={incidentType}
-                onChange={(e) => setIncidentType(e.target.value)}
-                className="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-rose-500 transition"
-              >
-                <option value="fire">Fire</option>
-                <option value="flood">Flood</option>
-                <option value="industrial_accident">Industrial Accident</option>
-                <option value="road_accident">Road Accident</option>
-                <option value="medical">Medical</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                Address / Landmark
-              </label>
-              <input
-                type="text"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-rose-500 transition"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                Latitude
-              </label>
-              <input
-                type="text"
-                value={latitude}
-                onChange={(e) => setLatitude(e.target.value)}
-                className="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-200 font-mono focus:outline-none focus:border-rose-500 transition"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                Longitude
-              </label>
-              <input
-                type="text"
-                value={longitude}
-                onChange={(e) => setLongitude(e.target.value)}
-                className="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-200 font-mono focus:outline-none focus:border-rose-500 transition"
-              />
-            </div>
-          </div>
-
-          <div className="pt-2 flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 rounded-lg text-xs font-medium text-slate-300 hover:bg-slate-800 transition"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-md transition disabled:opacity-50 cursor-pointer"
-            >
-              {isSubmitting ? "Dispatching..." : "Submit Incident"}
-            </button>
-          </div>
+            </FieldSet>
+          </FieldGroup>
         </form>
+
+        {/* Sticky Footer */}
+        <div className="p-4 border-t border-[#DCE3E8] bg-[#F8FAFC] flex justify-end gap-2 shrink-0">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="button"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Dispatching..." : "Submit Incident"}
+          </Button>
+        </div>
       </div>
     </div>
   );

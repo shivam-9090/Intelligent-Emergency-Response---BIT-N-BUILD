@@ -47,13 +47,15 @@ function App() {
     return () => clearInterval(interval);
   }, [loadData]);
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
   const handleIncidentCreated = (newInc: Incident) => {
     setIncidents((prev) => [newInc, ...prev]);
     setSelectedIncident(newInc);
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-950 text-slate-100">
+    <div className="h-screen w-screen flex flex-col overflow-hidden bg-[#F4F7FA] text-[#263238]">
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -61,19 +63,48 @@ function App() {
         onOpenOptimizer={() => setIsOptimizerOpen(true)}
         alertCount={alerts.filter((a) => !a.is_resolved).length}
         incidentCount={incidents.length}
+        isSidebarOpen={isSidebarOpen}
+        onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
       />
 
       <main className="flex-1 relative flex overflow-hidden">
         {activeTab === "map" ? (
           <>
-            <IncidentList
-              incidents={incidents}
-              selectedIncident={selectedIncident}
-              onSelectIncident={(inc) => {
-                setSelectedIncident(inc);
-                setActiveEvacuationRoute(null);
-              }}
-            />
+            {/* Desktop Incident Sidebar */}
+            {isSidebarOpen && (
+              <div className="hidden md:block h-full animate-in slide-in-from-left duration-200">
+                <IncidentList
+                  incidents={incidents}
+                  selectedIncident={selectedIncident}
+                  onSelectIncident={(inc) => {
+                    setSelectedIncident(inc);
+                    setActiveEvacuationRoute(null);
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Mobile Drawer Overlay */}
+            {isSidebarOpen && (
+              <div className="md:hidden fixed inset-0 z-[1500] flex">
+                <div
+                  className="fixed inset-0 bg-black/50 backdrop-blur-xs"
+                  onClick={() => setIsSidebarOpen(false)}
+                />
+                <div className="relative z-10 w-80 max-w-[85vw] h-full shadow-2xl animate-in slide-in-from-left duration-200">
+                  <IncidentList
+                    incidents={incidents}
+                    selectedIncident={selectedIncident}
+                    onSelectIncident={(inc) => {
+                      setSelectedIncident(inc);
+                      setActiveEvacuationRoute(null);
+                      setIsSidebarOpen(false);
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+
             <div className="flex-1 h-full relative">
               <EmergencyMap
                 incidents={incidents}
@@ -88,6 +119,7 @@ function App() {
                 predictiveDemand={predictiveDemand}
                 showDemandHeatmap={showDemandHeatmap}
                 onToggleDemandHeatmap={() => setShowDemandHeatmap((prev) => !prev)}
+                isSidebarOpen={isSidebarOpen}
               />
             </div>
           </>
