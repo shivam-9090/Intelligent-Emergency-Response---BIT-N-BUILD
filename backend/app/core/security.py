@@ -25,4 +25,7 @@ def create_access_token(subject: str, role: str) -> str:
 
 
 def decode_access_token(token: str) -> dict:
-    return jwt.decode(token, settings.secret_key, algorithms=[ALGORITHM])
+    try:
+        return jwt.decode(token, settings.secret_key, algorithms=[ALGORITHM])
+    except jwt.PyJWTError as exc:
+        raise ValueError(f"Invalid access token: {exc}") from exc

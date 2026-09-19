@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import DateTime, Enum, ForeignKey, Uuid
+from sqlalchemy import DateTime, Enum, ForeignKey, Index, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
@@ -16,6 +16,10 @@ if TYPE_CHECKING:
 
 class Assignment(Base):
     __tablename__ = "assignments"
+    __table_args__ = (
+        Index("ix_assignments_incident_id", "incident_id"),
+        Index("ix_assignments_resource_id", "resource_id"),
+    )
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
 
