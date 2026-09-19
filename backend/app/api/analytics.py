@@ -7,7 +7,13 @@ from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.ml.demand_forecaster import demand_engine
 from app.models.incident import Incident
-from app.schemas.analytics import Hotspot, IncidentBreakdown, ResourceShortage, ResponseDelayStats
+from app.schemas.analytics import (
+    Hotspot,
+    IncidentBreakdown,
+    ModelEvaluationSummary,
+    ResourceShortage,
+    ResponseDelayStats,
+)
 from app.schemas.demand_prediction import PredictiveDemandResponse
 from app.services import analytics_service
 
@@ -74,3 +80,8 @@ def predictive_demand_forecast(
     )
     _DEMAND_CACHE[clamped_horizon] = (now, forecast)
     return forecast
+
+
+@router.get("/model-evaluation", response_model=ModelEvaluationSummary)
+def model_evaluation() -> ModelEvaluationSummary:
+    return analytics_service.get_model_evaluation_metrics()

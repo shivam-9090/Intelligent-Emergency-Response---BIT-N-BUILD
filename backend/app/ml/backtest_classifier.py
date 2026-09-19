@@ -30,18 +30,27 @@ def run_backtest(dataset_path: Path, train_fraction: float = 0.8) -> dict:
     if not holdout:
         raise ValueError("Chronological holdout is empty.")
 
-    type_model = build_pipeline().fit([item["description"] for item in train], [item["incident_type"] for item in train])
+    type_model = build_pipeline().fit(
+        [item["description"] for item in train], [item["incident_type"] for item in train]
+    )
     severity_model = build_pipeline().fit(
-        [f"[{item['incident_type']}] {item['description']}" for item in train], [item["severity"] for item in train]
+        [f"[{item['incident_type']}] {item['description']}" for item in train],
+        [item["severity"] for item in train],
     )
     type_predictions = type_model.predict([item["description"] for item in holdout])
-    severity_predictions = severity_model.predict([f"[{item['incident_type']}] {item['description']}" for item in holdout])
+    severity_predictions = severity_model.predict(
+        [f"[{item['incident_type']}] {item['description']}" for item in holdout]
+    )
     return {
         "method": "chronological holdout; no future incidents in training",
         "train_records": len(train),
         "holdout_records": len(holdout),
-        "incident_type": classification_report([item["incident_type"] for item in holdout], type_predictions, output_dict=True, zero_division=0),
-        "severity": classification_report([item["severity"] for item in holdout], severity_predictions, output_dict=True, zero_division=0),
+        "incident_type": classification_report(
+            [item["incident_type"] for item in holdout], type_predictions, output_dict=True, zero_division=0
+        ),
+        "severity": classification_report(
+            [item["severity"] for item in holdout], severity_predictions, output_dict=True, zero_division=0
+        ),
     }
 
 

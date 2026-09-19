@@ -4,8 +4,8 @@ Uses TF-IDF feature extraction with Logistic Regression classifiers trained on
 the synthetic emergency incidents dataset. Serializes the trained models for fast inference.
 """
 
-import json
 import hashlib
+import json
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -17,22 +17,22 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
 BASE_DIR = Path(__file__).resolve().parent
-CONTAINER_DATASET_PATH = BASE_DIR / "data" / "emergency_incidents.json"
-REPO_DATASET_PATH = BASE_DIR.parents[2] / "data" / "synthetic" / "emergency_incidents.json"
+DATASET_CANDIDATE_PATHS = [
+    BASE_DIR / "data" / "emergency_incidents.json",
+    BASE_DIR.parent / "data" / "synthetic" / "emergency_incidents.json",
+    BASE_DIR.parents[2] / "data" / "synthetic" / "emergency_incidents.json",
+]
 MODEL_DIR = BASE_DIR / "model_weights"
 MODEL_PATH = MODEL_DIR / "incident_classifier.joblib"
 
 
 def load_dataset() -> list[dict]:
-    if CONTAINER_DATASET_PATH.exists():
-        path = CONTAINER_DATASET_PATH
-    elif REPO_DATASET_PATH.exists():
-        path = REPO_DATASET_PATH
-    else:
-        msg = f"Dataset not found at {CONTAINER_DATASET_PATH} or {REPO_DATASET_PATH}"
-        raise FileNotFoundError(msg)
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
+    for path in DATASET_CANDIDATE_PATHS:
+        if path.exists():
+            with open(path, encoding="utf-8") as f:
+                return json.load(f)
+    msg = f"Dataset not found at any candidate location: {[str(p) for p in DATASET_CANDIDATE_PATHS]}"
+    raise FileNotFoundError(msg)
 
 
 def build_pipeline() -> Pipeline:

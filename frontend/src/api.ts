@@ -9,6 +9,7 @@ import type {
   ImageAnalysisResponse,
   Incident,
   IncidentSummary,
+  ModelEvaluationSummary,
   PredictiveDemandResponse,
   ResourceBundleResponse,
   ResourceShortage,
@@ -188,3 +189,13 @@ export async function fetchPredictiveDemandForecast(
   }
   return res.json();
 }
+
+export async function fetchModelEvaluation(): Promise<ModelEvaluationSummary> {
+  const res = await fetch(`${API_BASE}/analytics/model-evaluation`);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Failed to fetch model evaluation metrics" }));
+    throw new Error(err.detail || "Failed to fetch model evaluation metrics");
+  }
+  return res.json();
+}
+
