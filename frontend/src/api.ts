@@ -96,9 +96,20 @@ export async function fetchCascadeRisk(
 }
 
 export async function fetchAnalyticsBreakdown(): Promise<Record<string, number>> {
-  const res = await fetch(`${API_BASE}/analytics/incident-breakdown`);
-  if (!res.ok) return {};
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE}/analytics/incidents`);
+    if (!res.ok) return {};
+    const data = await res.json();
+    const map: Record<string, number> = {};
+    if (data.by_type && Array.isArray(data.by_type)) {
+      for (const item of data.by_type) {
+        map[item.incident_type] = item.count;
+      }
+    }
+    return map;
+  } catch {
+    return {};
+  }
 }
 
 export async function fetchAnalyticsDelays(): Promise<any> {
