@@ -51,6 +51,7 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
   const [isAnalyzingImage, setIsAnalyzingImage] = useState(false);
   const [visualAudit, setVisualAudit] = useState<ImageAnalysisResponse | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   if (!isOpen) return null;
 
@@ -113,8 +114,6 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
       fileInputRef.current.value = "";
     }
   };
-
-  const formRef = useRef<HTMLFormElement>(null);
 
   const resetForm = () => {
     setTitle("");

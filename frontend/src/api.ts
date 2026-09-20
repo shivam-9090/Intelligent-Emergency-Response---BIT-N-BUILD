@@ -112,16 +112,29 @@ export async function fetchAnalyticsBreakdown(): Promise<Record<string, number>>
   }
 }
 
-export async function fetchAnalyticsDelays(): Promise<any> {
-  const res = await fetch(`${API_BASE}/analytics/response-delays`);
-  if (!res.ok) return [];
-  return res.json();
+export async function fetchAnalyticsDelays(): Promise<any[]> {
+  try {
+    const res = await fetch(`${API_BASE}/analytics/response-delays`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    if (Array.isArray(data)) return data;
+    if (data && Array.isArray(data.by_type)) return data.by_type;
+    return [];
+  } catch {
+    return [];
+  }
 }
 
-export async function fetchAnalyticsShortages(): Promise<any> {
-  const res = await fetch(`${API_BASE}/analytics/resource-shortages`);
-  if (!res.ok) return [];
-  return res.json();
+export async function fetchAnalyticsShortages(): Promise<any[]> {
+  try {
+    const res = await fetch(`${API_BASE}/analytics/resource-shortages`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    if (Array.isArray(data)) return data;
+    return [];
+  } catch {
+    return [];
+  }
 }
 
 export async function optimizeFleet(): Promise<FleetOptimizationResponse> {
