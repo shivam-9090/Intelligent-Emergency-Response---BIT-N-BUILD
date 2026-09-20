@@ -50,11 +50,13 @@ def optimize_fleet(db: Session = Depends(get_db)) -> FleetOptimizationResponse:
         {
             "id": inc.id,
             "title": inc.title,
+            "description": inc.description,
             "incident_type": inc.incident_type,
             "severity": inc.severity,
             "priority": inc.priority,
             "latitude": inc.latitude,
             "longitude": inc.longitude,
+            "address": inc.address,
             "created_at": inc.created_at.isoformat() if inc.created_at else "",
         }
         for inc in active_incidents

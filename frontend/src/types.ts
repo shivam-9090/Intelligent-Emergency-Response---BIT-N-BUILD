@@ -148,13 +148,19 @@ export interface CascadeRiskResponse {
 export interface OptimizedAssignmentItem {
   incident_id: string;
   incident_title: string;
+  incident_description?: string | null;
   incident_type: IncidentType;
   severity: Severity;
   priority: number;
+  latitude?: number | null;
+  longitude?: number | null;
+  address?: string | null;
   unit_id: string;
   unit_name: string;
   resource_type: ResourceType;
   capability: string | null;
+  unit_latitude?: number | null;
+  unit_longitude?: number | null;
   eta_minutes: number;
   urgency_cost_score: number;
 }

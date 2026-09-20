@@ -253,6 +253,14 @@ function App() {
           setIsOptimizerOpen(false);
           loadData();
         }}
+        onSelectIncident={(incidentId) => {
+          const inc = incidents.find((i) => i.id === incidentId);
+          if (inc) {
+            setSelectedIncident(inc);
+            setActiveTab("map");
+            setIsOptimizerOpen(false);
+          }
+        }}
       />
 
       <IncidentDetailModal
