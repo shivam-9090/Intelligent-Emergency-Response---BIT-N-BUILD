@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import { Activity, AlertTriangleIcon, Plus, BarChart3, Radio, Zap, X, Bell, PanelLeft } from "lucide-react";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert";
+import { Activity, AlertTriangleIcon, Plus, BarChart3, Radio, Zap, X, Bell, PanelLeft, Clock, Flame, CheckCircle2, ChevronRight } from "lucide-react";
+import type { Alert as AlertType, Incident } from "../types";
 
 interface NavbarProps {
   activeTab: "map" | "analytics";
@@ -12,6 +8,10 @@ interface NavbarProps {
   onOpenNewIncident: () => void;
   onOpenOptimizer: () => void;
   alertCount: number;
+  alerts?: AlertType[];
+  incidents?: Incident[];
+  onSelectIncident?: (inc: Incident) => void;
+  onDismissAlert?: (alertId: string) => void;
   incidentCount?: number;
   isSidebarOpen?: boolean;
   onToggleSidebar?: () => void;
@@ -23,6 +23,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenNewIncident,
   onOpenOptimizer,
   alertCount,
+  alerts,
+  incidents,
+  onSelectIncident,
+  onDismissAlert,
   isSidebarOpen = true,
   onToggleSidebar,
 }) => {
@@ -115,8 +119,14 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Middle Notification Modal Dialog */}
       {showAlertModal && (
-        <div className="fixed inset-0 z-[2500] flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-in fade-in duration-150">
-          <div className="bg-white rounded-2xl border border-[#DCE3E8] p-5 max-w-lg w-full shadow-2xl space-y-4 animate-in zoom-in-95 duration-150 text-[#263238]">
+        <div
+          className="fixed inset-0 z-[2500] flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-in fade-in duration-150"
+          onClick={() => setShowAlertModal(false)}
+        >
+          <div
+            className="bg-white rounded-2xl border border-[#DCE3E8] p-5 max-w-lg w-full shadow-2xl space-y-4 animate-in zoom-in-95 duration-150 text-[#263238]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center justify-between pb-3 border-b border-[#DCE3E8]">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-[#FFF3E0] border border-[#FFE0B2] flex items-center justify-center text-[#E65100]">
@@ -124,7 +134,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-[#0B1F33]">Emergency Notifications</h3>
-                  <p className="text-xs text-[#607D8B]">{alertCount} active priority advisories</p>
+                  <p className="text-xs text-[#607D8B]">{alerts?.length ?? alertCount} active priority advisories</p>
                 </div>
               </div>
               <button
@@ -136,18 +146,94 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             </div>
 
-            {/* Amber Alert Card as requested */}
-            <Alert className="border-amber-200 bg-amber-50 text-amber-900 shadow-xs">
-              <AlertTriangleIcon className="w-5 h-5 text-amber-700" />
-              <AlertTitle className="font-bold">Resource & Priority Queue Alert</AlertTitle>
-              <AlertDescription className="text-xs mt-1 text-amber-800 leading-relaxed">
-                {alertCount > 0
-                  ? `${alertCount} critical emergency dispatches require immediate field review. High hazard risk detected in active sector.`
-                  : "All monitored sectors report normal status. No pending critical escalation alerts."}
-              </AlertDescription>
-            </Alert>
+            {/* Notification Items List (Renders each alert individually) */}
+            <div className="space-y-2.5 max-h-[60vh] overflow-y-auto pr-1">
+              {alerts && alerts.length > 0 ? (
+                alerts.map((alert, idx) => {
+                  const matchedInc = incidents?.find((inc) => inc.id === alert.incident_id);
+                  const isDelayed = alert.alert_type === "delayed_response";
+                  const isCritical = alert.alert_type === "critical_incident";
 
-            <div className="flex justify-end gap-2 pt-1">
+                  return (
+                    <div
+                      key={alert.id || idx}
+                      className={`p-3.5 rounded-xl border transition-all ${
+                        isCritical
+                          ? "bg-[#FDECEC] border-[#EF9A9A] text-[#B71C1C]"
+                          : isDelayed
+                          ? "bg-[#FFF8E1] border-[#FFE082] text-[#B78103]"
+                          : "bg-[#FFF3E0] border-[#FFCC80] text-[#E65100]"
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-start gap-2.5">
+                          <div className="p-1.5 rounded-lg bg-white/90 shrink-0 mt-0.5 shadow-xs">
+                            {isCritical ? (
+                              <Flame className="w-4 h-4 text-[#D32F2F]" />
+                            ) : isDelayed ? (
+                              <Clock className="w-4 h-4 text-[#F57C00]" />
+                            ) : (
+                              <AlertTriangleIcon className="w-4 h-4 text-[#E65100]" />
+                            )}
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-white/90 border border-current">
+                                {isDelayed ? "DELAYED DISPATCH" : isCritical ? "CRITICAL EMERGENCY" : "OPERATIONAL ADVISORY"}
+                              </span>
+                              <span className="text-[10px] opacity-70 font-mono">
+                                {alert.created_at ? new Date(alert.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "Active"}
+                              </span>
+                            </div>
+                            <p className="text-xs font-semibold text-[#263238] mt-1 leading-snug">
+                              {alert.message}
+                            </p>
+                          </div>
+                        </div>
+
+                        {onDismissAlert && (
+                          <button
+                            type="button"
+                            onClick={() => onDismissAlert(alert.id)}
+                            className="text-[#90A4AE] hover:text-[#263238] p-1 rounded transition cursor-pointer"
+                            title="Dismiss notification"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                      </div>
+
+                      {matchedInc && (
+                        <div className="mt-2.5 pt-2 border-t border-black/5 flex items-center justify-between">
+                          <span className="text-[11px] text-[#607D8B] truncate max-w-[65%]">
+                            📍 {matchedInc.address || "Sector Point"} ({matchedInc.severity.toUpperCase()})
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setShowAlertModal(false);
+                              onSelectIncident?.(matchedInc);
+                            }}
+                            className="text-[11px] font-bold text-[#1565C0] hover:text-[#0D47A1] inline-flex items-center gap-1 cursor-pointer bg-white px-2.5 py-1 rounded shadow-xs border border-[#DCE3E8]"
+                          >
+                            <span>Inspect Incident</span>
+                            <ChevronRight className="w-3 h-3" />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="p-6 text-center text-xs text-[#90A4AE] bg-[#F8FAFC] rounded-xl border border-dashed border-[#DCE3E8]">
+                  <CheckCircle2 className="w-8 h-8 text-[#2E7D32] mx-auto mb-2 opacity-80" />
+                  <p className="font-semibold text-[#263238]">All Operational Corridors Clear</p>
+                  <p className="text-[11px] text-[#607D8B] mt-0.5">No pending emergency alerts or delayed dispatch advisories.</p>
+                </div>
+              )}
+            </div>
+
+            <div className="flex justify-end gap-2 pt-1 border-t border-[#DCE3E8]">
               <button
                 type="button"
                 onClick={() => setShowAlertModal(false)}
