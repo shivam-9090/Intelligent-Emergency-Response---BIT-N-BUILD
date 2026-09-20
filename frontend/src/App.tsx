@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { fetchIncidents, fetchResources, fetchAlerts, fetchPredictiveDemandForecast } from "./api";
+import { fetchIncidents, fetchResources, fetchAlerts, fetchPredictiveDemandForecast, resolveAlert, resolveAllAlerts } from "./api";
 import type { Incident, ResourceUnit, Alert, EvacuationRouteResponse, PredictiveDemandResponse } from "./types";
 import { Navbar } from "./components/Navbar";
 import { EmergencyMap } from "./components/EmergencyMap";
@@ -32,6 +32,21 @@ function App() {
     incident?: Incident;
   } | null>(null);
 
+  // Persistent tracking of dismissed alerts so they never re-appear on poll
+  const [dismissedAlertIds, setDismissedAlertIds] = useState<Set<string>>(() => {
+    try {
+      const saved = localStorage.getItem("dismissed_alert_ids");
+      return saved ? new Set(JSON.parse(saved)) : new Set<string>();
+    } catch {
+      return new Set<string>();
+    }
+  });
+
+  const dismissedAlertIdsRef = useRef<Set<string>>(dismissedAlertIds);
+  useEffect(() => {
+    dismissedAlertIdsRef.current = dismissedAlertIds;
+  }, [dismissedAlertIds]);
+
   const prevAlertCountRef = useRef<number>(0);
 
   const loadData = useCallback(async () => {
@@ -44,11 +59,15 @@ function App() {
       ]);
       setIncidents(incData);
       setResources(resData);
-      setAlerts(alertData);
       if (demandData) setPredictiveDemand(demandData);
 
-      // Trigger notification toast if a new unresolved alert appears
-      const unresolvedAlerts = alertData.filter((a: Alert) => !a.resolved && !a.is_resolved);
+      // Filter out alerts that are resolved or dismissed locally
+      const unresolvedAlerts = alertData.filter(
+        (a: Alert) => !a.resolved && !a.is_resolved && !dismissedAlertIdsRef.current.has(a.id)
+      );
+      setAlerts(unresolvedAlerts);
+
+      // Trigger notification toast if a genuinely new unresolved alert appears
       if (unresolvedAlerts.length > prevAlertCountRef.current && unresolvedAlerts.length > 0) {
         const latestAlert = unresolvedAlerts[0];
         const matchingInc = incData.find((i: Incident) => i.id === latestAlert.incident_id);
@@ -101,7 +120,55 @@ function App() {
     });
   };
 
-  const activeAlerts = alerts.filter((a) => !a.resolved && !a.is_resolved);
+  const handleDismissAlert = useCallback(async (alertId: string) => {
+    // 1. Immediately mark as dismissed locally & persist to localStorage
+    setDismissedAlertIds((prev) => {
+      const next = new Set(prev);
+      next.add(alertId);
+      try {
+        localStorage.setItem("dismissed_alert_ids", JSON.stringify(Array.from(next)));
+      } catch (e) {
+        console.error(e);
+      }
+      return next;
+    });
+
+    // 2. Immediately remove from current alerts state
+    setAlerts((prev) => prev.filter((a) => a.id !== alertId));
+
+    // 3. Persist resolution to backend database
+    try {
+      await resolveAlert(alertId);
+    } catch (err) {
+      console.warn("Backend alert resolution call failed, alert kept dismissed locally:", err);
+    }
+  }, []);
+
+  const handleDismissAllAlerts = useCallback(async () => {
+    const ids = alerts.map((a) => a.id);
+    setDismissedAlertIds((prev) => {
+      const next = new Set(prev);
+      ids.forEach((id) => next.add(id));
+      try {
+        localStorage.setItem("dismissed_alert_ids", JSON.stringify(Array.from(next)));
+      } catch (e) {
+        console.error(e);
+      }
+      return next;
+    });
+
+    setAlerts([]);
+
+    try {
+      await resolveAllAlerts();
+    } catch (err) {
+      console.warn("Backend resolve-all alerts call failed:", err);
+    }
+  }, [alerts]);
+
+  const activeAlerts = alerts.filter(
+    (a) => !a.resolved && !a.is_resolved && !dismissedAlertIds.has(a.id)
+  );
 
   return (
     <div className="h-screen w-screen flex flex-col overflow-hidden bg-[#F4F7FA] text-[#263238]">
@@ -117,9 +184,8 @@ function App() {
           setSelectedIncident(inc);
           setActiveEvacuationRoute(null);
         }}
-        onDismissAlert={(alertId) => {
-          setAlerts((prev) => prev.filter((a) => a.id !== alertId));
-        }}
+        onDismissAlert={handleDismissAlert}
+        onDismissAllAlerts={handleDismissAllAlerts}
         incidentCount={incidents.length}
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
@@ -228,7 +294,12 @@ function App() {
                 </span>
               </div>
               <button
-                onClick={() => setActiveEmergencyToast(null)}
+                onClick={() => {
+                  if (activeEmergencyToast.type === "alert" && activeEmergencyToast.id) {
+                    handleDismissAlert(activeEmergencyToast.id);
+                  }
+                  setActiveEmergencyToast(null);
+                }}
                 className="text-[#90A4AE] hover:text-[#263238] p-0.5 rounded transition cursor-pointer"
                 title="Dismiss"
               >

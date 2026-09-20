@@ -22,7 +22,19 @@ def list_alerts(
     return [AlertRead.model_validate(a) for a in alerts]
 
 
-@router.post("/{alert_id}/resolve", response_model=AlertRead, dependencies=[_dispatch_roles])
+@router.post("/resolve-all", response_model=list[AlertRead])
+def resolve_all_alerts(db: Session = Depends(get_db)) -> list[AlertRead]:
+    alerts = alert_service.list_alerts(db, resolved=False)
+    resolved = []
+    for a in alerts:
+        res = alert_service.resolve_alert(db, a.id)
+        if res:
+            resolved.append(res)
+    return [AlertRead.model_validate(a) for a in resolved]
+
+
+@router.post("/{alert_id}/resolve", response_model=AlertRead)
+@router.delete("/{alert_id}", response_model=AlertRead)
 def resolve_alert(alert_id: uuid.UUID, db: Session = Depends(get_db)) -> AlertRead:
     alert = alert_service.resolve_alert(db, alert_id)
     if alert is None:

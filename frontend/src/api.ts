@@ -33,6 +33,22 @@ export async function fetchAlerts(): Promise<Alert[]> {
   return res.json();
 }
 
+export async function resolveAlert(alertId: string): Promise<Alert> {
+  const res = await fetch(`${API_BASE}/alerts/${alertId}/resolve`, {
+    method: "POST",
+  });
+  if (!res.ok) throw new Error("Failed to resolve alert");
+  return res.json();
+}
+
+export async function resolveAllAlerts(): Promise<Alert[]> {
+  const res = await fetch(`${API_BASE}/alerts/resolve-all`, {
+    method: "POST",
+  });
+  if (!res.ok) throw new Error("Failed to resolve all alerts");
+  return res.json();
+}
+
 export async function createIncident(data: {
   title: string;
   description: string;

@@ -58,7 +58,6 @@ def check_delayed_responses(db: Session, threshold_minutes: int = DELAYED_RESPON
     already_alerted_subquery = (
         select(Alert.incident_id)
         .where(Alert.alert_type == AlertType.DELAYED_RESPONSE)
-        .where(Alert.resolved.is_(False))
     )
     stale_incidents = (
         db.execute(
@@ -88,7 +87,6 @@ def check_escalations(db: Session, threshold_minutes: int = ESCALATION_MINUTES) 
     already_escalated_subquery = (
         select(Alert.incident_id)
         .where(Alert.alert_type == AlertType.ESCALATION)
-        .where(Alert.resolved.is_(False))
     )
     overdue_incidents = (
         db.execute(
