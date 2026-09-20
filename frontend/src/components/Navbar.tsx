@@ -139,16 +139,30 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <p className="text-xs text-[#607D8B]">{alerts?.length ?? alertCount} active priority advisories</p>
                 </div>
               </div>
-              <button
-                onClick={() => setShowAlertModal(false)}
-                className="text-[#90A4AE] hover:text-[#263238] p-1.5 rounded-lg hover:bg-[#EEF2F6] transition cursor-pointer"
-                aria-label="Close notification"
-              >
-                <X className="w-4 h-4" />
-              </button>
+
+              {/* Top Side Action: Clear All & Close Modal */}
+              <div className="flex items-center gap-2">
+                {alerts && alerts.length > 0 && onDismissAllAlerts && (
+                  <button
+                    type="button"
+                    onClick={() => onDismissAllAlerts()}
+                    className="text-xs font-bold px-2.5 py-1 rounded-lg text-[#D32F2F] bg-[#FDECEC] hover:bg-[#FFCDD2] border border-[#EF9A9A] transition cursor-pointer flex items-center gap-1 shadow-2xs active:scale-95"
+                    title="Clear all notifications at once"
+                  >
+                    <span>Clear All</span>
+                  </button>
+                )}
+                <button
+                  onClick={() => setShowAlertModal(false)}
+                  className="text-[#90A4AE] hover:text-[#263238] p-1.5 rounded-lg hover:bg-[#EEF2F6] transition cursor-pointer"
+                  aria-label="Close notification"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
-            {/* Notification Items List (Renders each alert individually) */}
+            {/* Notification Items List (Renders each alert individually for manual dismissal) */}
             <div className="space-y-2.5 max-h-[60vh] overflow-y-auto pr-1">
               {alerts && alerts.length > 0 ? (
                 alerts.map((alert, idx) => {
@@ -193,6 +207,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           </div>
                         </div>
 
+                        {/* Manual 'X' Button to clear this specific notification */}
                         {onDismissAlert && (
                           <button
                             type="button"
@@ -200,11 +215,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                               e.stopPropagation();
                               onDismissAlert(alert.id);
                             }}
-                            className="text-[#90A4AE] hover:text-[#D32F2F] hover:bg-red-50 p-1.5 rounded-lg transition cursor-pointer shrink-0"
-                            title="Dismiss notification"
-                            aria-label="Dismiss notification"
+                            className="text-[#90A4AE] hover:text-[#D32F2F] hover:bg-[#FFEBEE] p-1.5 rounded-lg transition cursor-pointer shrink-0 border border-transparent hover:border-[#EF9A9A]"
+                            title="Clear this notification manually"
+                            aria-label="Clear notification"
                           >
-                            <X className="w-3.5 h-3.5" />
+                            <X className="w-4 h-4" />
                           </button>
                         )}
                       </div>
@@ -245,11 +260,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                   type="button"
                   onClick={() => {
                     onDismissAllAlerts();
-                    setShowAlertModal(false);
                   }}
-                  className="px-3 py-1.5 text-xs font-semibold text-[#607D8B] hover:text-[#D32F2F] hover:bg-[#FDECEC] rounded-lg transition cursor-pointer"
+                  className="px-3 py-1.5 text-xs font-semibold text-[#D32F2F] hover:bg-[#FDECEC] border border-[#EF9A9A] rounded-lg transition cursor-pointer active:scale-95"
                 >
-                  Clear All Alerts
+                  Clear All Alerts ({alerts.length})
                 </button>
               ) : (
                 <div />

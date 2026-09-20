@@ -32,15 +32,16 @@ function App() {
     incident?: Incident;
   } | null>(null);
 
-  // Persistent tracking of dismissed alerts so they never re-appear on poll
-  const [dismissedAlertIds, setDismissedAlertIds] = useState<Set<string>>(() => {
+  // Session tracking of dismissed alerts for instant optimistic UI update
+  const [dismissedAlertIds, setDismissedAlertIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
     try {
-      const saved = localStorage.getItem("dismissed_alert_ids");
-      return saved ? new Set(JSON.parse(saved)) : new Set<string>();
+      localStorage.removeItem("dismissed_alert_ids");
     } catch {
-      return new Set<string>();
+      // ignore
     }
-  });
+  }, []);
 
   const dismissedAlertIdsRef = useRef<Set<string>>(dismissedAlertIds);
   useEffect(() => {
@@ -121,15 +122,10 @@ function App() {
   };
 
   const handleDismissAlert = useCallback(async (alertId: string) => {
-    // 1. Immediately mark as dismissed locally & persist to localStorage
+    // 1. Immediately mark as dismissed in session for instantaneous removal
     setDismissedAlertIds((prev) => {
       const next = new Set(prev);
       next.add(alertId);
-      try {
-        localStorage.setItem("dismissed_alert_ids", JSON.stringify(Array.from(next)));
-      } catch (e) {
-        console.error(e);
-      }
       return next;
     });
 
@@ -140,7 +136,7 @@ function App() {
     try {
       await resolveAlert(alertId);
     } catch (err) {
-      console.warn("Backend alert resolution call failed, alert kept dismissed locally:", err);
+      console.warn("Backend alert resolution call failed, alert kept dismissed in session:", err);
     }
   }, []);
 
@@ -149,11 +145,6 @@ function App() {
     setDismissedAlertIds((prev) => {
       const next = new Set(prev);
       ids.forEach((id) => next.add(id));
-      try {
-        localStorage.setItem("dismissed_alert_ids", JSON.stringify(Array.from(next)));
-      } catch (e) {
-        console.error(e);
-      }
       return next;
     });
 
