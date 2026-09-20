@@ -8,13 +8,19 @@ from app.models.enums import IncidentType, ResourceType, Severity
 class OptimizedAssignmentItem(BaseModel):
     incident_id: uuid.UUID
     incident_title: str
+    incident_description: str | None = None
     incident_type: IncidentType
     severity: Severity
     priority: int
+    latitude: float | None = None
+    longitude: float | None = None
+    address: str | None = None
     unit_id: uuid.UUID
     unit_name: str
     resource_type: ResourceType
     capability: str | None = None
+    unit_latitude: float | None = None
+    unit_longitude: float | None = None
     eta_minutes: float
     urgency_cost_score: float
 
