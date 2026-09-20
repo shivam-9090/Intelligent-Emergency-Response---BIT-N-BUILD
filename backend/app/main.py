@@ -13,12 +13,36 @@ from app.core.scheduler import start_scheduler, stop_scheduler
 settings = get_settings()
 
 
+import logging
+
+logger = logging.getLogger("uvicorn.error")
+
+
+def run_db_migrations_and_seed() -> None:
+    try:
+        from alembic.config import Config
+        from alembic import command
+        alembic_cfg = Config("alembic.ini")
+        command.upgrade(alembic_cfg, "head")
+        logger.info("Database migrations verified and up to date.")
+    except Exception as exc:
+        logger.warning(f"Database migration check failed or skipped: {exc}")
+
+    try:
+        from app.db.seed import seed
+        seed()
+    except Exception as exc:
+        logger.warning(f"Database seed check failed or skipped: {exc}")
+
+
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    run_db_migrations_and_seed()
     manager.bind_loop(asyncio.get_running_loop())
     start_scheduler()
     yield
     stop_scheduler()
+
 
 
 app = FastAPI(title="Intelligent Emergency Response Platform", version="0.1.0", lifespan=lifespan)

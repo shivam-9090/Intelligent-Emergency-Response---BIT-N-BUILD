@@ -68,64 +68,62 @@ function App() {
       />
 
       <main className="flex-1 relative flex overflow-hidden">
-        {activeTab === "map" ? (
-          <>
-            {/* Desktop Incident Sidebar */}
-            {isSidebarOpen && (
-              <div className="hidden md:block h-full animate-in slide-in-from-left duration-200">
-                <IncidentList
-                  incidents={incidents}
-                  selectedIncident={selectedIncident}
-                  onSelectIncident={(inc) => {
-                    setSelectedIncident(inc);
-                    setActiveEvacuationRoute(null);
-                  }}
-                />
-              </div>
-            )}
+        {/* Desktop Incident Sidebar (Available on both Map and Analytics) */}
+        {isSidebarOpen && (
+          <div className="hidden md:block h-full animate-in slide-in-from-left duration-200 shrink-0 z-20">
+            <IncidentList
+              incidents={incidents}
+              selectedIncident={selectedIncident}
+              onSelectIncident={(inc) => {
+                setSelectedIncident(inc);
+                setActiveEvacuationRoute(null);
+              }}
+            />
+          </div>
+        )}
 
-            {/* Mobile Drawer Overlay */}
-            {isSidebarOpen && (
-              <div className="md:hidden fixed inset-0 z-[1500] flex">
-                <div
-                  className="fixed inset-0 bg-black/50 backdrop-blur-xs"
-                  onClick={() => setIsSidebarOpen(false)}
-                />
-                <div className="relative z-10 w-80 max-w-[85vw] h-full shadow-2xl animate-in slide-in-from-left duration-200">
-                  <IncidentList
-                    incidents={incidents}
-                    selectedIncident={selectedIncident}
-                    onSelectIncident={(inc) => {
-                      setSelectedIncident(inc);
-                      setActiveEvacuationRoute(null);
-                      setIsSidebarOpen(false);
-                    }}
-                  />
-                </div>
-              </div>
-            )}
-
-            <div className="flex-1 h-full relative">
-              <EmergencyMap
+        {/* Mobile Drawer Overlay */}
+        {isSidebarOpen && (
+          <div className="md:hidden fixed inset-0 z-[1500] flex">
+            <div
+              className="fixed inset-0 bg-black/50 backdrop-blur-xs"
+              onClick={() => setIsSidebarOpen(false)}
+            />
+            <div className="relative z-10 w-80 max-w-[85vw] h-full shadow-2xl animate-in slide-in-from-left duration-200">
+              <IncidentList
                 incidents={incidents}
-                resources={resources}
                 selectedIncident={selectedIncident}
                 onSelectIncident={(inc) => {
                   setSelectedIncident(inc);
                   setActiveEvacuationRoute(null);
+                  setIsSidebarOpen(false);
                 }}
-                activePlumePolygon={activePlumePolygon}
-                evacuationRoute={activeEvacuationRoute}
-                predictiveDemand={predictiveDemand}
-                showDemandHeatmap={showDemandHeatmap}
-                onToggleDemandHeatmap={() => setShowDemandHeatmap((prev) => !prev)}
-                isSidebarOpen={isSidebarOpen}
               />
             </div>
-          </>
-        ) : (
-          <AnalyticsView incidents={incidents} />
+          </div>
         )}
+
+        <div className="flex-1 h-full relative overflow-hidden">
+          {activeTab === "map" ? (
+            <EmergencyMap
+              incidents={incidents}
+              resources={resources}
+              selectedIncident={selectedIncident}
+              onSelectIncident={(inc) => {
+                setSelectedIncident(inc);
+                setActiveEvacuationRoute(null);
+              }}
+              activePlumePolygon={activePlumePolygon}
+              evacuationRoute={activeEvacuationRoute}
+              predictiveDemand={predictiveDemand}
+              showDemandHeatmap={showDemandHeatmap}
+              onToggleDemandHeatmap={() => setShowDemandHeatmap((prev) => !prev)}
+              isSidebarOpen={isSidebarOpen}
+            />
+          ) : (
+            <AnalyticsView incidents={incidents} />
+          )}
+        </div>
       </main>
 
       <QuickIntakeModal

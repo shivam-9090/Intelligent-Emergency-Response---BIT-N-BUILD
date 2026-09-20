@@ -25,6 +25,13 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
   const highCount = incidents.filter((i) => i.severity === "high").length;
   const duplicateCount = incidents.filter((i) => i.duplicate_of_id !== null).length;
 
+  const displayBreakdown = { ...breakdown };
+  if (Object.keys(displayBreakdown).length === 0 && incidents.length > 0) {
+    for (const inc of incidents) {
+      displayBreakdown[inc.incident_type] = (displayBreakdown[inc.incident_type] || 0) + 1;
+    }
+  }
+
   return (
     <div className="w-full h-full bg-[#F4F7FA] p-8 overflow-y-auto space-y-6 text-[#263238]">
       <div>
@@ -81,10 +88,10 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
           Incidents by Emergency Category
         </h3>
         <div className="space-y-3">
-          {Object.entries(breakdown).length === 0 ? (
+          {Object.entries(displayBreakdown).length === 0 ? (
             <div className="text-xs text-[#90A4AE] py-4">No category data yet.</div>
           ) : (
-            Object.entries(breakdown).map(([cat, count]) => {
+            Object.entries(displayBreakdown).map(([cat, count]) => {
               const pct = totalIncidents > 0 ? (count / totalIncidents) * 100 : 0;
               return (
                 <div key={cat} className="space-y-1">

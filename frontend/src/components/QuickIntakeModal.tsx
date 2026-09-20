@@ -114,31 +114,61 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!title.trim() || !description.trim()) {
-      setError("Title and description are required.");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setIncidentType("fire");
+    setLatitude("12.9716");
+    setLongitude("77.5946");
+    setAddress("Bangalore City Center");
+    setImagePreview(null);
+    setVisualAudit(null);
+    setAiClassification(null);
+    setError(null);
+  };
+
+  const handleModalClose = () => {
+    resetForm();
+    onClose();
+  };
+
+  const handleSubmit = async (e?: React.FormEvent | React.MouseEvent) => {
+    if (e && typeof e.preventDefault === "function") {
+      e.preventDefault();
+    }
+    if (!description.trim()) {
+      setError("Please provide an incident description / caller transcript.");
+      formRef.current?.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
+
+    const finalTitle = title.trim() || `${incidentType.toUpperCase()} Emergency Report`;
+    const parsedLat = parseFloat(latitude);
+    const parsedLng = parseFloat(longitude);
 
     setIsSubmitting(true);
     setError(null);
 
     try {
       const newInc = await createIncident({
-        title,
-        description,
+        title: finalTitle,
+        description: description.trim(),
         source: "citizen_report",
         incident_type: incidentType,
-        latitude: parseFloat(latitude),
-        longitude: parseFloat(longitude),
-        address,
+        latitude: isNaN(parsedLat) ? 12.9716 : parsedLat,
+        longitude: isNaN(parsedLng) ? 77.5946 : parsedLng,
+        address: address.trim() || "Bangalore City Center",
       });
 
       onIncidentCreated(newInc);
+      resetForm();
       onClose();
     } catch (err: any) {
-      setError(err.message || "Failed to submit emergency incident.");
+      const msg = err.message || "Failed to submit emergency incident.";
+      setError(msg);
+      formRef.current?.scrollTo({ top: 0, behavior: "smooth" });
     } finally {
       setIsSubmitting(false);
     }
@@ -158,7 +188,7 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
             </p>
           </div>
           <button
-            onClick={onClose}
+            onClick={handleModalClose}
             className="text-[#607D8B] hover:text-[#263238] p-1.5 rounded-lg hover:bg-[#EEF2F6] transition cursor-pointer"
             aria-label="Close dialog"
           >
@@ -167,7 +197,12 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
         </div>
 
         {/* Scrollable Form Body */}
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-5 space-y-4">
+        <form
+          ref={formRef}
+          id="quick-intake-form"
+          onSubmit={handleSubmit}
+          className="flex-1 overflow-y-auto p-5 space-y-4"
+        >
           {error && (
             <div className="flex items-center gap-2 p-3 rounded-lg bg-[#FDECEC] border border-[#EF9A9A] text-[#B71C1C] text-xs">
               <AlertCircle className="w-4 h-4 text-[#D32F2F] shrink-0" />
@@ -413,21 +448,33 @@ export const QuickIntakeModal: React.FC<QuickIntakeModalProps> = ({
         </form>
 
         {/* Sticky Footer */}
-        <div className="p-4 border-t border-[#DCE3E8] bg-[#F8FAFC] flex justify-end gap-2 shrink-0">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={onClose}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            onClick={handleSubmit}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Dispatching..." : "Submit Incident"}
-          </Button>
+        <div className="p-4 border-t border-[#DCE3E8] bg-[#F8FAFC] flex items-center justify-between gap-2 shrink-0">
+          {error ? (
+            <div className="flex items-center gap-1.5 text-xs text-[#D32F2F] font-semibold truncate max-w-[55%]">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span className="truncate">{error}</span>
+            </div>
+          ) : (
+            <div />
+          )}
+          <div className="flex items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleModalClose}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              form="quick-intake-form"
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="cursor-pointer"
+            >
+              {isSubmitting ? "Dispatching..." : "Submit Incident"}
+            </Button>
+          </div>
         </div>
       </div>
     </div>
