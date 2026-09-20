@@ -62,9 +62,10 @@ export interface ResourceBundleResponse {
 export interface Alert {
   id: string;
   incident_id: string;
-  alert_type: "critical_incident" | "delayed_response" | "escalation";
+  alert_type: "critical_incident" | "delayed_response" | "escalation" | string;
   message: string;
-  is_resolved: boolean;
+  resolved?: boolean;
+  is_resolved?: boolean;
   created_at: string;
 }
 
