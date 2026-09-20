@@ -12,6 +12,7 @@ interface NavbarProps {
   incidents?: Incident[];
   onSelectIncident?: (inc: Incident) => void;
   onDismissAlert?: (alertId: string) => void;
+  onDismissAllAlerts?: () => void;
   incidentCount?: number;
   isSidebarOpen?: boolean;
   onToggleSidebar?: () => void;
@@ -27,6 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   incidents,
   onSelectIncident,
   onDismissAlert,
+  onDismissAllAlerts,
   isSidebarOpen = true,
   onToggleSidebar,
 }) => {
@@ -194,9 +196,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                         {onDismissAlert && (
                           <button
                             type="button"
-                            onClick={() => onDismissAlert(alert.id)}
-                            className="text-[#90A4AE] hover:text-[#263238] p-1 rounded transition cursor-pointer"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onDismissAlert(alert.id);
+                            }}
+                            className="text-[#90A4AE] hover:text-[#D32F2F] hover:bg-red-50 p-1.5 rounded-lg transition cursor-pointer shrink-0"
                             title="Dismiss notification"
+                            aria-label="Dismiss notification"
                           >
                             <X className="w-3.5 h-3.5" />
                           </button>
@@ -233,13 +239,27 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </div>
 
-            <div className="flex justify-end gap-2 pt-1 border-t border-[#DCE3E8]">
+            <div className="flex items-center justify-between gap-2 pt-2 border-t border-[#DCE3E8]">
+              {alerts && alerts.length > 0 && onDismissAllAlerts ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onDismissAllAlerts();
+                    setShowAlertModal(false);
+                  }}
+                  className="px-3 py-1.5 text-xs font-semibold text-[#607D8B] hover:text-[#D32F2F] hover:bg-[#FDECEC] rounded-lg transition cursor-pointer"
+                >
+                  Clear All Alerts
+                </button>
+              ) : (
+                <div />
+              )}
               <button
                 type="button"
                 onClick={() => setShowAlertModal(false)}
                 className="px-4 py-2 bg-[#1565C0] hover:bg-[#0D47A1] text-white text-xs font-semibold rounded-lg shadow-xs transition cursor-pointer"
               >
-                Acknowledge & Close
+                Close
               </button>
             </div>
           </div>

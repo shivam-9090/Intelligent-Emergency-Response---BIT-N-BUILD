@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { classifyText, createIncident, analyzeIncidentImage } from "../api";
 import { Sparkles, X, AlertCircle, Camera, CheckCircle2, Trash2, Zap } from "lucide-react";
 import type { Incident, ImageAnalysisResponse } from "../types";
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
 import {
   Field,
   FieldDescription,
@@ -11,8 +11,8 @@ import {
   FieldLegend,
   FieldSeparator,
   FieldSet,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+} from "./ui/field";
+import { Input } from "./ui/input";
 import {
   Select,
   SelectContent,
@@ -20,8 +20,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+} from "./ui/select";
+import { Textarea } from "./ui/textarea";
 
 interface QuickIntakeModalProps {
   isOpen: boolean;

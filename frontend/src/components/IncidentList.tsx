@@ -6,7 +6,7 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from "@/components/ui/input-group";
+} from "./ui/input-group";
 
 interface IncidentListProps {
   incidents: Incident[];
