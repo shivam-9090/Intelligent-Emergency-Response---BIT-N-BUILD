@@ -181,14 +181,14 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
             <Clock className="w-4 h-4 text-[#F57C00]" />
             Response Delay Alerts
           </h3>
-          {delays.length === 0 ? (
+          {(!Array.isArray(delays) || delays.length === 0) ? (
             <div className="text-xs text-[#90A4AE] py-4">All response teams are currently within optimal response windows.</div>
           ) : (
             <div className="space-y-2">
               {delays.map((d, i) => (
                 <div key={i} className="p-3 bg-[#EEF2F6] border border-[#DCE3E8] rounded-lg text-xs flex justify-between items-center">
-                  <span className="text-[#263238] font-semibold">{d.title || `Incident #${i+1}`}</span>
-                  <span className="text-[#D32F2F] font-mono font-bold">Delay: {d.delay_minutes || 15}m</span>
+                  <span className="text-[#263238] font-semibold">{d.title || d.incident_type || `Incident #${i+1}`}</span>
+                  <span className="text-[#D32F2F] font-mono font-bold">Delay: {d.delay_minutes || d.average_delay_minutes || 15}m</span>
                 </div>
               ))}
             </div>
@@ -200,11 +200,11 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
             <Users className="w-4 h-4 text-[#1565C0]" />
             Sector Resource Constraints
           </h3>
-          {shortages.length === 0 ? (
+          {(!Array.isArray(shortages) || shortages.filter((s) => s.shortage).length === 0) ? (
             <div className="text-xs text-[#90A4AE] py-4">Resource unit capacity is healthy across all operational sectors.</div>
           ) : (
             <div className="space-y-2">
-              {shortages.map((s, i) => (
+              {shortages.filter((s) => s.shortage).map((s, i) => (
                 <div key={i} className="p-3 bg-[#EEF2F6] border border-[#DCE3E8] rounded-lg text-xs flex justify-between items-center">
                   <span className="text-[#263238] capitalize font-medium">{s.resource_type || "Units"}</span>
                   <span className="text-[#F57C00] font-bold">Capacity low in Sector</span>
