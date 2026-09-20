@@ -430,18 +430,6 @@ export const FleetOptimizerModal: React.FC<FleetOptimizerModalProps> = ({
               </div>
             </div>
 
-            {/* Algorithmic Optimality Rationale */}
-            <div className="p-3 rounded-xl bg-[#FFF8E1] border border-[#FFE082] text-xs space-y-1">
-              <div className="font-bold text-[#B78103] flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-[#F57C00]" />
-                Hungarian Algorithm Mathematical Rationale
-              </div>
-              <p className="text-[11px] text-[#455A64]">
-                This assignment achieved a minimized total urgency-cost score of{" "}
-                <span className="font-bold font-mono text-[#0B1F33]">{selectedAssignment.urgency_cost_score}</span>.
-                Severity priority was weighted to guarantee minimal response latency for high-risk hazards.
-              </p>
-            </div>
 
             {/* Actions */}
             <div className="flex items-center justify-between pt-2 border-t border-[#DCE3E8]">
