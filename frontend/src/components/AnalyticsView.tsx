@@ -197,11 +197,6 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ incidents }) => {
               );
             })}
           </div>
-
-          <div className="text-[10px] text-[#607D8B] font-mono flex items-center justify-between border-t border-[#DCE3E8] pt-2">
-            <span>Grid Points Calculated: {predictiveDemand.heatmap_grid.length} cells</span>
-            <span>Algorithm: {predictiveDemand.algorithm}</span>
-          </div>
         </div>
       )}
 
